@@ -1,0 +1,16 @@
+File Name: Drosophila_melanogaster_protein.faa.gz
+Organism Name: Drosophila_melanogaster
+Database: NCBI refseq
+URL: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/008/025/GCF_000008025.1_ASM802v1/GCF_000008025.1_ASM802v1_protein.faa.gz
+Download_Date: Sat Oct 13 13:34:58 2018
+refseq_category: representative genome
+assembly_accession: GCF_000008025.1
+bioproject: PRJNA224116
+biosample: SAMN02604000
+taxid: 163164
+infraspecific_name: strain=wMel
+version_status: latest
+release_type: Major
+genome_rep: Full
+seq_rel_date: 2004-02-05
+submitter: TIGR

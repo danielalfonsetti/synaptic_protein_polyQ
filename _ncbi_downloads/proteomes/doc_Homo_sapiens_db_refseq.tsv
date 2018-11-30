@@ -1,0 +1,2 @@
+file_name	organism	url	database	path	refseq_category	assembly_accession	bioproject	biosample	taxid	infraspecific_name	version_status	release_type	genome_rep	seq_rel_date	submitter
+Homo_sapiens_genomic_refseq.fna.gz	Homo_sapiens	ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.38_GRCh38.p12/GCF_000001405.38_GRCh38.p12_protein.faa.gz	refseq	_ncbi_downloads/proteomes	reference genome	GCF_000001405.38	PRJNA168	NA	9606	NA	latest	Patch	Full	2017-12-21	Genome Reference Consortium

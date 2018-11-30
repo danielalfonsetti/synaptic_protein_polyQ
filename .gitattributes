@@ -1,0 +1,7 @@
+*.csv filter=lfs diff=lfs merge=lfs -text
+**.csv filter=lfs diff=lfs merge=lfs -text
+***.csv filter=lfs diff=lfs merge=lfs -text
+.***.csv filter=lfs diff=lfs merge=lfs -text
+/c/UROPs/polyQ_neuronal_proteins/***.csv filter=lfs diff=lfs merge=lfs -text
+/c/UROPs/polyQ_neuronal_proteins/**.csv filter=lfs diff=lfs merge=lfs -text
+/c/UROPs/polyQ_neuronal_proteins/*.csv filter=lfs diff=lfs merge=lfs -text

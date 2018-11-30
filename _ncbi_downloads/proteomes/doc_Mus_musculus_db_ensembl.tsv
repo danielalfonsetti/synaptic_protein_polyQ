@@ -1,0 +1,2 @@
+file_name	organism	database	download_data	assembly_name	assembly_date	genebuild_last_geneset_update	assembly_accession	genebuild_initial_release_date
+_ncbi_downloads/proteomes/Mus_musculus.GRCm38.pep.all.fa.gz	Mus_musculus	ensembl	Fri Oct 12 22:11:10 2018	GRCm38.p6	2012-01	2018-06	GCA_000001635.8	2012-07
