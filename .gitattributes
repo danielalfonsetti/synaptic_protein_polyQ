@@ -5,3 +5,5 @@
 /c/UROPs/polyQ_neuronal_proteins/***.csv filter=lfs diff=lfs merge=lfs -text
 /c/UROPs/polyQ_neuronal_proteins/**.csv filter=lfs diff=lfs merge=lfs -text
 /c/UROPs/polyQ_neuronal_proteins/*.csv filter=lfs diff=lfs merge=lfs -text
+scripts/Q_v9.R filter=lfs diff=lfs merge=lfs -text
+scripts/Q_v14234.R filter=lfs diff=lfs merge=lfs -text
