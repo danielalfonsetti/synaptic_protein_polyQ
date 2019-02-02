@@ -5,6 +5,7 @@
 #########################################
 # Load libraries
 #########################################
+rm(list = ls())
 
 library(doParallel)
 
@@ -30,11 +31,10 @@ library(org.Hs.eg.db)
 library(org.Mm.eg.db)
 library(org.Ce.eg.db)
 library(GO.db)
+library(protr)
 
 # Enrichment analysis tools
 library(clusterProfiler) 
-
-rm(list = ls())
 #########################################
 # Setup environment
 #########################################
@@ -53,10 +53,10 @@ output_base_dir <- "C:/UROPs/polyQ_neuronal_proteins/output/"
 
 species_vec = c("fly")
 
-candidate_AA_vec = c("D", "Q")
+# candidate_AA_vec = c("Q", "D")
 
-# candidate_AA_vec = c("D", "T", "S", "E", "P", "G", "A", "C", "V", "M",
-#                      "I", "L", "Y", "F", "H", "K", "R", "W", "Q", "N")
+candidate_AA_vec = c("D", "T", "S", "E", "P", "G", "A", "C", "V", "M",
+                     "I", "L", "Y", "F", "H", "K", "R", "W", "Q", "N")
 # species_vec = c("fly", "mouse", "human", "worm")
 
 # test_id_dict <- list(mouse_Q = c("FBpp0289769","FBpp0307700", "FBpp0086727", "FBpp0111724", "FBpp0070830", "FBpp0309352", "FBpp0402897", "FBpp0110299","FBpp0305807"),
@@ -71,7 +71,7 @@ term3 <- "GO:0003676" # nucleic acid binding
 
 # term3 <- "GO:0019219" # regulation of nucleobase-containing compound metabolic process
 
-filtered_out_cats <- c(term1, get(term1, GOCCOFFSPRING), 
+nuclear_cats <- c(term1, get(term1, GOCCOFFSPRING), 
                        term2, get(term2, GOCCOFFSPRING),
                        term3, get(term3, GOMFOFFSPRING))
 
@@ -130,11 +130,12 @@ train_HMM = function(training_set, candidate_AA) {
   emiss <- matrix(c(0.95, 0.05,
                     0.26, 0.74),
                   nrow=2, ncol=2, byrow = TRUE)
-  
+
   # Initial values for transition matrix
   trans <- matrix(c(0.95, 0.05, 
-                    0.13, 0.87), 
+                    0.01, 0.99), 
                   nrow = 2, ncol = 2, byrow = TRUE)
+
   
   # Initial values for initial state probabilities
   initial_probs <- c(.99, .01)
@@ -172,7 +173,7 @@ train_HMM = function(training_set, candidate_AA) {
   return(hmm_fit)
 }
 
-test_HMM = function(proteinSet, trained_model, candidate_AA){
+test_HMM = function(proteinSet, model, candidate_AA){
   print("At start of test_HMM!")
   
   # Remoeve any proteins with a sequence of length 1
@@ -183,17 +184,19 @@ test_HMM = function(proteinSet, trained_model, candidate_AA){
   # proteinSet.
   x <- NULL
   HMM <- dthmm(x, 
-               Pi = trained_model$model$transition_probs,  # Looks right 
-               delta = trained_model$model$initial_probs,  # Looks right
+               Pi = model$transition_probs,  # Looks right 
+               delta = model$initial_probs,  # Looks right
                distn = "binom",             
-               pm = list(prob = trained_model$model$emission_probs[1:2, 2], size = 1),       # 
+               pm = list(prob = model$emission_probs[1:2, 2], size = 1),       # 
                pn = NULL,
                discrete = TRUE,
                nonstat = TRUE)
   print("In test_HMM: Finished building the object!")
 
-  # A column for the Qfraction for an entire protein.
-  proteinSet$AAfraction = rep(NA, nrow(proteinSet))
+  # Columns for fractions of Single, double, and triple AAs of the particularly type in the entire protein sequence.
+  proteinSet$AAComp = rep(NA, nrow(proteinSet)) # Errors here
+  # proteinSet$DipeptideComp = rep(NA, nrow(proteinSet))
+  # proteinSet$TripeptideComp = rep(NA, nrow(proteinSet))
   
   # A boolean indicating whether or not at least one polyQ region was found by the HMM for this protein.
   proteinSet$HMMhasPolyAA = rep(NA, nrow(proteinSet))
@@ -218,10 +221,21 @@ test_HMM = function(proteinSet, trained_model, candidate_AA){
   proteinSet$MaxPolyAARegionAAFractions = rep(NA, nrow(proteinSet))
   
   proteinSet$annotatedSequence = rep(NA, nrow(proteinSet))
+  proteinSet$PeptideLength = rep(NA, nrow(proteinSet))
+  
+  
+  proteinSet$pvalues = rep(0, nrow(proteinSet))
+  
+  # TODO: Add amino acid descriptor, dipeptide descriptor, and tri peptide descriptor.
+  # Add autocorrelatoin descriptor.
+  
   
   print("In test_HMM: Extracting information about annotated paths!")
-  for (sequenceNum in 1:nrow(proteinSet)){
-    print(sequenceNum)
+  for (sequenceNum in 1:nrow(proteinSet)) {
+    
+    if (sequenceNum %% 5000 == 0){
+      print(paste0("Annotating sequence ", sequenceNum, " out of ", nrow(proteinSet)))
+    }
     proteinRow <- proteinSet[sequenceNum,]
     
     ### TURN TRANSLATION INTO BINARY VECTOR (coded as 1 if AA == Q, 0 otherwise)
@@ -241,14 +255,16 @@ test_HMM = function(proteinSet, trained_model, candidate_AA){
     proteinRow$annotatedSequence <- paste0(annotatedSequence, collapse = "")
     
     # Get Qfraction for the entire protein.
-    nAAs = str_count(proteinRow$peptide_seq, candidate_AA)
-    proteinRow$AAfraction = round(nAAs/nchar(proteinRow$peptide_seq), 4)
     
 
-    ### DETERMINE IF THERE ARE ANY Q ISLANDS AND REPORT TRUE OR FALSE IN THE TABLE
-    a = annotatedSequence == 2
-    if (sum(a) >= 1 ) {
-    } else {proteinRow}
+    # proteinRow$AAComp <- extractAAC(proteinRow$peptide_seq)[paste0(replicate(1, candidate_AA), collapse = "")]
+    # proteinRow$DipeptideComp <- extractDC(proteinRow$peptide_seq)[paste0(replicate(2, candidate_AA), collapse = "")]
+    # proteinRow$TripeptideComp <- extractTC(proteinRow$peptide_seq)[paste0(replicate(3, candidate_AA), collapse = "")]
+    nAAs = str_count(proteinRow$peptide_seq, candidate_AA)
+    proteinRow$AAComp= round(nAAs/nchar(proteinRow$peptide_seq), 4)
+    
+    # Get length of protein.
+    proteinRow$PeptideLength <- nchar(proteinRow$peptide_seq)
     
     # Find which indices of the translation are marked as being polyQ
     polyAA_indices <- which(annotatedSequence %in% c(2))
@@ -256,9 +272,11 @@ test_HMM = function(proteinSet, trained_model, candidate_AA){
     # Group the indicies into groups (so if you have multiple polyQ regions, the indices for each polyQ region will be seperated from each other)
     grouped_polyAA_indicies <- split(polyAA_indices, cumsum(c(1, diff(polyAA_indices) != 1))) 
     
+    # Only keep polyAAs that are greater than 6AAs in length here
+    grouped_polyAA_indicies <- grouped_polyAA_indicies[lapply(grouped_polyAA_indicies, length) > 6]
     
     # Record how many polyQ regions there are
-    if (length(grouped_polyAA_indicies[[1]]) == 0) {
+    if (length(grouped_polyAA_indicies) == 0) {
       proteinRow$NumberPolyAA = 0
       proteinRow$HMMhasPolyAA = FALSE
     } else {
@@ -281,7 +299,7 @@ test_HMM = function(proteinSet, trained_model, candidate_AA){
         
         nAAs = str_count(PolyAATranslations[i], candidate_AA)
         PolyAARegionAAFractions[i] <- round(nAAs/nchar(PolyAATranslations[i]), 4)
-      }
+      } # for (i in 1:proteinRow$NumberPolyAA)
       
       proteinRow$TranslationsPolyAA <- paste0(PolyAATranslations, collapse = "; ")
       
@@ -293,11 +311,18 @@ test_HMM = function(proteinSet, trained_model, candidate_AA){
       proteinRow$PolyAARegionAAFractions <- paste0(sort(PolyAARegionAAFractions, decreasing = TRUE), collapse = "; ")
       proteinRow$AvgPolyAARegionAAFractions <- round(mean(PolyAARegionAAFractions), 4)
       proteinRow$MaxPolyAARegionAAFractions <- PolyAARegionAAFractions[1]
-    }
+      
+      # Compute p-values for protein. See NOTE 1 at bottom for details.
+      n = proteinRow$MaxLengthsPolyAA # get max length of polyQ tract found for each protein
+      m = proteinRow$PeptideLength # Protein length
+      proteinRow$pvalues <-  1-(1-1/(20**n))**(m-(n-1)) # compute p-values
+      
+    } # if else (length(grouped_polyAA_indicies[[1]]) == 0) {
     
-    # Add the row back
+    # Add the row back into dataframe we are building up.
     proteinSet[sequenceNum,] <- proteinRow
-  }
+    
+  } # for (sequenceNum in 1:nrow(proteinSet))
   
   # Return a column that gives length of largest region 
   # and the number of regions present (and the Qfraction of the largest region?)
@@ -319,7 +344,6 @@ for (species in species_vec) {
   dir.create(output_species_dir, recursive = TRUE)
   # Diagnostics: Measure download time
   start_time <- Sys.time() 
-  
   
   # datasets = useMart(biomart="ENSEMBL_MART_ENSEMBL", host="uswest.ensembl.org")
   # listDatasets(datasets); Relevant data sets:
@@ -343,13 +367,12 @@ for (species in species_vec) {
     ensembl <- useMart("ensembl", dataset = "celegans_gene_ensembl")
   }
 
-  
   protein_df <- getBM(attributes = c('ensembl_gene_id', 'ensembl_peptide_id', "external_gene_name", 'go_id', "name_1006", "namespace_1003"), 
                       values = "*", 
                       mart = ensembl)
   
   # Filter here based on whether it has CC GO annot. Make two seperate files
-  nuclear_prots <- protein_df[protein_df$go_id %in% filtered_out_cats, ]
+  nuclear_prots <- protein_df[protein_df$go_id %in% nuclear_cats, ]
 
   
   protein_df <- dplyr::rename(protein_df, "go_description" = name_1006 , "go_type" = namespace_1003 )
@@ -408,7 +431,7 @@ for (species in species_vec) {
   
   # Only include non-nuclear proteins
   protein_df_w_seqs_filt <- protein_df_w_seqs %>% filter(!(ensembl_peptide_id %in% nuclear_prots$ensembl_peptide_id))
-  write.csv(protein_df_w_seqs_filt, file = paste0(output_species_dir, species, "_prots_filt.csv"), row.names = FALSE)
+  write.csv(protein_df_w_seqs_filt, file = paste0(output_species_dir, species, "_prots_nuclear_filt.csv"), row.names = FALSE)
   
   #####################
   print(paste0("Downloaded and saved proteome for ", species, " in ", output_species_dir, "!"))
@@ -416,88 +439,6 @@ for (species in species_vec) {
 ##########################
 # Downloads complete
 ##########################
-
-#########################################
-# Preliminary Diagnostics
-#########################################
-proteins <- read.csv(paste0(output_base_dir, "fly/fly_prots.csv"), stringsAsFactors = FALSE)
-
-protein_lengths <- unlist(lapply(proteins$peptide_seq, function(x){length(unlist(strsplit(x, "")))}))
-
-# ggplot() + aes(protein_lengths)+ geom_histogram(binwidth=1, colour="black", fill="white")
-# Length of universe proteins
-
-p <- ggplot() + 
-  aes(protein_lengths)+
-  geom_histogram(show.legend = FALSE, aes(fill=..count..), binwidth = 50) +
-  xlim(c(0, 7500)) +
-  ylim(c(0, 2100)) +
-  xlab("# of Amino Acids") +
-  ylab("# of Proteins") +
-  ggtitle(paste0("Fly Protein Length Histogram (All Proteins)")) +
-  theme_light()
-print(p)
-
-# Length of synapse proteins 
-synapse_term1 <- "GO:0045202"
-synapse_cats <- get(synapse_term1, GOCCOFFSPRING)
-synapse_cats <- c(synapse_cats, synapse_term1)
-#synapse_only <- proteins %>% filter()
-
-proteins_synapse_only <- proteins[unlist(
-            lapply(
-                lapply(proteins$go_ids_CC, function(x){unlist(strsplit(x, "; "))}), 
-                function(x){any(x %in% synapse_cats)}
-              )
-            )
-        ,]
-nrow(proteins); nrow(proteins_synapse_only)
-
-synapse_protein_lengths <- unlist(lapply(proteins_synapse_only$peptide_seq, function(x){length(unlist(strsplit(x, "")))}))
-
-p <- ggplot() + 
-  aes(synapse_protein_lengths)+
-  geom_histogram(show.legend = FALSE, aes(fill=..count..), binwidth = 50) +
-  xlim(c(0, 7500)) +
-  ylim(c(0, 2100)) +
-  xlab("# of Amino Acids") +
-  ylab("# of Proteins") +
-  ggtitle(paste0("Fly Protein Length Histogram (Synaptic Proteins)")) +
-  theme_light()
-print(p)
-
-
-# There are some outliers....
-summary(synapse_protein_lengths)
-summary(protein_lengths)
-t_test_res <- t.test(synapse_protein_lengths, protein_lengths)
-t_test_res$p.value
-
-# Try capping to deal with outliers... 
-# http://r-statistics.co/Outlier-Treatment-With-R.html
-cap <- function(vec) {
-  x <- vec
-  qnt <- quantile(x, probs=c(.25, .75), na.rm = T)
-  caps <- quantile(x, probs=c(.05, .95), na.rm = T)
-  H <- 1.5 * IQR(x, na.rm = T)
-  x[x < (qnt[1] - H)] <- caps[1]
-  x[x > (qnt[2] + H)] <- caps[2]
-  return(x)
-}
-
-synapse_protein_lengths_capped <- cap(synapse_protein_lengths)
-protein_lengths_capped <- cap(protein_lengths)
-
-summary(synapse_protein_lengths_capped)
-summary(protein_lengths_capped)
-t_test_res <- t.test(synapse_protein_lengths_capped, protein_lengths_capped)
-t_test_res$p.value
-# Still significantly different. Seems that synaptic proteins are longer on average.
-# Therefore we will have to do adjusted-p value of category vs avergage peptide length of category
-
-#########################################
-# End of preliminary diagnostics
-#########################################
 
 
 # Mappings from species and amino acid repeat type to list of IDs used to train the HMM.
@@ -512,7 +453,8 @@ for (species in species_vec) {
   output_species_dir <- paste0(output_base_dir, species, "/")
   dir.create(output_species_dir, recursive = TRUE)
   
-  protein_df_w_seqs <- read.csv(paste0(output_species_dir, species, "_prots_filt.csv"), stringsAsFactors = FALSE)
+  # Don't use the filtered list. Use all. And then filter again later if need be.
+  protein_df_w_seqs <- read.csv(paste0(output_species_dir, species, "_prots.csv"), stringsAsFactors = FALSE)
 
   for (candidate_AA in candidate_AA_vec) {
     # debugging; candidate_AA = candidate_AA_vec[1]; candidate_AA
@@ -521,37 +463,68 @@ for (species in species_vec) {
     output_AA_dir <- paste0(output_species_dir, candidate_AA, "/")
     dir.create(output_AA_dir, recursive = TRUE)
     
-    # Use either 1 or 2.
-    # 1.) Hard coded training
-      training_set_ids <- training_id_dict[["mouse_Q"]]
+    x <- read.csv("C:/UROPs/polyQ_neuronal_proteins/output/fly/fly_prots.csv", stringsAsFactors = FALSE)
     
-      x <- read.csv("C:/UROPs/polyQ_neuronal_proteins/output/fly/fly_prots.csv", stringsAsFactors = FALSE)
-      training_set <- x %>% filter(ensembl_peptide_id %in% training_set_ids)
-    
-    # 2.) Soft coded training
-      # training_set_ids <- test_id_dict[[paste0(species, "_", candidate_AA)]]
-      # training_set <- protein_df_w_seqs %>% filter(ensembl_peptide_id %in% training_set_ids)
-      
-    # Remove duplicates (why would there be duplicates?). There shouldn't be...
-    # vec <- duplicated(training_set[,c("ensembl_peptide_id")])
-    # training_set <- training_set[!vec,]  # Remove duplicated rows.
-
-    # Train model on training set
-    print("Generating the model...")
+    training_set_ids <- training_id_dict[["mouse_Q"]]
+    training_set <- x %>% filter(ensembl_peptide_id %in% training_set_ids)
+    training_seqs <- format_for_HMM(training_set, candidate_AA) # We aren't actually using these. But 
     trained_model <- train_HMM(training_set, candidate_AA)
-    print("Finished making the model!")
-  
+    
+    
+    # build function needs them for some reason...
+    random_set <- sample_n(x, 1000)
+    emiss <- matrix(c(0.95, 0.05,
+                      0.05, 0.95),
+                    nrow=2, ncol=2, byrow = TRUE)
+    trans <- matrix(c(0.995, 0.005, 
+                      0.0676, 0.9324), 
+                    nrow = 2, ncol = 2, byrow = TRUE)
+    initial_probs <- c(.99, .01)
+    
+    hard_coded_model <- build_hmm(observations = training_seqs,
+                     initial_probs = initial_probs,
+                     transition_probs = trans,
+                     emission_probs = emiss,
+                     state_names = c("NonPolyAA", "PolyAA"))
+    
+    # Evaluate/inspect models (debugging)
+        # Evaluate compare hard-coded model with trained model on trained model's training data.
+        # hard_coded_model
+        # trained_model$model
+        # training_df_w_trained_hmm <- test_HMM(training_set, trained_model$model, candidate_AA)
+        # View(training_df_w_trained_hmm)
+        # training_df_w_hard_hmm <- test_HMM(training_set, hard_coded_model, candidate_AA)
+        # View(training_df_w_hard_hmm)
+        # 
+        # 
+        # # Evaluate compare hard-coded model with trained model on random set of protein data
+        # random_df_w_trained_hmm <- test_HMM(random_set, trained_model$model, candidate_AA)
+        # random_df_w_hard_hmm <- test_HMM(random_set, hard_coded_model, candidate_AA)
+        # trained <- random_df_w_trained_hmm %>%
+        #   filter(HMMhasPolyAA == TRUE)
+        # mean(trained$MaxPolyAARegionAAFractions)
+        # hard <- random_df_w_hard_hmm %>%
+        #   filter(HMMhasPolyAA == TRUE)
+        # mean(hard$MaxPolyAARegionAAFractions)
+        # nrow(hard)
+        # nrow(trained)
+        # View(random_df_w_hard_hmm)
+        # View(random_df_w_trained_hmm)
     
     # Use trained HMM model on testSet (proteinSet).
     proteinSet <- protein_df_w_seqs
+    
     # Annotate the proteins based on the model we have trained and generate various statistics for each annotation (or lack thereof)
     protein_df_w_hmm <- test_HMM(proteinSet, trained_model, candidate_AA)
+    
     # Order so most relevant proteins are at the top.
     protein_df_w_hmm <- protein_df_w_hmm %>% arrange(desc(HMMhasPolyAA), desc(MaxLengthsPolyAA), desc(AvgPolyAARegionAAFractions))
-    # Save HMM annotation results.
-    write.csv(protein_df_w_hmm, file = paste0(output_AA_dir, species, "_", nrow(protein_df_w_hmm), "prots_w_HMM_", candidate_AA, ".csv"), row.names = FALSE)
     
-    # Find genes where alternative splicing results in some isoforms being annoated for at least one polyQ region and other isoforms not having any polyQs.
+    # Save HMM annotation results.
+    write.csv(protein_df_w_hmm, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, ".csv"), row.names = FALSE)
+    
+    # Find genes where alternative splicing results in some isoforms being annoated 
+    # for at least one polyQ region and other isoforms not having any polyQs.
     protein_df_w_hmm_alt_spliced <- protein_df_w_hmm %>% 
                                     group_by(ensembl_gene_id) %>% 
                                     filter(sum(HMMhasPolyAA) < n(),  1 < sum(HMMhasPolyAA))
@@ -561,13 +534,72 @@ for (species in species_vec) {
                                             desc(HMMhasPolyAA), 
                                             desc(MaxLengthsPolyAA),
                                             desc(AvgPolyAARegionAAFractions))
-    write.csv(protein_df_w_hmm_alt_spliced, file = paste0(output_AA_dir, species, "_", nrow(protein_df_w_hmm_alt_spliced), "prots_w_HMM_", candidate_AA, "_alt_spliced.csv"), row.names = FALSE)
+    write.csv(protein_df_w_hmm_alt_spliced, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_alt_spliced.csv"), row.names = FALSE)
+  } # for (candidate_AA in candidate_AA_vec)
+} # for (species in species_vec) {
+
+##################
+# Filter out nuclear proteins and then save again.
+###################
+for (species in species_vec) {
+  # debugging; species = species_vec[1]
+  
+  output_species_dir <- paste0(output_base_dir, species, "/")
+  dir.create(output_species_dir, recursive = TRUE)
+  for (candidate_AA in candidate_AA_vec) {
+    output_AA_dir <- paste0(output_species_dir, candidate_AA, "/")
+    
+    protein_df_w_hmm <- read.csv(paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, ".csv"))
+    
+    
+    vec <- unlist(
+      lapply(
+        lapply(as.character(protein_df_w_hmm$go_ids_CC), function(x){unlist(strsplit(x, "; "))}), 
+        function(x){any(x %in% nuclear_cats)}
+      )
+    )
+    protein_df_w_hmm <- protein_df_w_hmm[vec,]
+    # Save
+    write.csv(protein_df_w_hmm, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_nuclear_filt.csv"), row.names = FALSE)
+    
+    #######
+    # Repeat filtering for alternatively spliced list.
+    protein_df_w_hmm_alt_spliced <- read.csv(paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_alt_spliced.csv"))
+    vec <- unlist(
+      lapply(
+        lapply(as.character(protein_df_w_hmm_alt_spliced$go_ids_CC), function(x){unlist(strsplit(x, "; "))}), 
+        function(x){any(x %in% nuclear_cats)}
+      )
+    )
+    protein_df_w_hmm_alt_spliced <- protein_df_w_hmm_alt_spliced[vec,]
+    # Save
+    write.csv(protein_df_w_hmm_alt_spliced, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_alt_spliced_nuclear_filt.csv"), row.names = FALSE)
+  } #   for (candidate_AA in candidate_AA_vec) 
+} # for (species in species_vec) 
+
+###################
+# Further Analyses
+###################
+for (candidate_AA in candidate_AA_vec) {
+  # debugging; species = species_vec[1]
+  output_species_dir <- paste0(output_base_dir, species, "/")
+  dir.create(output_species_dir, recursive = TRUE)
+  
+  protein_df_w_seqs <- read.csv(paste0(output_species_dir, species, "_prots_filt.csv"), stringsAsFactors = FALSE)
+  
+  for (species in species_vec) {
+    # debugging; candidate_AA = candidate_AA_vec[1]; candidate_AA
+    
+    print(paste0("Species: ", species,"; Amino acid: ", candidate_AA))
+    output_AA_dir <- paste0(output_species_dir, candidate_AA, "/")
+    dir.create(output_AA_dir, recursive = TRUE)
     
     #########################################
     # ClusterProfiler module
     #########################################
     
     # Load in protein set data from local drive
+    # Error here
     proteins <- read.csv( paste0(output_AA_dir, species, "_", nrow(protein_df_w_hmm), "prots_w_HMM_", candidate_AA, ".csv"))
 
     polyAA_proteins = proteins %>% filter(proteins$HMMhasPolyAA == TRUE)
@@ -618,7 +650,7 @@ for (species in species_vec) {
                           OrgDb = OrgDb)
       universe_genes <- unique(universe_df$ENTREZID)
       
-      # Get mapping from ensembl to entrez (entrez ids are needed for)
+      # Get mapping from ensembl to entrez (entrez ids are needed for enrichment analysis)
       sig_df <- bitr(polyAA_proteins_vec,
                      fromType = fromType,
                      toType = c("ENTREZID", "SYMBOL"),
@@ -646,7 +678,6 @@ for (species in species_vec) {
                                    pvalueCutoff = 0.05,
                                    qvalueCutoff = 0.05,
                                    readable = TRUE)
-
       
       # Control group
       go_enrich_output_control <- enrichGO(gene = control_genes,
@@ -658,43 +689,12 @@ for (species in species_vec) {
                                            qvalueCutoff = 1,
                                            readable = TRUE)
       
-      # clusterProfiler Plots
-      # Do we need this now that we have the function?
-      # Make plots for the control group.
-      if (!is.null(go_enrich_output_control)) {
-        go_control_result <- go_enrich_output_control@result
-        
-        write.csv(go_enrich_output_control, file = paste0(output_AA_dir,  species, "_", candidate_AA, "_Control_Enriched_GO_", go_ont, ".csv"), row.names = FALSE)
-        pdf(paste0(output_AA_dir,  species, "_", candidate_AA, "_Control_Enriched_GO_", go_ont, "_plots.pdf"), width = 8.5, height = 11)
-        
-        par(mfrow = c(1, 1))
-        p1 <- barplot(go_enrich_output_control, showCategory=8)
-        p2 <- dotplot(go_enrich_output_control)
-        
-        print(p1)
-        print(p2)
-        
-        if (nrow(go_enrich_output_control) != 0) {
-          p3 <- emapplot(go_enrich_output_control)
-          # p4 <- cnetplot(go_enrich_output_control, 
-          #                categorySize = "pvalue", 
-          #                foldChange = control_df$ENTREZID,
-          #                node_label = FALSE,
-          #                colorEdge = TRUE) 
-          print(p3)
-          # print(p4)
-        }
-      
-        dev.off()
-      }
-      
-      
       make_enrichment_plots_and_files <- function(go_enrich_output, type) {
         if (!is.null(go_enrich_output)) {
           go_result <- go_enrich_output@result
           
           if (type == "control") {
-            write.csv(go_enrich_output_control, file = paste0(output_AA_dir,  species, "_", candidate_AA, "_Control_Enriched_GO_", go_ont, ".csv"), row.names = FALSE)
+            write.csv(go_enrich_output, file = paste0(output_AA_dir,  species, "_", candidate_AA, "_Control_Enriched_GO_", go_ont, ".csv"), row.names = FALSE)
             pdf(paste0(output_AA_dir,  species, "_", candidate_AA, "_Control_Enriched_GO_", go_ont, "_plots.pdf"), width = 8.5, height = 11)
           } else {
             write.csv(go_enrich_output, file = paste0(output_AA_dir, species, "_", candidate_AA, "_Enriched_GO_", go_ont, ".csv"), row.names = FALSE)
@@ -754,7 +754,6 @@ for (species in species_vec) {
             df <- category_to_proteins %>% filter(category_to_proteins$number_proteins > 20)
             
             
-            
             df$synaptic_cat = df$GO_id %in% synapse_cats # True or False, depending on whether or not the category is a synaptic category
             
             # Make two linear regression.
@@ -787,12 +786,12 @@ for (species in species_vec) {
           } # for (i in 1:nrow(enrich_results)) {
           dev.off()
         } # if (!is.null(go_enrich_output)) {
-      } # make_enrichment_plots_and_files
+      } # make_enrichment_plots_and_files()
       
       make_enrichment_plots_and_files(go_enrich_output_control, type = "control")
       make_enrichment_plots_and_files(go_enrich_output_test, type = "test")
-      
     } # for (go_ont in c("BP", "MF", "CC")) {
+    
     #########################################
     # End of clusterProfiler Part 1 - GO
     #########################################
@@ -832,12 +831,12 @@ for (species in species_vec) {
         random_substring = substr(x, start, end)
         return(random_substring)
       }
-    }
-    ###########################################
+    } # rnd_substr <- function(x, length)
+    #########################################
+    
     pdf(paste0(output_AA_dir, species, "_", candidate_AA, "_", nrow(proteins), "prots_result_plots.pdf"))
       
-    ########################################################
-    #######################
+    #########################################
     # Plot type: Whole Protein Qfraction Histogram for all proteins
     p <- ggplot(data = proteins, aes(x = proteins$AAfraction)) +
       geom_histogram(show.legend = FALSE, aes(fill=..count..)) +
@@ -847,12 +846,12 @@ for (species in species_vec) {
       theme_light()
     print(p)
       
-    filtered_df <- proteins %>% filter(proteins$AAfraction > quantile(proteins$AAfraction, 0.95))
+    filtered_df <- proteins %>% filter(proteins$AAC> quantile(proteins$AAfraction, 0.95))
     filtered_df <- filtered_df %>% arrange(desc(filtered_df$AAfraction))
     write.csv(filtered_df, file = paste0(output_AA_dir, candidate_AA, "fraction_all_wholeProts_95sig.csv"))
     
     
-    # Plot type: Whole Protein AAfraction Histogram split by HMMhasPolyAA
+    # Plot type: Whole Protein AAC Histogram split by HMMhasPolyAA
     p <- ggplot(data = proteins, aes(x = AAfraction, fill = HMMhasPolyAA)) +
       geom_histogram(alpha=0.5, position="identity") +
       xlab(paste0("%", candidate_AA, " (Whole Protein Seqs)")) +
@@ -941,5 +940,35 @@ for (species in species_vec) {
   }
 }
 
-############ End Plotting ################
-      
+
+# NOTE 1: Find a way to measure sigificance of polyQ proteins outputted by our HMM while controlling for length.
+# Ideally, would be able to order the proteins by significance, allowing for more resolution
+# besides just a boolean of "is a polyQ"/"is not a polyQ".
+
+# Proposed Method:
+# --------------------------
+# Let m be the length of a protein
+# Let n be the length of the largest polyQ tract found by the HMM
+
+# There are 20**n different possible amino acid sequences of length n.
+# This implies there is a 1/(20**n) chance of seeing a specific n-mer at a specific location.
+# Thus there is a 1-1/(20**n) chance of not seeing the specific n-mer at a specific location.
+# There are m-(n-1) possible locations for a given n-mer to be located on a protein of length m.
+# Therefore, there is a (1-1/20**n)**(m-(n-1)) chance of not seeing a specific n-mer anywhere on a protein of length m.
+# Therefore, there is a 1-(1-1/20**n)**(m-(n-1)) chance of seeing the n-mer at least once on the protein.
+# This is our p-value for a given protein of length m annotated by the HMM to have a maximum polyQ tract of length n.
+
+# This p-value is testing the following for a given protein of length m:
+
+# Null hypothesis:  The m probability distributions for each of the m locations along the protein that define that 
+# locations' respective probabilities of being a particular amino acid are uniform and independent.
+# (i.e. each location has a 1/20 probability of being any amino acid)
+
+# Alternative hypothesis (? still debating the exact wording here?): 
+# The m probability distributions are not uniform and independent.
+# E.g. knowing that one location is a "Q" may affect the probability that another location is a "Q".
+
+# We are able to calculate such a p-value for each protein in our dataset, 
+# thus giving us a metric of determining relative significance of polyQ proteins (instead of a boolean of polyQ vs not polyQ)
+# and thereby giving us a ranked order. With this ranked order, we can use certain non-parametric tests 
+# such as the Wilcoxon ranked sum test as well as gene set enrichment analysis (GSEA) - as shown below.
