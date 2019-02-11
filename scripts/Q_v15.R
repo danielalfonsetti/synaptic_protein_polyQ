@@ -367,9 +367,15 @@ for (species in species_vec) {
     ensembl <- useMart("ensembl", dataset = "celegans_gene_ensembl")
   }
 
-  protein_df <- getBM(attributes = c('ensembl_gene_id', 'ensembl_peptide_id', "external_gene_name", 'go_id', "name_1006", "namespace_1003"), 
+  listAttributes(ensembl)
+  protein_df <- getBM(attributes = c('ensembl_gene_id', 'ensembl_peptide_id', "external_gene_name", 'go_id', "name_1006", "namespace_1003", "kegg_enzyme"), 
                       values = "*", 
                       mart = ensembl)
+  
+  
+  # protein_df <- getBM(attributes = c("kegg_enzyme"),
+  #                     values = "*",
+  #                     mart = ensembl)
   
   # Filter here based on whether it has CC GO annot. Make two seperate files
   nuclear_prots <- protein_df[protein_df$go_id %in% nuclear_cats, ]
@@ -429,6 +435,7 @@ for (species in species_vec) {
   # Make two versions: one with all the proteins, and one with only nuclear proteins.
   write.csv(protein_df_w_seqs, file = paste0(output_species_dir, species, "_prots.csv"), row.names = FALSE)
   
+  # Something is sketchy here with the nuclear filters....
   # Only include non-nuclear proteins
   protein_df_w_seqs_filt <- protein_df_w_seqs %>% filter(!(ensembl_peptide_id %in% nuclear_prots$ensembl_peptide_id))
   write.csv(protein_df_w_seqs_filt, file = paste0(output_species_dir, species, "_prots_nuclear_filt.csv"), row.names = FALSE)
@@ -446,136 +453,137 @@ training_id_dict <- list("mouse_Q"= c("FBpp0289769","FBpp0307700", "FBpp0086727"
                          "mouse_M" = c("NA", "NA"),
                          "worm_Q" = c("Something", "Something"))
 
-# Now do the analyses...
-for (species in species_vec) {
-  # debugging; species = species_vec[1]
-  
-  output_species_dir <- paste0(output_base_dir, species, "/")
-  dir.create(output_species_dir, recursive = TRUE)
-  
-  # Don't use the filtered list. Use all. And then filter again later if need be.
-  protein_df_w_seqs <- read.csv(paste0(output_species_dir, species, "_prots.csv"), stringsAsFactors = FALSE)
+models_dict <- list("adjusted" = NA, "trained" = NA)
 
-  for (candidate_AA in candidate_AA_vec) {
-    # debugging; candidate_AA = candidate_AA_vec[1]; candidate_AA
-    
-    print(paste0("Species: ", species,"; Amino acid: ", candidate_AA))
-    output_AA_dir <- paste0(output_species_dir, candidate_AA, "/")
-    dir.create(output_AA_dir, recursive = TRUE)
-    
-    x <- read.csv("C:/UROPs/polyQ_neuronal_proteins/output/fly/fly_prots.csv", stringsAsFactors = FALSE)
-    
-    training_set_ids <- training_id_dict[["mouse_Q"]]
-    training_set <- x %>% filter(ensembl_peptide_id %in% training_set_ids)
-    training_seqs <- format_for_HMM(training_set, candidate_AA) # We aren't actually using these. But 
-    trained_model <- train_HMM(training_set, candidate_AA)
-    
-    
-    # build function needs them for some reason...
-    random_set <- sample_n(x, 1000)
-    emiss <- matrix(c(0.95, 0.05,
-                      0.05, 0.95),
-                    nrow=2, ncol=2, byrow = TRUE)
-    trans <- matrix(c(0.995, 0.005, 
-                      0.0676, 0.9324), 
-                    nrow = 2, ncol = 2, byrow = TRUE)
-    initial_probs <- c(.99, .01)
-    
-    hard_coded_model <- build_hmm(observations = training_seqs,
-                     initial_probs = initial_probs,
-                     transition_probs = trans,
-                     emission_probs = emiss,
-                     state_names = c("NonPolyAA", "PolyAA"))
-    
-    # Evaluate/inspect models (debugging)
-        # Evaluate compare hard-coded model with trained model on trained model's training data.
-        # hard_coded_model
-        # trained_model$model
-        # training_df_w_trained_hmm <- test_HMM(training_set, trained_model$model, candidate_AA)
-        # View(training_df_w_trained_hmm)
-        # training_df_w_hard_hmm <- test_HMM(training_set, hard_coded_model, candidate_AA)
-        # View(training_df_w_hard_hmm)
-        # 
-        # 
-        # # Evaluate compare hard-coded model with trained model on random set of protein data
-        # random_df_w_trained_hmm <- test_HMM(random_set, trained_model$model, candidate_AA)
-        # random_df_w_hard_hmm <- test_HMM(random_set, hard_coded_model, candidate_AA)
-        # trained <- random_df_w_trained_hmm %>%
-        #   filter(HMMhasPolyAA == TRUE)
-        # mean(trained$MaxPolyAARegionAAFractions)
-        # hard <- random_df_w_hard_hmm %>%
-        #   filter(HMMhasPolyAA == TRUE)
-        # mean(hard$MaxPolyAARegionAAFractions)
-        # nrow(hard)
-        # nrow(trained)
-        # View(random_df_w_hard_hmm)
-        # View(random_df_w_trained_hmm)
-    
-    # Use trained HMM model on testSet (proteinSet).
-    proteinSet <- protein_df_w_seqs
-    
-    # Annotate the proteins based on the model we have trained and generate various statistics for each annotation (or lack thereof)
-    protein_df_w_hmm <- test_HMM(proteinSet, trained_model, candidate_AA)
-    
-    # Order so most relevant proteins are at the top.
-    protein_df_w_hmm <- protein_df_w_hmm %>% arrange(desc(HMMhasPolyAA), desc(MaxLengthsPolyAA), desc(AvgPolyAARegionAAFractions))
-    
-    # Save HMM annotation results.
-    write.csv(protein_df_w_hmm, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, ".csv"), row.names = FALSE)
-    
-    # Find genes where alternative splicing results in some isoforms being annoated 
-    # for at least one polyQ region and other isoforms not having any polyQs.
-    protein_df_w_hmm_alt_spliced <- protein_df_w_hmm %>% 
-                                    group_by(ensembl_gene_id) %>% 
-                                    filter(sum(HMMhasPolyAA) < n(),  1 < sum(HMMhasPolyAA))
-    # Reorder
-    protein_df_w_hmm_alt_spliced <- protein_df_w_hmm_alt_spliced %>%
-                                    arrange(ensembl_gene_id, 
-                                            desc(HMMhasPolyAA), 
-                                            desc(MaxLengthsPolyAA),
-                                            desc(AvgPolyAARegionAAFractions))
-    write.csv(protein_df_w_hmm_alt_spliced, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_alt_spliced.csv"), row.names = FALSE)
-  } # for (candidate_AA in candidate_AA_vec)
-} # for (species in species_vec) {
-
-##################
-# Filter out nuclear proteins and then save again.
-###################
-for (species in species_vec) {
-  # debugging; species = species_vec[1]
+for (model in names(models_dict)) {
   
-  output_species_dir <- paste0(output_base_dir, species, "/")
-  dir.create(output_species_dir, recursive = TRUE)
-  for (candidate_AA in candidate_AA_vec) {
-    output_AA_dir <- paste0(output_species_dir, candidate_AA, "/")
+  output_model_dir <- paste0(output_base_dir, model, "/")
+  
+  # Now do the analyses...
+  for (species in species_vec) {
+    # debugging; species = species_vec[1]
     
-    protein_df_w_hmm <- read.csv(paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, ".csv"))
+    output_species_dir <- paste0(output_model_dir, species, "/")
+    dir.create(output_species_dir, recursive = TRUE)
     
+    # Don't use the filtered list. Use all. And then filter again later if need be.
+    protein_df_w_seqs <- read.csv(paste0(output_base_dir, species, "_prots.csv"), stringsAsFactors = FALSE)
+  
+    for (candidate_AA in candidate_AA_vec) {
+      # debugging; candidate_AA = candidate_AA_vec[1]; candidate_AA
+      
+      print(paste0("Species: ", species,"; Amino acid: ", candidate_AA))
+      output_AA_dir <- paste0(output_species_dir, candidate_AA, "/")
+      dir.create(output_AA_dir, recursive = TRUE)
+      
+      x <- read.csv("C:/UROPs/polyQ_neuronal_proteins/output/fly_prots.csv", stringsAsFactors = FALSE)
+      
+      training_set_ids <- training_id_dict[["mouse_Q"]]
+      training_set <- x %>% filter(ensembl_peptide_id %in% training_set_ids)
+      training_seqs <- format_for_HMM(training_set, candidate_AA) # We aren't actually using these. But 
+      trained_model <- train_HMM(training_set, candidate_AA)
+      
+      
+      # build function needs them for some reason...
+      random_set <- sample_n(x, 1000)
+      emiss <- matrix(c(0.95, 0.05,
+                        0.05, 0.95),
+                      nrow=2, ncol=2, byrow = TRUE)
+      trans <- matrix(c(0.995, 0.005, 
+                        0.0676, 0.9324), 
+                      nrow = 2, ncol = 2, byrow = TRUE)
+      initial_probs <- c(.99, .01)
+      
+      hard_coded_model <- build_hmm(observations = training_seqs,
+                       initial_probs = initial_probs,
+                       transition_probs = trans,
+                       emission_probs = emiss,
+                       state_names = c("NonPolyAA", "PolyAA"))
+      
+      # Evaluate/inspect models (debugging)
+          # Evaluate compare hard-coded model with trained model on trained model's training data.
+          # hard_coded_model
+          # trained_model$model
+          # training_df_w_trained_hmm <- test_HMM(training_set, trained_model$model, candidate_AA)
+          # View(training_df_w_trained_hmm)
+          # training_df_w_hard_hmm <- test_HMM(training_set, hard_coded_model, candidate_AA)
+          # View(training_df_w_hard_hmm)
+          # 
+          # 
+          # # Evaluate compare hard-coded model with trained model on random set of protein data
+          # random_df_w_trained_hmm <- test_HMM(random_set, trained_model$model, candidate_AA)
+          # random_df_w_hard_hmm <- test_HMM(random_set, hard_coded_model, candidate_AA)
+          # trained <- random_df_w_trained_hmm %>%
+          #   filter(HMMhasPolyAA == TRUE)
+          # mean(trained$MaxPolyAARegionAAFractions)
+          # hard <- random_df_w_hard_hmm %>%
+          #   filter(HMMhasPolyAA == TRUE)
+          # mean(hard$MaxPolyAARegionAAFractions)
+          # nrow(hard)
+          # nrow(trained)
+          # View(random_df_w_hard_hmm)
+          # View(random_df_w_trained_hmm)
+      
+      # Use trained HMM model on testSet (proteinSet).
+      proteinSet <- protein_df_w_seqs
+      
+      # Annotate the proteins based on the model we have trained and generate various statistics for each annotation (or lack thereof)
+      if (model == "trained") {
+        protein_df_w_hmm <- test_HMM(proteinSet, trained_model$model, candidate_AA)
+      } else if (model == "adjusted") {
+        protein_df_w_hmm <- test_HMM(proteinSet, hard_coded_model, candidate_AA)
+      }
     
-    vec <- unlist(
-      lapply(
-        lapply(as.character(protein_df_w_hmm$go_ids_CC), function(x){unlist(strsplit(x, "; "))}), 
-        function(x){any(x %in% nuclear_cats)}
+      # Order so most relevant proteins are at the top.
+      protein_df_w_hmm <- protein_df_w_hmm %>% arrange(desc(HMMhasPolyAA), desc(MaxLengthsPolyAA), desc(AvgPolyAARegionAAFractions))
+      
+      # Save HMM annotation results.
+      write.csv(protein_df_w_hmm, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, ".csv"), row.names = FALSE)
+      
+      # Find genes where alternative splicing results in some isoforms being annoated 
+      # for at least one polyQ region and other isoforms not having any polyQs.
+      protein_df_w_hmm_alt_spliced <- protein_df_w_hmm %>% 
+                                      group_by(ensembl_gene_id) %>% 
+                                      filter(sum(HMMhasPolyAA) < n(),  1 < sum(HMMhasPolyAA))
+      # Reorder
+      protein_df_w_hmm_alt_spliced <- protein_df_w_hmm_alt_spliced %>%
+                                      arrange(ensembl_gene_id, 
+                                              desc(HMMhasPolyAA), 
+                                              desc(MaxLengthsPolyAA),
+                                              desc(AvgPolyAARegionAAFractions))
+      write.csv(protein_df_w_hmm_alt_spliced, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_alt_spliced.csv"), row.names = FALSE)
+    
+      
+      #################################################################################33
+      #################################################################################
+      # Save versions without nuclear proteins.
+      vec <- unlist(
+        lapply(
+          lapply(as.character(protein_df_w_hmm$go_ids_CC), function(x){unlist(strsplit(x, "; "))}), 
+          function(x){any(x %in% nuclear_cats)}
+        )
+      ) # Get list of rows that have proteins that are nuclear.
+      
+      protein_df_w_hmm <- protein_df_w_hmm[!vec,]
+      # Save
+      write.csv(protein_df_w_hmm, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_nuclear_filt.csv"), row.names = FALSE)
+      
+      #######
+      # Repeat filtering for alternatively spliced list.
+      vec <- unlist(
+        lapply(
+          lapply(as.character(protein_df_w_hmm_alt_spliced$go_ids_CC), function(x){unlist(strsplit(x, "; "))}), 
+          function(x){any(x %in% nuclear_cats)}
+        )
       )
-    )
-    protein_df_w_hmm <- protein_df_w_hmm[vec,]
-    # Save
-    write.csv(protein_df_w_hmm, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_nuclear_filt.csv"), row.names = FALSE)
-    
-    #######
-    # Repeat filtering for alternatively spliced list.
-    protein_df_w_hmm_alt_spliced <- read.csv(paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_alt_spliced.csv"))
-    vec <- unlist(
-      lapply(
-        lapply(as.character(protein_df_w_hmm_alt_spliced$go_ids_CC), function(x){unlist(strsplit(x, "; "))}), 
-        function(x){any(x %in% nuclear_cats)}
-      )
-    )
-    protein_df_w_hmm_alt_spliced <- protein_df_w_hmm_alt_spliced[vec,]
-    # Save
-    write.csv(protein_df_w_hmm_alt_spliced, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_alt_spliced_nuclear_filt.csv"), row.names = FALSE)
-  } #   for (candidate_AA in candidate_AA_vec) 
-} # for (species in species_vec) 
+      protein_df_w_hmm_alt_spliced <- protein_df_w_hmm_alt_spliced[vec,]
+      # Save
+      write.csv(protein_df_w_hmm_alt_spliced, file = paste0(output_AA_dir, species, "_prots_w_HMM_", candidate_AA, "_alt_spliced_nuclear_filt.csv"), row.names = FALSE)
+      
+    } # for (candidate_AA in candidate_AA_vec)
+  } # for (species in species_vec) {
+} # for (model in models) {
+
 
 ###################
 # Further Analyses
