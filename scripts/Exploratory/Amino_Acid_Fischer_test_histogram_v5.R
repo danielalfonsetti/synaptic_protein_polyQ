@@ -21,74 +21,62 @@ library(ggplot2)
 library(dplyr)
 ####################################################
 output_base_dir <- "C:/UROPs/polyQ_neuronal_proteins/output/"
+####################################################
 
-species_vec = c("fly")
+# Get lists of various neuron categories so we can label proteins.
+# We will annotate proteins based on whether they are in the category or not, and see if this relation is 
+# associated with whether they have a polyAA track.
 
-
-
-# TODO: Remove isoforms of proteins. They are too similiar. Could be screwing up results.
-# TODO: Try playing with other categories, like maybe just active zone instead of synaptic active zone.
-# TODO: write p-values of fisher t-tests to one csv file.
-
-# Get a list of synaptic categories so we can label proteins.
-# Annotate proteins based on whether they are synaptic or not.
-
+# Synaptic categories
 synapse_term1 <- "GO:0045202"
 synapse_cats <- get(synapse_term1, GOCCOFFSPRING)
 synapse_cats <- c(synapse_cats, synapse_term1)
 
-
+# Active Zone categories
 AZ_term1 <- "GO:0048786"
 AZ_cats <- get(AZ_term1, GOCCOFFSPRING)
 AZ_cats <- c(AZ_cats, AZ_term1)
 
-neuron_term1 <- "GO:0043005" # neuron projection
-neuron_term2 <- "GO:0097458" # neuron part
-neuron_term3 <- "GO:0044309" # neuron spine
-neuron_cats <- c(neuron_term1, neuron_term2, neuron_term3, 
-                 get(neuron_term1, GOCCOFFSPRING),
-                 get(neuron_term2, GOCCOFFSPRING),
-                 get(neuron_term3, GOCCOFFSPRING),
-                 synapse_cats)
-
-
+# Post synaptic density categories
 PSD_term1 <- "GO:0014069"
 PSD_cats <- get(PSD_term1, GOCCOFFSPRING)
 PSD_cats <- c(PSD_cats, PSD_term1)
 
-
-# Transcription factors
+# Transcription factor categories
 term1 <- "GO:0003676" # nucleic acid binding
 transcription_cats <- c(term1, get(term1, GOMFOFFSPRING))
 
-##############
-location_dict = list("AZ" = AZ_cats, "Synapse" =  synapse_cats, "PSD" = PSD_cats, "Transcription_factor"= transcription_cats)
-location_dict = list("AZ" = AZ_cats, "Synapse" =  synapse_cats, "PSD" = PSD_cats)
+####################
 
-# location_dict <- list("PSD" = PSD_cats)
-# location_dict = list("PSD" = PSD_cats)
-#######################################
-
-# Categories to filter out of analysis. ANything that has to do with nucleus or DNA regulation.
+# Categories to filter out of analysis. Anything that has to do with nucleus or DNA regulation.
 term1 <- "GO:0005634" # Nucleus
 term2 <- "GO:0009295" # nucleoid 
 nuclear_cats <- c(term1, get(term1, GOCCOFFSPRING), 
-                  term2, get(term2, GOCCOFFSPRING))
+                  term2, get(term2, GOCCOFFSPRING), transcription_cats)
 
-
-
-# This is using all proteins. Repeat the fischer test after controlling for nuclear proteins.
-models_vec <- c("trained", "adjusted")
-
-
+####################################################
 # Helper functions
+####################################################
 annotate_cats <- function(df, cats) {
-  df$label <- unlist(
+  CC <- unlist(
     lapply(
       lapply(as.character(df$go_ids_CC), function(x){unlist(strsplit(x, "; "))}), 
       function(x){any(x %in% cats)}
     )
   )
+  MF <- unlist(
+    lapply(
+      lapply(as.character(df$go_ids_MF), function(x){unlist(strsplit(x, "; "))}), 
+      function(x){any(x %in% cats)}
+    )
+  )
+  BP <- unlist(
+    lapply(
+      lapply(as.character(df$go_ids_BP), function(x){unlist(strsplit(x, "; "))}), 
+      function(x){any(x %in% cats)}
+    )
+  )
+  df$label <- CC | MF | BP
   return(df)
 }
 
@@ -97,9 +85,8 @@ fisher_test_comparsion <- function(location_cats = NA,
                                    proteins_no_hmm = NA, output_species_dir = NA) {
   
 
-  candidate_AA_vec = c("Q", "T", "S", "E", "P", "G", "A", "C", "V", "M",                      
-                       "I", "L", "Y", "F", "H", "K", "R", "W", "D", "N")
-
+  candidate_AA_vec = c("A", "V", "L", "I", "M", "F","W", "C", "Y", "S", "T", "G", "P", "Q","N", "E", "D", "R", "H", "K")
+  
   fisher_test_results <- rep(NA, length(candidate_AA_vec)) # For the p-value barplot
   aa_fraction_df <- as.data.frame(matrix(ncol = 3, nrow = 0)) # For the AA fraction histograms
   colnames(aa_fraction_df) <- c("TractFraction", "AA", "label")
@@ -150,14 +137,7 @@ fisher_test_comparsion <- function(location_cats = NA,
     
     # Annotate each protein as to whether it is in the GO category list or not.
     proteins <- annotate_cats(df = proteins, cats = location_cats)
-    sum(proteins$label)
-    # proteins$label <- unlist(
-    #   lapply(
-    #     lapply(as.character(proteins$go_ids_CC), function(x){unlist(strsplit(x, "; "))}), 
-    #     function(x){any(x %in% location_cats)}
-    #   )
-    # )
-    
+
     if (length(unique(proteins$HMMhasPolyAA)) > 1 & length(unique(proteins$label)) > 1) {
       p.val <- fisher.test(proteins$label, proteins$HMMhasPolyAA, alternative = "greater")
     } else {
@@ -235,7 +215,16 @@ fisher_test_comparsion <- function(location_cats = NA,
   par(mfrow = c(1,1))
   print(p)
 }
+####################################################
+# End of helper functions
+####################################################
 
+
+# Exploratory analysis
+models_vec <- c("adjusted")
+species_vec = c("fly")
+location_dict = list("AZ" = AZ_cats, "Synapse" =  synapse_cats, "PSD" = PSD_cats, "Transcription_factor (+ cntrl)"= transcription_cats)
+location_dict = list("AZ" = AZ_cats)
 
 for (model in models_vec) {
     
@@ -245,9 +234,10 @@ for (model in models_vec) {
     for (location in names(location_dict)) {
       
       output_species_dir <- paste0(output_model_dir, species, "/")
-      dir.create(output_species_dir, recursive = TRUE)
-      pdf(file = paste0(output_species_dir, "AA_Fisher_Tests___Model-", model, 
-                        "___Location-", location, "-"  ,".pdf"))
+      fisher_output_dir <- paste0(output_species_dir, "AA_Fisher_Tests", "/")
+      dir.create(fisher_output_dir, recursive = TRUE)
+      pdf(file = paste0(fisher_output_dir, "AA_Fisher_Tests___Model-", model, 
+                        "___Location-", location, "-"  ,"_", species, ".pdf"))
       
       proteins_no_hmm <- read.csv(paste0(output_base_dir, species, "_prots.csv"))
       location_cats <- location_dict[[location]]
@@ -271,10 +261,5 @@ for (model in models_vec) {
   } #for (species in species_vec) {
 } # for (model in models_vec) {
 
-# x <- read.csv("C:/UROPs/polyQ_neuronal_proteins/output/fly/Q/fly_prots_w_HMM_Q.csv", stringsAsFactors = FALSE)
-# training_set_ids <- c("FBpp0289769","FBpp0307700", "FBpp0086727", "FBpp0111724", "FBpp0070830", "FBpp0309352", "FBpp0402897", "FBpp0110299","FBpp0305807")
-# training_set <- x %>% filter(ensembl_peptide_id %in% training_set_ids)
-# ggplot(training_set, aes(x = MaxPolyAARegionAAfractions)) +
-#   geom_histogram()
 
 

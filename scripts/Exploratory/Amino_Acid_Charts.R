@@ -3,6 +3,9 @@
 # MIT, Littleton Lab UROP
 # 27 February 2019
 # ---------------------------------
+# Description: 
+####################################################
+# Import libraries and set 'global' variables
 ####################################################
 rm(list = ls())
 library(GO.db)
@@ -11,21 +14,20 @@ library(biomartr)
 library(ggplot2)
 library(reshape2)
 library(dplyr)
-#####################################################
-#####################################################
 
 output_base_dir <- "C:/UROPs/polyQ_neuronal_proteins/output/"
-
 
 ######################################################
 # Helper functions
 ######################################################
+
+# Helper function for plotting
 plot_AA_Chart <- function(row, graph_HMM_annots = FALSE)  {
   peptide_seq <- as.character(row$peptide_seq)
   peptide_name <- row$ensembl_gene_id
   
-  candidate_AA_vec = c("Q", "T", "S", "E", "P", "G", "A", "C", "V", "M",                      
-                       "I", "L", "Y", "F", "H", "K", "R", "W", "D", "N")
+  candidate_AA_vec = c("A", "V", "L", "I", "M", "F","W", "C", "Y", "S", "T", "G", "P", "Q","N", "E", "D", "R", "H", "K")
+  
   
   # Get indicies of each amino acid in the protein
   AA_pos_list <- lapply(
@@ -49,20 +51,9 @@ plot_AA_Chart <- function(row, graph_HMM_annots = FALSE)  {
   
   # Reorganize into a form useful for plotting
   melted_df <- melt(df)[,c(-1)]
-  #############################################################
-  
 
-
-  
-  ################################################################
-  
-  # Plot
-  # Look at 
-  # geom_segment(mapping=aes(x=-1, y=s, xend=1, yend=s, size=s))+
-  # from http://sape.inf.usi.ch/quick-reference/ggplot2/size
   
   box_width = 7
-  # http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r pch and lwd
   p <- ggplot() +
     # geom_point(shape = "|", size = 4.5, alpha = 0.3, aes(x=melted_df$value, y=melted_df$Var2)) +
     geom_segment(aes(x=melted_df$value-box_width/2, xend = melted_df$value+box_width/2, 
@@ -102,47 +93,37 @@ plot_AA_Chart <- function(row, graph_HMM_annots = FALSE)  {
   print(p)
 }
 
-################################################################
-# Define program specific variables
-################################################################
 
-synapse_term1 <- "GO:0045202"
-synapse_cats <- get(synapse_term1, GOCCOFFSPRING)
-synapse_cats <- c(synapse_cats, synapse_term1)
-
-
-AZ_term1 <- "GO:0048786"
-AZ_cats <- get(AZ_term1, GOCCOFFSPRING)
-AZ_cats <- c(AZ_cats, AZ_term1)
-
-neuron_term1 <- "GO:0043005" # neuron projection
-neuron_term2 <- "GO:0097458" # neuron part
-neuron_term3 <- "GO:0044309" # neuron spine
-neuron_cats <- c(neuron_term1, neuron_term2, neuron_term3, 
-                 get(neuron_term1, GOCCOFFSPRING),
-                 get(neuron_term2, GOCCOFFSPRING),
-                 get(neuron_term3, GOCCOFFSPRING),
-                 synapse_cats)
-
-
-PSD_term1 <- "GO:0014069"
-PSD_cats <- get(PSD_term1, GOCCOFFSPRING)
-PSD_cats <- c(PSD_cats, PSD_term1)
-
-term1 <- "GO:0003676" # nucleic acid binding
-transcription_cats <- c(term1, get(term1, GOMFOFFSPRING))
-
-location_dict = list("AZ" = AZ_cats, "Synapse" =  synapse_cats, "PSD" = PSD_cats, "Transcription_factor"= transcription_cats)
-location_dict = list("AZ" = AZ_cats, "Synapse" =  synapse_cats, "PSD" = PSD_cats)
+# Helper function for filtering certain GO categories
+annotate_cats <- function(df, cats) {
+  CC <- unlist(
+    lapply(
+      lapply(as.character(df$go_ids_CC), function(x){unlist(strsplit(x, "; "))}), 
+      function(x){any(x %in% cats)}
+    )
+  )
+  MF <- unlist(
+    lapply(
+      lapply(as.character(df$go_ids_MF), function(x){unlist(strsplit(x, "; "))}), 
+      function(x){any(x %in% cats)}
+    )
+  )
+  BP <- unlist(
+    lapply(
+      lapply(as.character(df$go_ids_BP), function(x){unlist(strsplit(x, "; "))}), 
+      function(x){any(x %in% cats)}
+    )
+  )
+  df$label <- CC | MF | BP
+  return(df)
+}
 
 
-candidate_AA_vec = c("Q", "T", "S", "E", "P", "G", "A", "C", "V", "M",                      
-                     "I", "L", "Y", "F", "H", "K", "R", "W", "D", "N")
+####################################################
+# Preliminary Data Wrangling
+####################################################
 
-################################################################
-# Main
-################################################################
-
+candidate_AA_vec = c("K", "H", "R","D", "E", "N", "Q", "P", "G", "T", "S", "Y", "C", "W", "F", "M", "I", "L", "V", "A")
 # Merge the polyAA output files for each HMM type.
 for (HMM_type in c("adjusted", "trained")) {
   # Important columns to take from each file are...
@@ -166,21 +147,25 @@ for (HMM_type in c("adjusted", "trained")) {
   write.csv(merged_polyAA_df, paste0("C:/UROPs/polyQ_neuronal_proteins/output/", HMM_type, "/fly/merged_polyAA_df.csv"), row.names = FALSE)
 }
 
-##########################################################################################
-##########################################################################################
+####################################################
+# Plotting
+####################################################
 
-for (HMM_type in c("adjusted", "trained")) {
+
+####################################################
+# Plotting 1 - Explore the AA charts for some hand chosen proteins
+####################################################
+
+for (HMM_type in c("adjusted")) {
   proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", HMM_type, "/fly/merged_polyAA_df.csv"))
-  
-  # proteins <- merged_polyAA_df
-  
   
   # Known AZ proteins
   AZ_proteins <- proteins %>% filter(proteins$external_gene_name %in% c("brp", "Rbp", "Rim"))
   AZ_proteins <- AZ_proteins[!duplicated(AZ_proteins$ensembl_gene_id),]
   
-  setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",HMM_type,"/fly/"))
-  pdf(file = paste0("AZ_protein_AA_charts_", HMM_type, ".pdf"))
+  dir.create(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",HMM_type,"/fly/AA_charts"))
+  setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",HMM_type,"/fly/AA_charts"))
+  pdf(file = paste0("fly_AA_charts_manualAZ_protein_Model-", HMM_type, "_fly.pdf"))
   for (i in 1:nrow(AZ_proteins)){
     row <- AZ_proteins[i,]
     plot_AA_Chart(row, TRUE)
@@ -193,7 +178,7 @@ for (HMM_type in c("adjusted", "trained")) {
   PSD_proteins <- proteins %>% filter(proteins$external_gene_name %in% c("homer", "Grip", "dlg1", "SH3PX1", "Prosap"))
   PSD_proteins <- PSD_proteins[!duplicated(PSD_proteins$ensembl_gene_id),]
 
-  pdf(file = paste0("PSD_protein_AA_charts_", HMM_type, ".pdf"))
+  pdf(file = paste0("AA_charts_manualPSD_protein_Model-", HMM_type, "_fly.pdf"))
   for (i in 1:nrow(PSD_proteins)){
     row <- PSD_proteins[i,]
     plot_AA_Chart(row, TRUE)
@@ -205,11 +190,92 @@ for (HMM_type in c("adjusted", "trained")) {
   training_set_protein_ids <- c("FBpp0289769","FBpp0307700", "FBpp0086727", "FBpp0111724", "FBpp0293366",
                                 "FBpp0070830", "FBpp0309352", "FBpp0402897", "FBpp0110299","FBpp0305807")
   training_set_proteins <- proteins %>% filter(proteins$ensembl_peptide_id %in% training_set_protein_ids)
-  pdf(file = paste0("training_set_proteins_AA_charts_", HMM_type, ".pdf"))
+  pdf(file = paste0("AA_charts_training_set_proteins_Model-", HMM_type, "_fly.pdf"))
   for (i in 1:nrow(training_set_proteins)){
     row <- training_set_proteins[i,]
     plot_AA_Chart(row, TRUE)
   }
   dev.off()
+}
+
+
+####################################################
+# Plotting 2 - Explore AA charts for proteins of certain GO categories
+####################################################
+
+
+# Synaptic categories
+synapse_term1 <- "GO:0045202"
+synapse_cats <- get(synapse_term1, GOCCOFFSPRING)
+synapse_cats <- c(synapse_cats, synapse_term1)
+
+# Active Zone categories
+AZ_term1 <- "GO:0048786"
+AZ_cats <- get(AZ_term1, GOCCOFFSPRING)
+AZ_cats <- c(AZ_cats, AZ_term1)
+
+# Post synaptic density categories
+PSD_term1 <- "GO:0014069"
+PSD_cats <- get(PSD_term1, GOCCOFFSPRING)
+PSD_cats <- c(PSD_cats, PSD_term1)
+
+# Transcription factor categories
+term1 <- "GO:0003676" # nucleic acid binding
+transcription_cats <- c(term1, get(term1, GOMFOFFSPRING))
+
+# Nucleus categories 
+term1 <- "GO:0005634" # Nucleus
+term2 <- "GO:0009295" # nucleoid 
+nuclear_cats <- c(term1, get(term1, GOCCOFFSPRING), 
+                  term2, get(term2, GOCCOFFSPRING),
+                  transcription_cats)
+
+location_dict = list("AZ" = AZ_cats, "Synapse" =  synapse_cats, "PSD" = PSD_cats)
+
+
+
+for (HMM_type in c("adjusted")) {
+  dir.create(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",HMM_type,"/fly/AA_charts"))
+  setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",HMM_type,"/fly/AA_charts/"))
   
+  for (location in names(location_dict)) {
+    proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", HMM_type, "/fly/merged_polyAA_df.csv"))
+    location_cats <- location_dict[[location]]
+    proteins <- annotate_cats(proteins, location_cats)
+    proteins <- proteins %>% filter(proteins$label)
+    
+    pdf(file = paste0("AA_charts__location-", location, "_proteins__Model-", HMM_type, "__fly.pdf"))
+    for (i in 1:nrow(proteins)){
+      row <- proteins[i,]
+      plot_AA_Chart(row, TRUE)
+    }
+    dev.off()
+  }
+}
+
+####################################################
+# Plotting 3 -   Plot neuronally expressed proteins (based off transcriptome) that have polyAAs
+####################################################
+
+for (HMM_type in c("adjusted")) {
+  dir.create(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",HMM_type,"/fly/AA_charts"))
+  setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",HMM_type,"/fly/AA_charts/"))
+  
+  proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", HMM_type, "/fly/merged_polyAA_df.csv"))
+  neuronal_transcripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+  proteins <- proteins[proteins$ensembl_peptide_id %in% neuronal_transcripts$V1,]
+  proteins <- proteins %>% filter(!is.na(proteins$IndiciesPolyQ)) # Only plot proteins that have a polyQ region
+  
+  
+  # Remove nucleus related and transcription factor proteins
+  proteins <- annotate_cats(proteins, nuclear_cats)
+  proteins <- proteins %>% filter(!proteins$label)
+  
+  pdf(file = paste0("AA_charts__location-neuronal_transcriptome_proteins__Model-", HMM_type, "__fly.pdf"))
+  for (i in 1:nrow(proteins)){
+    print(i)
+    row <- proteins[i,]
+    plot_AA_Chart(row, TRUE)
+  }
+  dev.off()
 }
