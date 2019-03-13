@@ -92,7 +92,7 @@ species_vec = c("fly")
 candidate_AA_vec = c("D", "T", "S", "E", "P", "G", "A", "C", "V", "M",
                      "I", "L", "Y", "F", "H", "K", "R", "W", "Q", "N")
 
-models = c("adjusted", "trained")
+models = c("trained")
 
   # debugging; species = species_vec[1]
 for (model in models) {
@@ -148,9 +148,9 @@ for (model in models) {
       # Get significant proteins list
       polyAA_proteins_vec <- proteins_has_ont_type %>% 
                              filter(HMMhasPolyAA) %>%
-                             dplyr::select(c(ensembl_peptide_id))[,1]
+                             dplyr::select(c(ensembl_peptide_id))
       
-      
+      polyAA_proteins_vec <- polyAA_proteins_vec$ensembl_peptide_id
       # Get mapping from ensembl to entrez (entrez ids are needed for enrichment analysis)
       # Create vector of  entrez ids for significant genes.
       # Not there can be a 1 to many mapping from ensembl to entrez in the above step.

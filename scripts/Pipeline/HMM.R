@@ -58,7 +58,7 @@ species_vec = c("fly")
 candidate_AA_vec = c("D", "T", "S", "E", "P", "G", "A", "C", "V", "M",
                      "I", "L", "Y", "F", "H", "K", "R", "W", "Q", "N")
 
-models = c("adjusted") # c("adjusted", "trained")
+models = c("trained") # c("adjusted", "trained")
 # Categories to filter out of analysis. Anything that has to do with nucleus or DNA regulation.
 
 # Transcription factor categories

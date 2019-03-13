@@ -166,8 +166,8 @@ fisher_test_comparsion <- function(location_cats = NA,
     theme_light() +
     xlab("Amino Acid") +
     ylab("-log(Fisher Test P-value)") + 
-    ggtitle(paste0("Enrichment of polyAA tracts in ", location, " Proteins by Fisher Test \n",
-                   "Nuclear Filter: ", nuclear_filter, ", Isoform Filter: ", isoform_filter, " Neuronal Filter: ", neuron_filter)) +
+    ggtitle(paste0("Association between polyAA tract proteins and ", location, " proteins \n",
+                   "Nuclear Filter: ", nuclear_filter, ", Isoform Filter: ", isoform_filter, ", Neuronal Filter: ", neuron_filter)) +
     geom_hline(yintercept = -log(0.05), linetype="dashed", color="orange") +
     geom_hline(yintercept = -log(0.0025), linetype="dashed", color="red")
   par(mfrow = c(1,1))
@@ -207,7 +207,7 @@ fisher_test_comparsion <- function(location_cats = NA,
                    "Nuclear Filter: ", nuclear_filter, ", Isoform Filter: ", isoform_filter, ", Neuronal Filter: ", neuron_filter))
   } else {
     p <- p + ggtitle(paste0("Histograms of %AA of polyAA tracts (", species, ") \n",
-                            "# of prots in genome: ", nrow(proteins_no_hmm),
+                            "# of prots in genome: ", nrow(proteins_no_hmm), "\n",
                             "# of prots in category (", location, "): ", sum(proteins_no_hmm$label), "\n",
                             "Nuclear Filter: ", nuclear_filter, ", Isoform Filter: ", isoform_filter, ", Neuronal Filter: ", neuron_filter))
   }
@@ -221,9 +221,11 @@ fisher_test_comparsion <- function(location_cats = NA,
 
 
 # Exploratory analysis
-models_vec <- c("adjusted")
+models_vec <- c("adjusted", "trained")
 species_vec = c("fly")
 location_dict = list("AZ" = AZ_cats, "Synapse" =  synapse_cats, "PSD" = PSD_cats, "Transcription_factor (+ cntrl)"= transcription_cats)
+
+models_vec <- c("adjusted")
 location_dict = list("AZ" = AZ_cats)
 
 for (model in models_vec) {
