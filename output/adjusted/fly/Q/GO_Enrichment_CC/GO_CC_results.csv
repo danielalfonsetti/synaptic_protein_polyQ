@@ -1,31 +1,3 @@
-"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
-"GO:0099738","cell cortex region","16/317","36/3139",9.03994208737041e-08,1.17780781767566e-05,9.49974863197044e-06,"Ten-a/aPKC/RhoGEF64C/Fife/brp/CG42684/pros/baz/pon/Abl/jub/sdt/Spn/Rim/dlg1/Rbp",16
-"GO:0005938","cell cortex","24/317","75/3139",1.1511110772421e-07,1.17780781767566e-05,9.49974863197044e-06,"Ten-a/aPKC/RhoGEF64C/fry/Fife/Dys/brp/CG42684/pyd/pros/baz/Pez/pon/Abl/jub/sdt/Spn/spdo/spri/Rim/dlg1/cno/Rbp/scrib",24
-"GO:0099568","cytoplasmic region","24/317","76/3139",1.52962054243592e-07,1.17780781767566e-05,9.49974863197044e-06,"Ten-a/aPKC/RhoGEF64C/fry/Fife/Dys/brp/CG42684/pyd/pros/baz/Pez/pon/Abl/jub/sdt/Spn/spdo/spri/Rim/dlg1/cno/Rbp/scrib",24
-"GO:0030054","cell junction","25/317","96/3139",4.72966069181501e-06,0.000273137904952317,0.000220302616434541,"aPKC/sns/ASPP/pyd/baz/Efa6/Abl/jub/sdt/bib/Magi/CG45049/ena/DIP-theta/dlg1/Atg9/Grip/cno/stan/if/PDZ-GEF/wts/Lap1/ex/scrib",25
-"GO:0044448","cell cortex part","17/317","52/3139",6.28338959493578e-06,0.000290292599286033,0.000234138938590239,"Ten-a/aPKC/RhoGEF64C/Fife/brp/CG42684/pros/baz/pon/Abl/jub/sdt/Spn/spdo/Rim/dlg1/Rbp",17
-"GO:0005912","adherens junction","16/317","50/3139",1.61486979923075e-05,0.000532907033746146,0.000429822487915552,"ASPP/pyd/baz/Efa6/Abl/jub/sdt/bib/Magi/ena/cno/if/PDZ-GEF/wts/Lap1/ex",16
-"GO:0070161","anchoring junction","16/317","50/3139",1.61486979923075e-05,0.000532907033746146,0.000429822487915552,"ASPP/pyd/baz/Efa6/Abl/jub/sdt/bib/Magi/ena/cno/if/PDZ-GEF/wts/Lap1/ex",16
-"GO:0045177","apical part of cell","20/317","77/3139",4.5539693951516e-05,0.00120925763450731,0.000975341085932078,"aPKC/RhoGEF64C/fry/CG42684/pyd/pros/m/baz/Pez/sas/Abl/jub/sdt/exp/btsz/Spn/Ptp10D/dlg1/ex/kibra",20
-"GO:0044456","synapse part","29/317","135/3139",4.71139338119733e-05,0.00120925763450731,0.000975341085932078,"Tomosyn/Ten-a/mtg/Fife/brp/X11L/RtGEF/X11Lbeta/Rab3-GEF/VAChT/Nlg2/Magi/Rgk1/Spn/ena/Rim/S6kII/dlg1/Grip/nAChRalpha3/stg1/Rph/gukh/Neto/Prosap/na/unc-13-4A/Rbp/jeb",29
-"GO:0045202","synapse","35/317","180/3139",7.10696584881374e-05,0.00164170911107597,0.00132413995288424,"Tomosyn/Ten-a/mtg/Fife/Dys/brp/X11L/RtGEF/X11Lbeta/Rab3-GEF/VAChT/Nlg4/Nlg2/sif/Nlg3/Magi/Rgk1/Spn/ena/Rim/S6kII/dlg1/Grip/nAChRalpha3/stg1/Rph/gukh/dysc/Neto/Prosap/na/unc-13-4A/Rbp/scrib/jeb",35
-"GO:0045179","apical cortex","10/317","25/3139",7.85229202668526e-05,0.0016489813256039,0.00133000544375434,"aPKC/RhoGEF64C/CG42684/pros/baz/Abl/jub/sdt/Spn/dlg1",10
-"GO:0016327","apicolateral plasma membrane","7/317","14/3139",0.000184105212146163,0.00354402533381364,0.00285847566226938,"aPKC/baz/sdt/Magi/dlg1/PDZ-GEF/scrib",7
-"GO:0097458","neuron part","41/317","238/3139",0.000290823067945774,0.00516770220734414,0.00416807150011352,"Tomosyn/Ten-a/tau/fry/mtg/Fife/brp/Myo10A/pyd/X11L/5-HT1A/hdc/X11Lbeta/Rab3-GEF/Abl/VAChT/Magi/Rgk1/Spn/Ptp10D/ena/rad/Rim/S6kII/DIP-theta/dlg1/Grip/nAChRalpha3/stg1/Rph/gukh/dysc/SK/Prosap/robo3/na/unc-13-4A/Rbp/Itp-r83A/robo2/jeb",41
-"GO:0031594","neuromuscular junction","13/317","46/3139",0.000412829893646398,0.00681169324516556,0.00549405196807612,"Tomosyn/Ten-a/brp/RtGEF/Rab3-GEF/Nlg2/Magi/S6kII/dlg1/Grip/Neto/Prosap/scrib",13
-"GO:0030863","cortical cytoskeleton","6/317","12/3139",0.000552085538390717,0.00850211729121705,0.0068574835294847,"Ten-a/Fife/brp/spdo/Rim/Rbp",6
-"GO:0099572","postsynaptic specialization","8/317","21/3139",0.00062054115619977,0.00895906294263418,0.00722603846364206,"RtGEF/Magi/Spn/dlg1/Grip/stg1/Neto/Prosap",8
-"GO:0005856","cytoskeleton","27/317","142/3139",0.00071718940128387,0.00974533833509259,0.00786021820602136,"Ten-a/tau/Fife/Dys/brp/Myo10A/wake/jv/f/Bili/BuGZ/Pez/Patronin/jub/klar/dnr1/Spn/Cdep/spdo/Rim/Wdr62/gukh/Chro/ex/Rbp/sstn/Msp300",27
-"GO:0005911","cell-cell junction","15/317","62/3139",0.000933474174336415,0.0119795852373173,0.00966227654137693,"aPKC/sns/pyd/baz/Abl/jub/sdt/CG45049/ena/DIP-theta/dlg1/cno/stan/ex/scrib",15
-"GO:0098794","postsynapse","12/317","46/3139",0.00149674909580785,0.0179561706253114,0.0144827623635458,"X11L/RtGEF/X11Lbeta/Nlg2/Magi/Spn/dlg1/Grip/nAChRalpha3/stg1/Neto/Prosap",12
-"GO:0098793","presynapse","20/317","99/3139",0.00164247472862307,0.0179561706253114,0.0144827623635458,"Tomosyn/Ten-a/mtg/Fife/brp/Rab3-GEF/VAChT/Magi/Rgk1/ena/Rim/S6kII/dlg1/Grip/Rph/gukh/na/unc-13-4A/Rbp/jeb",20
-"GO:0008328","ionotropic glutamate receptor complex","5/317","10/3139",0.00167196470159331,0.0179561706253114,0.0144827623635458,"dlg1/Grip/stg1/Neto/Prosap",5
-"GO:0016592","mediator complex","8/317","24/3139",0.0017101114881249,0.0179561706253114,0.0144827623635458,"kto/MED23/Cdk8/MED11/MED25/MED30/MED15/skd",8
-"GO:0098590","plasma membrane region","24/317","130/3139",0.00215713250986166,0.0216651134686105,0.0174742541988793,"Ten-a/aPKC/brp/pyd/m/baz/sas/sdt/btsz/Nlg2/Magi/dlg1/Grip/nAChRalpha3/stg1/gukh/if/PDZ-GEF/Prosap/PIP5K59B/Lap1/ex/scrib/sstn",24
-"GO:0044451","nucleoplasm part","21/317","109/3139",0.00235805704793292,0.0221459279324042,0.0178620608067238,"kto/MED23/Cdk8/MED11/HDAC4/Spt20/CstF-64/MED25/trr/htk/MED30/Eaf/simj/nej/MED15/Rnp4F/skd/Hers/CG15356/Sap130/Atxn7",21
-"GO:0030424","axon","20/317","102/3139",0.00239674544722989,0.0221459279324042,0.0178620608067238,"tau/fry/mtg/pyd/hdc/Rab3-GEF/Abl/VAChT/Magi/Ptp10D/ena/rad/dlg1/Grip/gukh/robo3/na/Itp-r83A/robo2/jeb",20
-"GO:0036477","somatodendritic compartment","16/317","75/3139",0.00264996292334378,0.0235439013574005,0.0189896128514919,"Ten-a/tau/fry/Myo10A/X11L/5-HT1A/hdc/X11Lbeta/Rab3-GEF/Spn/ena/rad/S6kII/SK/Prosap/na",16
-"GO:0098802","plasma membrane receptor complex","9/317","32/3139",0.00334141627116812,0.0285876725422162,0.0230577263156631,"GABA-B-R2/dlg1/Grip/nAChRalpha3/stg1/Neto/if/Prosap/Msp300",9
-"GO:0098878","neurotransmitter receptor complex","5/317","12/3139",0.00442972660248233,0.0361423194385631,0.0291510163619306,"dlg1/Grip/stg1/Neto/Prosap",5
-"GO:0043005","neuron projection","28/317","168/3139",0.00453734746198411,0.0361423194385631,0.0291510163619306,"tau/fry/mtg/pyd/X11L/5-HT1A/hdc/X11Lbeta/Rab3-GEF/Abl/VAChT/Magi/Spn/Ptp10D/ena/rad/DIP-theta/dlg1/Grip/nAChRalpha3/gukh/dysc/Prosap/robo3/na/Itp-r83A/robo2/jeb",28
-"GO:0005654","nucleoplasm","24/317","138/3139",0.00486156560663564,0.0374340551710944,0.0301928811359477,"kto/MED23/Cdk8/MED11/CG46301/HDAC4/Spt20/CG10348/CstF-64/mura/MED25/trr/htk/MED30/Eaf/simj/nej/MED15/Rnp4F/skd/Hers/CG15356/Sap130/Atxn7",24
+version https://git-lfs.github.com/spec/v1
+oid sha256:6972b830322cf714827c76b8d8f555649586a8077c06f1922cbb4c27810c28e2
+size 6501

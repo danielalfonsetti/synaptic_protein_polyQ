@@ -2,7 +2,8 @@
 # daniel.alfonsetti@gmail.com; alfonset@mit.edu
 # MIT Littleton Lab
 # 7 March, 2019
-# Description:
+# Description: Use enrichment analysis to find GO gene categories that are enriched for
+# proteins that contain a polyAA track as annoated by our HMM.
 
 #########################################
 # Load libraries
@@ -91,10 +92,10 @@ species_vec = c("fly")
 candidate_AA_vec = c("D", "T", "S", "E", "P", "G", "A", "C", "V", "M",
                      "I", "L", "Y", "F", "H", "K", "R", "W", "Q", "N")
 
-candidate_AA_vec = c("Q")
+models = c("adjusted", "trained")
 
   # debugging; species = species_vec[1]
-for (model in c("adjusted", "trained")) {
+for (model in models) {
   for (species in species_vec) {
     for (candidate_AA in candidate_AA_vec) {
       
@@ -147,7 +148,7 @@ for (model in c("adjusted", "trained")) {
       # Get significant proteins list
       polyAA_proteins_vec <- proteins_has_ont_type %>% 
                              filter(HMMhasPolyAA) %>%
-                             dplyr::select(c(ensembl_peptide_id))
+                             dplyr::select(c(ensembl_peptide_id))[,1]
       
       
       # Get mapping from ensembl to entrez (entrez ids are needed for enrichment analysis)

@@ -3,7 +3,7 @@
 # MIT Littleton Lab
 # 7 March, 2019
 # Description: Download proteomes for human, fly, mouse, and worm for future polyQ
-# analysis in "Q.R"script.
+# analysis in "HMM.R"script.
 #########################################
 # Load libraries and set 'global' variables 
 #########################################

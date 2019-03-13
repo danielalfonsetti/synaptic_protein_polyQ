@@ -2,7 +2,8 @@
 # daniel.alfonsetti@gmail.com; alfonset@mit.edu
 # MIT Littleton Lab
 # 7 March, 2019
-# Description: 
+# Description: Run HMMs on protein sequences to identify poly amino acid (polyAA) tracts. 
+# Run for each of the 20 different amino acids
 
 #########################################
 # Load libraries and set 'global' variables 
@@ -38,6 +39,7 @@ library(protr)
 
 # Enrichment analysis tools
 library(clusterProfiler) 
+library(RColorBrewer)
 
 #########################################
 # Setup environment/set 'global' variables
@@ -56,7 +58,7 @@ species_vec = c("fly")
 candidate_AA_vec = c("D", "T", "S", "E", "P", "G", "A", "C", "V", "M",
                      "I", "L", "Y", "F", "H", "K", "R", "W", "Q", "N")
 
-
+models = c("adjusted") # c("adjusted", "trained")
 # Categories to filter out of analysis. Anything that has to do with nucleus or DNA regulation.
 
 # Transcription factor categories
@@ -320,9 +322,8 @@ training_id_dict <- list("mouse_Q"= c("FBpp0289769","FBpp0307700", "FBpp0086727"
                          "mouse_M" = c("NA", "NA"),
                          "worm_Q" = c("Something", "Something"))
 
-models_dict <- list("adjusted" = NA, "trained" = NA)
 
-for (model in names(models_dict)) {
+for (model in models) {
   for (species in species_vec) {
     # Don't use the filtered list. Use all. And then filter again later if need be.
     protein_df_w_seqs <- read.csv(paste0(output_base_dir, species, "_prots.csv"), stringsAsFactors = FALSE)
@@ -459,11 +460,13 @@ for (candidate_AA in candidate_AA_vec) {
 }
 
 # Summary Plots
-for (model in c("adjusted")) {
+for (model in models) {
   for (species in species_vec) {
     for (candidate_AA in candidate_AA_vec) {
       output_dir <- paste0(output_base_dir, model, "/", species, "/", candidate_AA, "/")
       dir.create(output_dir, recursive = TRUE)
+      proteins <- read.csv(paste0(output_dir, species, "_prots_w_HMM_", candidate_AA, "_nuclear_filt_transcriptome_filt.csv"))
+        
       
       # Plotting helper function
       # Number of randomly chosen 50 amino acid peptide chunks
@@ -482,8 +485,15 @@ for (model in c("adjusted")) {
       pdf(paste0(output_dir, "/sequence_summary_plots.pdf"))
       #########################################
       # Plot type: Whole Protein Qfraction Histogram for all proteins
+      colors1 <- brewer.pal(8, "Dark2")[1]
+      colors2 <- brewer.pal(8, "Dark2")[round(seq(from = 1, to = 8,length.out = 2))]
+      colors3 <- brewer.pal(8, "Dark2")[round(seq(from = 1, to = 8,length.out = 3))]
+      
       p <- ggplot(data = proteins, aes(x = proteins$AAComp)) +
-        geom_histogram(show.legend = FALSE) +
+        geom_histogram(alpha=0.5, color = colors1, 
+                       fill = colors1) +
+        geom_vline(aes(xintercept=mean(AAComp)),
+                   color=colors1, linetype="dashed", size=1) + 
         xlab(paste0("%", candidate_AA, " (Whole Protein Seqs)")) +
         ylab("# Proteins") +
         ggtitle(paste0("%", candidate_AA, " Whole Protein")) +
@@ -496,34 +506,47 @@ for (model in c("adjusted")) {
       
       
       # Plot type: Whole Protein AAC Histogram split by HMMhasPolyAA
-      p <- ggplot(data = proteins, aes(x = AAComp, fill = HMMhasPolyAA)) +
+      # Histogram.
+      mu <- proteins %>% group_by(HMMhasPolyAA) %>%
+        summarise(HMMhasPolyAA.mean = mean(AAComp))
+      p <- ggplot(data = proteins, aes(x = AAComp, fill = HMMhasPolyAA, color = HMMhasPolyAA)) +
         geom_histogram(alpha=0.5, position="identity") +
+        geom_vline(data=mu, aes(xintercept= HMMhasPolyAA.mean, color = HMMhasPolyAA),
+                   linetype='dashed', size=1, show.legend = FALSE) + 
         xlab(paste0("%", candidate_AA, " (Whole Protein Seqs)")) +
         ylab("# Proteins") +
         labs(fill = paste0("Contains \n poly", candidate_AA)) +
         ggtitle(paste0("%", candidate_AA," Whole Proteins Histogram")) +
-        theme_light()
+        theme_light()+
+        scale_colour_manual(values = colors2)  +
+        scale_fill_manual(values = colors2)  +
+        guides(color = FALSE)
       print(p)
       
+      # Density plot
       p <- ggplot(data = proteins, aes(x = AAComp, fill = HMMhasPolyAA)) +
         geom_density(alpha = 0.5) +
         xlab(paste0("%", candidate_AA, " (Whole Protein Seqs)")) +
         ylab("Density") +
         labs(fill = paste0("Contains \n poly", candidate_AA)) +
         ggtitle(paste0("%", candidate_AA, " Whole Proteins Density Plot")) +
+        scale_colour_manual(values = colors2)  +
+        scale_fill_manual(values = colors2)  +
         theme_light()
       print(p)
       
       ########################################################
       # Plot type: 100000 50AA chunks, each randomly chosen from randomly chosen Protein seqs
       df <- sample_n(proteins, 100000, replace = TRUE)
-      df$RandomSeqs <-unlist(lapply(as.character(df$peptide_seq), rnd_substr, 50)) # TODO: Have length be randomly choosen from lengths of polyAA seuqneces.
+      df$RandomSeqs <-unlist(lapply(as.character(df$peptide_seq), rnd_substr, 50))
       nAAs = str_count(df$RandomSeqs, candidate_AA)
       df$AAComp <- nAAs/nchar(df$RandomSeqs)
       
-      
       p <- ggplot(data = df, aes(x = df$AAComp)) +
-        geom_histogram(show.legend = FALSE) +
+        geom_histogram(show.legend = FALSE, alpha = 0.5,                 
+                       fill = colors1, 
+                       color = colors1) +
+        geom_vline(aes(xintercept=mean(AAComp)), linetype="dashed", size=1, color = colors1) +
         xlab(paste0("%", candidate_AA, " (Random 50AA Seqs)")) +
         ylab("# of Randomly Choosen Pepitides") +
         ggtitle(paste0("%", candidate_AA, " for 100000 50AA Random Seqs Histogram")) +
@@ -555,7 +578,10 @@ for (model in c("adjusted")) {
       # (both avg %AA and max %AA for the polyAA regions in a given polyAA protein)
       
       p <- ggplot(data = df, aes(x = as.numeric(df$AvgPolyAARegionAAFractions))) +
-        geom_histogram(show.legend = FALSE) +
+        geom_histogram(show.legend = FALSE, alpha = 0.5,                 
+                       fill = colors1, 
+                       color = colors1) +
+        geom_vline(aes(xintercept=mean(AvgPolyAARegionAAFractions, na.rm = TRUE)), linetype="dashed", size=1, color = colors1) +        
         xlab(paste0("Avg %", candidate_AA, " of poly", candidate_AA, " Regions")) + 
         ggtitle(paste0("Avg %", candidate_AA, " of poly", candidate_AA," Regions for poly", candidate_AA, " Containing Proteins")) +
         ylab(paste0("# Proteins Containing poly", candidate_AA)) +
@@ -563,8 +589,11 @@ for (model in c("adjusted")) {
       print(p)
       
       df <- proteins %>% filter(HMMhasPolyAA)
-      p <- ggplot(data = df, aes(x = df$MaxPolyAARegionAAFractions, fill = "")) +
-        geom_histogram(show.legend = FALSE) +
+      p <- ggplot(data = df, aes(x = df$MaxPolyAARegionAAFractions)) +
+        geom_histogram(show.legend = FALSE, alpha = 0.5,                 
+                         fill = colors1, 
+                         color = colors1) +
+        geom_vline(aes(xintercept=mean(df$MaxPolyAARegionAAFractions, na.rm = TRUE)), linetype="dashed", size=1, color = colors1) +              
         xlab(paste0("Max %", candidate_AA, " of poly", candidate_AA, " Regions")) +
         ggtitle(paste0("Max %", candidate_AA, " of Poly", candidate_AA, " Regions for poly", candidate_AA, " Containing Proteins")) +
         ylab(paste0("# Proteins Containing poly", candidate_AA)) +
@@ -573,77 +602,124 @@ for (model in c("adjusted")) {
       
       # Now compare to randomly chosen sequences of the same size
       polyAA_df <- proteins %>% filter(HMMhasPolyAA)
-      random_seq_df <- data.frame(matrix(nrow = nrow(polyAA_df), ncol = 1))
-      colnames(random_seq_df) <- c("AAComp")
-      for (i in 1:nrow(polyAA_df)) {
-        target_length <- polyAA_df[i,]$MaxLengthsPolyAA
-        flag = TRUE
-        while (flag){
-          try = as.character(sample_n(proteins, 1)$peptide_seq)
-          if (nchar(try) > target_length) {
-            res <- rnd_substr(try, target_length)
-            nAAs = str_count(res, candidate_AA)
-            random_seq_df$AAComp[i] <- nAAs/nchar(res)
-            flag = FALSE
+      if (nrow(polyAA_df) > 0) {
+        
+        
+        random_seq_df <- data.frame(matrix(nrow = nrow(polyAA_df), ncol = 1))
+        colnames(random_seq_df) <- c("AAComp")
+        for (i in 1:nrow(polyAA_df)) {
+          target_length <- polyAA_df[i,]$MaxLengthsPolyAA
+          flag = TRUE
+          while (flag){
+            try = as.character(sample_n(proteins, 1)$peptide_seq)
+            if (nchar(try) > target_length) {
+              res <- rnd_substr(try, target_length)
+              nAAs = str_count(res, candidate_AA)
+              random_seq_df$AAComp[i] <- nAAs/nchar(res)
+              flag = FALSE
+            }
           }
         }
+        
+        # Compare Maxs to randomly chosen
+        df <- data.frame(random_AAComp= random_seq_df$AAComp, Max_AAComp= polyAA_df$MaxPolyAARegionAAFractions)
+        df <- melt(df)
+        colnames(df) <- c("seqType", "AAComp")
+        mu <- df %>% group_by(df$seqType) %>% summarise(AAComp.mean = mean(AAComp))
+        colnames(mu) <- c("seqType", "AAComp.mean")
+        p <- ggplot() +
+          geom_histogram(data = df, aes(x = AAComp, fill = seqType, color = seqType), alpha = 0.5) +
+          geom_vline(data=mu, aes(xintercept= AAComp.mean, color = seqType),
+                     linetype='dashed', size=1, show.legend = FALSE) + 
+          xlab(paste0("%", candidate_AA)) +
+          ylab(paste0("# Proteins")) +
+          ggtitle(paste0("Max %", candidate_AA, " of Poly", candidate_AA, " Regions for poly", candidate_AA, " Containing Proteins \n vs %Q of randomly chosen tracts of similiar size")) +
+          scale_fill_manual(values = colors2, labels = c("Random Seqs", "Max %Q Seqs"))  +
+          scale_colour_manual(values = colors2)  +
+          theme_light() + 
+          labs(fill = "Sequence Type") + 
+          guides(color = FALSE)
+        print(p)
+        
+        # Compare Averages to randomly chosen
+        df <- data.frame(random_AAComp= random_seq_df$AAComp, Avg_AAComp= polyAA_df$AvgPolyAARegionAAFractions)
+        df <- melt(df)
+        colnames(df) <- c("seqType", "AAComp")
+        mu <- df %>% group_by(df$seqType) %>% summarise(AAComp.mean = mean(AAComp))
+        colnames(mu) <- c("seqType", "AAComp.mean")
+        # df <- df %>% filter(df$seqType == "random_AAComp")
+        p <- ggplot() +
+          geom_histogram(data = df, aes(x = AAComp, fill = seqType, color = seqType), alpha = 0.5) +
+          geom_vline(data=mu, aes(xintercept= AAComp.mean, color = seqType),
+                     linetype='dashed', size=1, show.legend = FALSE) + 
+          xlab(paste0("%", candidate_AA)) +
+          ylab(paste0("# Proteins")) +
+          ggtitle(paste0("Avg %", candidate_AA, " of Poly", candidate_AA, " Regions for poly", candidate_AA, " Containing Proteins \n vs %", candidate_AA, " of Randomly Chosen Tracts")) +
+          scale_fill_manual(values = colors2, labels = c("Random Seqs", "Avg %Q Seqs"))  +
+          scale_colour_manual(values = colors2)  +
+          theme_light() +
+          labs(fill = "Sequence Type") +
+          guides(color = FALSE)
+        print(p)
+        
+        # All three on the same chart
+        # Max %Q vs Avg %Q vs Random Tracts
+        
+        df <- data.frame(random_AAComp = random_seq_df$AAComp, 
+                         Avg_AAComp = polyAA_df$AvgPolyAARegionAAFractions,
+                         Max_AAComp = polyAA_df$MaxPolyAARegionAAFractions)
+        df <- melt(df)
+        colnames(df) <- c("seqType", "AAComp")
+        mu <- df %>% group_by(df$seqType) %>% summarise(AAComp.mean = mean(AAComp))
+        colnames(mu) <- c("seqType", "AAComp.mean")
+        p <- ggplot() +
+          geom_histogram(data = df, aes(x = AAComp, fill = seqType, color = seqType), alpha = 0.5) +
+          geom_vline(data=mu, aes(xintercept= AAComp.mean, color = seqType),
+                     linetype='dashed', size=1, show.legend = FALSE) + 
+          xlab(paste0("%", candidate_AA)) +
+          ylab(paste0("# Proteins")) +
+          ggtitle(paste0("Avg %", candidate_AA," of poly", candidate_AA, " Regions \n vs Max %", candidate_AA, " of poly", candidate_AA," Regions \n vs %Q of randomly chosen tracts")) +
+          scale_fill_manual(values = colors3, label = c("Random Seqs", "Avg %Q Seqs", "Max %Q Seqs"))  +
+          scale_colour_manual(values = colors3)   +
+          theme_light() +
+          labs(fill = "Sequence Type") +
+          guides(color = FALSE)
+        print(p)
       }
-      
-      p <- ggplot() +
-        geom_histogram(data = polyAA_df, aes(x = polyAA_df$MaxPolyAARegionAAFractions, fill = "Red")) +
-        geom_histogram(data = random_seq_df, aes(x= random_seq_df$AAComp, fill = "Blue")) + 
-        xlab(paste0("%", candidate_AA)) +
-        ggtitle(paste0("Max %", candidate_AA, " of Poly", candidate_AA, " Regions for poly", candidate_AA, " Containing Proteins \n
-                       vs %Q of randomly chosen tracts")) +
-        ylab(paste0("# Proteins", candidate_AA)) +
-        theme_light()
-      print(p)
-      
-      p <- ggplot() +
-        geom_histogram(data = polyAA_df, aes(x = polyAA_df$AvgPolyAARegionAAFractions, fill = "Red")) +
-        geom_histogram(data = random_seq_df, aes(x= random_seq_df$AAComp, fill = "Blue")) + 
-        xlab(paste0("%", candidate_AA)) + 
-        ggtitle(paste0("Avg %", candidate_AA, " of poly", candidate_AA," Regions for poly", candidate_AA, " Containing Proteins \n vs %Q of randomly chosen tracts")) +
-        ylab(paste0("# Proteins", candidate_AA)) +
-        theme_light()
-      print(p)
-      
-      # All three on the same chart
-      # Max %Q vs Avg %Q vs Random Tracts
-      p <- ggplot() +
-        geom_histogram(data = polyAA_df, aes(x = polyAA_df$AvgPolyAARegionAAFraction, fill= "Avg"), alpha = 0.5) +
-        geom_histogram(data = polyAA_df, aes(x = polyAA_df$MaxPolyAARegionAAFractions, fill= "Max"), alpha= 0.5) +
-        geom_histogram(data = random_seq_df, aes(x= random_seq_df$AAComp, fill="Random"), alpha = 0.5) + 
-        xlab(paste0("%", candidate_AA)) + 
-        ggtitle(paste0("Avg %", candidate_AA, " vs Max %", candidate_AA, " of poly", candidate_AA," Regions \n vs %Q of randomly chosen tracts")) +
-        ylab(paste0("# Proteins", candidate_AA)) +
-        scale_fill_manual(name = "", values = c("Avg" = "blue", "Max" = "green", "Random" = "red")) 
-      print(p)
-      
+
       ##############
       # Plot type: Number of Proteins annotated by HMM to be Poly Q vs Length of Region
-      
+      df <- proteins %>% filter(HMMhasPolyAA)
       p <- ggplot(data = df, aes(x = df$AvgLengthsPolyAA)) +
-        geom_histogram(show.legend = FALSE) +
+        geom_histogram(show.legend = FALSE, alpha = 0.5,                 
+                       fill = brewer.pal(8, "Dark2")[1], 
+                       color = brewer.pal(8, "Dark2")[1]) +
+        geom_vline(aes(xintercept=mean(AvgLengthsPolyAA, na.rm = TRUE)), linetype="dashed", size=1, color = colors1) +   
         xlab(paste0("Average Poly", candidate_AA, " Length")) +
         ylab(paste0("# Proteins Containing poly", candidate_AA, " (by HMM)")) +
-        ggtitle(paste0("Average Poly", candidate_AA, " Length in Poly", candidate_AA, " Containing Proteins")) +
+        ggtitle(paste0("Average Poly", candidate_AA, " Region Length in poly", candidate_AA, " Containing Proteins")) +
         theme_light()
       print(p)
       
       p <- ggplot(data = df, aes(x = df$MaxLengthsPolyAA)) +
-        geom_histogram(show.legend = FALSE) +
+        geom_histogram(show.legend = FALSE, alpha = 0.5,                 
+                       fill = brewer.pal(8, "Dark2")[1], 
+                       color = brewer.pal(8, "Dark2")[1]) +
+        geom_vline(aes(xintercept=mean(MaxLengthsPolyAA, na.rm = TRUE)), linetype="dashed", size=1, color = colors1)  +
         xlab(paste0("Max poly", candidate_AA, " Length")) +
         ylab(paste0("# Proteins Containing poly", candidate_AA, " (by HMM)")) +
-        ggtitle(paste0("Max poly", candidate_AA, " in poly", candidate_AA, " Containing Proteins")) +
+        ggtitle(paste0("Max poly", candidate_AA, " Region Length in poly", candidate_AA, " Containing Proteins")) +
         theme_light()
       print(p)
       
       p <- ggplot(data = df, aes(x = df$NumberPolyAA)) + 
-        geom_histogram(show.legend = FALSE) +
+        geom_bar(show.legend = FALSE, alpha = 0.5,                 
+                       fill = brewer.pal(8, "Dark2")[1], 
+                       color = brewer.pal(8, "Dark2")[1]) +
+        geom_vline(aes(xintercept=mean(NumberPolyAA, na.rm = TRUE)), linetype="dashed", size=1, color = colors1)  +
         xlab(paste0("Number of poly", candidate_AA, " Regions")) +
         ylab(paste0("# of ", candidate_AA, " Proteins")) +
-        ggtitle(paste0("Number of poly", candidate_AA, " regions in poly", candidate_AA, " Containing Proteins")) +
+        ggtitle(paste0("Number of poly", candidate_AA, " Regions in poly", candidate_AA, " Containing Proteins")) +
         theme_light()
       print(p)
       dev.off()

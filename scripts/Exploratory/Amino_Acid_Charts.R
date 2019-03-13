@@ -3,7 +3,9 @@
 # MIT, Littleton Lab UROP
 # 27 February 2019
 # ---------------------------------
-# Description: 
+# Description: A script with functionality to take protein sequences and corresponding HMM annotations for that sequence
+# and generate a plot divided by amino acid, showing the position of each amino acid of a certain type while overlayed by
+# polyAA tracks denoted for that amino acid by the HMM.
 ####################################################
 # Import libraries and set 'global' variables
 ####################################################

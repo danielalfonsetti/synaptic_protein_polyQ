@@ -1,1 +1,3 @@
-"","ensembl_peptide_id","ensembl_gene_id","external_gene_name","go_list_MF","go_ids_MF","go_list_CC","go_ids_CC","go_list_BP","go_ids_BP","peptide_seq","peptide_length","AAComp","HMMhasPolyAA","NumberPolyAA","IndiciesPolyAA","TranslationsPolyAA","LengthsPolyAA","AvgLengthsPolyAA","MaxLengthsPolyAA","PolyAARegionAAFractions","AvgPolyAARegionAAFractions","MaxPolyAARegionAAFractions","annotatedSequence","PeptideLength","pvalues"
+version https://git-lfs.github.com/spec/v1
+oid sha256:fb9e9e5fbe16487e6f3465cb9e3e9e0ed797df35d45b48c22d436a29c3f5b5df
+size 431
