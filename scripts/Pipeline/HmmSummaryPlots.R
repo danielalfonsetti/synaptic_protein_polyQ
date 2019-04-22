@@ -166,7 +166,6 @@ for (model in kModels) {
         theme_light()
       print(p)
       
-      
       # Now compare polyAA regions to a set of randomly chosen sequences whose sequence lengths
       # follow the same distribution as the distribution of lengths of the polyAA regions.
       polyAADf <- proteins %>% filter(hmmHasPolyAA)
@@ -293,5 +292,4 @@ for (model in kModels) {
     } # for (model in c("adjusted", "trained")) {
   } # for (species in kSpecies) {
 } # for (candidateAA in kCandidateAAs) {
-
 # END

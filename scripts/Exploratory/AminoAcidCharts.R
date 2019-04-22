@@ -12,8 +12,6 @@
 rm(list = ls())
 source("C:/UROPs/polyQ_neuronal_proteins/scripts/ConstantsAndFunctions.R")
 
-# library(biomaRt)
-# library(biomartr)
 library(ggplot2)
 library(reshape2)
 library(dplyr)
@@ -22,7 +20,8 @@ library(dplyr)
 # Helper functions
 ######################################################
 
-# Helper function for plotting
+# Helper functions for plotting
+# Helper function 1
 polyAAChart <- function(row, graphHasHMMannots = FALSE)  {
 
   # Get indicies of each amino acid in the protein
@@ -89,6 +88,22 @@ polyAAChart <- function(row, graphHasHMMannots = FALSE)  {
   print(p)
 }
 
+# Helper function 2
+polyAAChartWrapper <- function(proteins){
+  if (nrow(proteins) == 0){
+    plot(NA, xlim=c(0,2), ylim=c(0,2), bty='n',
+         xaxt='n', yaxt='n', xlab='', ylab='')
+    text(1, 1.7,"No data", cex = 4)
+    text(1, 1.4, "No proteins in this set had a polyAA regions", cex = 1.5)
+    text(1, 1.2, "Cannot make amino acid plots", cex = 1.5)
+  } else {
+    for (i in 1:nrow(proteins)){
+      row <- proteins[i,]
+      polyAAChart(row, TRUE)
+    }
+  }
+}
+
 ####################################################
 # Preliminary Data Wrangling
 ####################################################
@@ -98,7 +113,6 @@ for (hmmType in kModels) {
   # Important columns to take from each file are...
   # First 11 columns (general protein information, not polyAA annotation specific)
   # And 15th column (indices of polyAA regions)
-  
   
   mergedPolyAaDf <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",  hmmType, "/fly/", kCandidateAAs[1], "/fly_prots_w_HMM_", kCandidateAAs[1], ".csv"))
   mergedPolyAaDf <- mergedPolyAaDf[, c(1:11, 16)]
@@ -116,7 +130,6 @@ for (hmmType in kModels) {
   write.csv(mergedPolyAaDf, paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"), row.names = FALSE)
 }
 
-
 ####################################################
 # Plotting
 ####################################################
@@ -125,20 +138,8 @@ for (hmmType in kModels) {
 ####################################################
 # Plotting 1 - Explore the AA charts for some hand chosen proteins
 ####################################################
-polyAAChartWrapper <- function(proteins){
-  if (nrow(proteins) == 0){ #TODO: Implement wrapper function to get rid of repetitive code.
-    plot(NA, xlim=c(0,2), ylim=c(0,2), bty='n',
-         xaxt='n', yaxt='n', xlab='', ylab='')
-    text(1, 1.7,"No data", cex = 4)
-    text(1, 1.4, "No proteins in this set had a polyAA regions", cex = 1.5)
-    text(1, 1.2, "Cannot make amino acid plots", cex = 1.5)
-  } else {
-    for (i in 1:nrow(proteins)){
-      row <- proteins[i,]
-      polyAAChart(row, TRUE)
-    }
-  }
-}
+
+
 
 for (hmmType in kModels) {
   proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
@@ -150,7 +151,7 @@ for (hmmType in kModels) {
   AZproteins <- proteins %>% filter(proteins$external_gene_name %in% c("brp", "Rbp", "Rim"))
   AZproteins <- AZproteins[!duplicated(AZproteins$ensembl_gene_id),]
   
-  pdf(file = paste0("AA_charts_manualAZ_protein_Model-", hmmType, "_fly.pdf"))
+  pdf(file = paste0("AA_charts_manualAZ_proteins_Model-", hmmType, "_fly.pdf"))
   polyAAChartWrapper(AZproteins)
   dev.off()
   
@@ -159,7 +160,7 @@ for (hmmType in kModels) {
   psdProteins <- proteins %>% filter(proteins$external_gene_name %in% c("homer", "Grip", "dlg1", "SH3PX1", "Prosap"))
   psdProteins <- psdProteins[!duplicated(psdProteins$ensembl_gene_id),]
 
-  pdf(file = paste0("AA_charts_manualPSD_protein_Model-", hmmType, "_fly.pdf"))
+  pdf(file = paste0("AA_charts_manualPSD_proteins_Model-", hmmType, "_fly.pdf"))
   polyAAChartWrapper(psdProteins)
   dev.off()
   
@@ -210,7 +211,63 @@ for (hmmType in kModels) {
   proteins <- AnnotateByCategorySet(proteins, kNuclearCats)
   proteins <- proteins %>% filter(!proteins$inSet)
   
-  pdf(file = paste0("AA_charts__location-neuronal_transcriptome_proteins__Model-", hmmType, "__fly.pdf"))
+  pdf(file = paste0("AA_charts__location-neuronal_transcriptome_proteins_(non_nuclear)__Model-", hmmType, "__fly.pdf"))
+  polyAAChartWrapper(proteins)
+  dev.off()
+} # for (hmmType in kModels) {
+
+
+####################################################
+# Plotting 4 - Plot all proteins have overlapping polyAA regions
+####################################################
+# Check for interval overlaps
+for (hmmType in kModels) {
+  proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
+  
+  intervals <- proteins[,(ncol(proteins)-20+1):ncol(proteins)] # Only get the columns with polyAA intervals
+  
+  # O(n)
+  intervals_list <- apply(intervals, 1, function(row)
+    sapply(row, function(x) 
+      c((strsplit(as.character(x), ":"))))
+  )
+  
+  # Function to check if any two intervals overlap 
+  isOverlap <- function(L) { 
+    
+    # Sort intervals in increasing order of start time 
+    L = L[order(sapply(L, function(x) x[1]), decreasing=FALSE)] # O(20)
+    
+    # In the sorted array, if start time of an interval 
+    # is less than end of previous interval, then there 
+    # is an overlap (O(20))
+    for (i in 2:20) { 
+      if (is.na(L[i-1]) | is.na(L[i])) {next}
+      if (L[[i-1]][2] > L[[i]][1]){
+        return(TRUE)
+      }
+    }
+    #If we reach here, then no overlap
+    return(FALSE)
+  } 
+  
+  res <- unlist(lapply(intervals_list, isOverlap)) # O(n)
+  proteins <- proteins[res,]
+  
+  pdf(file = paste0("AA_charts_overlappingPolyAAs__Model-", hmmType, "__fly.pdf"))
+  polyAAChartWrapper(proteins)
+  dev.off()
+  ####################################################
+  # Plot proteins with overlapping polyAAs that ALSO have neuronally expressed proteins (based off transcriptome)
+  neuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+  proteins <- proteins[proteins$ensembl_peptide_id %in% neuronalTranscripts$V1,]
+  proteins <- proteins %>% filter(!is.na(proteins$indiciesPolyQ)) # Only plot proteins that have a polyQ region
+  
+  # Remove nucleus related and transcription factor proteins
+  proteins <- AnnotateByCategorySet(proteins, kNuclearCats)
+  proteins <- proteins %>% filter(!proteins$inSet)
+  
+  pdf(file = paste0("AA_charts_overlappingPolyAAs__location-neuronal_transcriptome_proteins_(non_nuclear)__Model-", hmmType, "__fly.pdf"))
   polyAAChartWrapper(proteins)
   dev.off()
 } # for (hmmType in kModels) {

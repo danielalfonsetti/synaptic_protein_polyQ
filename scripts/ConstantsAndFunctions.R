@@ -5,8 +5,12 @@
 # ---------------------------------
 # Description: Some helper functions and constants that are used in multiple scripts in this project.
 ####################################################
-rm(list = ls()) # Remove everything in environment
-lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE) # Detach all libraries
+
+# Remove everything in environment
+rm(list = ls()) 
+# Detach all libraries
+lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE) 
+
 
 .libPaths(c("C:/Users/danie/Documents/R/win-library/3.5",.libPaths()))
 library(dplyr)

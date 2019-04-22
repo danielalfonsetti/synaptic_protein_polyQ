@@ -2,10 +2,10 @@ polyQ Synaptic Protein Project
 MIT Littleton Lab UROP Fall 18, Spring 19
 Daniel Alfonsetti
 daniel.alfonsetti@gmail.com; alfonset@mit.edu 
-13 March 2019
+22 April 2019
 
 -------------------------------
-- Question
+- Research Question
 -------------------------------
 Are proteins with polyQ tracks enriched in the pre-synaptic active zone? What about the post synaptic density?
 
@@ -37,5 +37,8 @@ Identifier Conventions:
   Variables: myVariables
   https://google.github.io/styleguide/Rguide.xml
 
+-------------------------------
+Made in...
+R version 3.5.2 (2018-12-20) -- "Eggshell Igloo"
 
 
