@@ -1,9 +1,0 @@
-File Name: _ncbi_downloads/proteomes/Drosophila_melanogaster.BDGP6.pep.all.fa.gz
-Organism Name: Drosophila_melanogaster
-Database: ensembl
-Download_Date: Sat Oct 13 13:07:24 2018
-assembly_name: BDGP6
-assembly_date: 2014-07
-genebuild_last_geneset_update: none
-assembly_accession: GCA_000001215.4
-genebuild_initial_release_date: 2014-09

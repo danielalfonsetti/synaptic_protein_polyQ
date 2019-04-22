@@ -3,13 +3,15 @@ MIT Littleton Lab UROP Fall 18, Spring 19
 Daniel Alfonsetti
 daniel.alfonsetti@gmail.com; alfonset@mit.edu 
 13 March 2019
+
 -------------------------------
+- Question
 -------------------------------
-Question: 
 Are proteins with polyQ tracks enriched in the pre-synaptic active zone? What about the post synaptic density?
 
 -------------------------------
-Goal: 
+- Goal
+-------------------------------
 Make a computational pipeline that is general enough to answer this question and related questions such as...
 
 For an arbitrary amino acid AA and an arbitrary cellulular location X or functional category Y...
@@ -19,11 +21,21 @@ For an arbitrary amino acid AA and an arbitrary cellulular location X or functio
 Do our finds vary by species?
 
 -------------------------------
-Procedure Overview: 
+- Procedure Overview
+-------------------------------
 Train hidden markov model on known polyQ proteins and then find polyAA tracks (Viterbi method).
 Take the proteins annotated to have polyAA tracks and test to see if they are enriched for certain functional categories or groups (Fisher Tests, enrichment analysis).
 
 Repeat enrichment testing procedures after filtering on only neuronally transcribed proteins and non-nulcear proteins (the latter of which are known to have polyQ regions).
+
+-------------------------------
+- Style Guide for this Project
+-------------------------------
+Identifier Conventions: 
+  Functions: MyFunction(...)
+  Constants: kMyConstant
+  Variables: myVariables
+  https://google.github.io/styleguide/Rguide.xml
 
 
 

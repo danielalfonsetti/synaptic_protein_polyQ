@@ -1,2 +1,0 @@
-file_name	organism	url	database	path	refseq_category	assembly_accession	bioproject	biosample	taxid	infraspecific_name	version_status	release_type	genome_rep	seq_rel_date	submitter
-Drosophila_melanogaster_genomic_refseq.fna.gz	Drosophila_melanogaster	ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/008/025/GCF_000008025.1_ASM802v1/GCF_000008025.1_ASM802v1_protein.faa.gz	refseq	_ncbi_downloads/proteomes	representative genome	GCF_000008025.1	PRJNA224116	SAMN02604000	163164	strain=wMel	latest	Major	Full	2004-02-05	TIGR
