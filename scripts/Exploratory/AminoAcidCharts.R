@@ -22,7 +22,7 @@ library(dplyr)
 
 # Helper functions for plotting
 # Helper function 1
-polyAAChart <- function(row, graphHasHMMannots = FALSE)  {
+PolyAAChart <- function(row, graphHasHMMannots = FALSE)  {
 
   # Get indicies of each amino acid in the protein
   peptideSeq <- as.character(row$peptideSeq)
@@ -89,21 +89,42 @@ polyAAChart <- function(row, graphHasHMMannots = FALSE)  {
 }
 
 # Helper function 2
-polyAAChartWrapper <- function(proteins){
+PolyAAChartWrapper <- function(proteins){
   if (nrow(proteins) == 0){
     plot(NA, xlim=c(0,2), ylim=c(0,2), bty='n',
          xaxt='n', yaxt='n', xlab='', ylab='')
     text(1, 1.7,"No data", cex = 4)
-    text(1, 1.4, "No proteins in this set had a polyAA regions", cex = 1.5)
+    text(1, 1.4, "No proteins in this set had polyAA regions", cex = 1.5)
     text(1, 1.2, "Cannot make amino acid plots", cex = 1.5)
   } else {
     for (i in 1:nrow(proteins)){
       row <- proteins[i,]
-      polyAAChart(row, TRUE)
+      PolyAAChart(row, TRUE)
     }
   }
 }
 
+
+# Helper function 3
+# Function to check if any two intervals overlap 
+IsOverlap <- function(L) { 
+  
+  # Sort intervals in increasing order of start time 
+  L = L[order(as.integer(unlist(lapply(L, function(x) x[1]))), decreasing=FALSE)]
+  
+  # In the sorted array, if start time of an interval 
+  # is less than end of previous interval, then there 
+  # is an overlap
+  for (i in 2:length(L)) { 
+    if (is.na(L[i-1]) | is.na(L[i])) {next}
+    if (as.integer(L[[i-1]][2]) > as.integer(L[[i]][1])){
+      return(TRUE)
+    }
+  }
+  
+  #If we reach here, then no overlap
+  return(FALSE)
+} 
 ####################################################
 # Preliminary Data Wrangling
 ####################################################
@@ -152,7 +173,7 @@ for (hmmType in kModels) {
   AZproteins <- AZproteins[!duplicated(AZproteins$ensembl_gene_id),]
   
   pdf(file = paste0("AA_charts_manualAZ_proteins_Model-", hmmType, "_fly.pdf"))
-  polyAAChartWrapper(AZproteins)
+  PolyAAChartWrapper(AZproteins)
   dev.off()
   
   # Known PSD proteins
@@ -161,7 +182,7 @@ for (hmmType in kModels) {
   psdProteins <- psdProteins[!duplicated(psdProteins$ensembl_gene_id),]
 
   pdf(file = paste0("AA_charts_manualPSD_proteins_Model-", hmmType, "_fly.pdf"))
-  polyAAChartWrapper(psdProteins)
+  PolyAAChartWrapper(psdProteins)
   dev.off()
   
   # Proteins used in HMM training set
@@ -169,7 +190,7 @@ for (hmmType in kModels) {
   training_set_proteins <- proteins %>% filter(proteins$ensembl_peptide_id %in% training_set_protein_ids)
   
   pdf(file = paste0("AA_charts_training_set_proteins_Model-", hmmType, "_fly.pdf"))
-  polyAAChartWrapper(training_set_proteins)
+  PolyAAChartWrapper(training_set_proteins)
   dev.off()
 }
 
@@ -190,7 +211,7 @@ for (hmmType in kModels) {
     proteins <- proteins %>% filter(proteins$inSet)
     
     pdf(file = paste0("AA_charts__location-", location, "_proteins__Model-", hmmType, "__fly.pdf"))
-    polyAAChartWrapper(proteins)
+    PolyAAChartWrapper(proteins)
     dev.off()
   } #   for (location in names(kLocations)) {
 } # for (hmmType in kModels) {
@@ -212,7 +233,7 @@ for (hmmType in kModels) {
   proteins <- proteins %>% filter(!proteins$inSet)
   
   pdf(file = paste0("AA_charts__location-neuronal_transcriptome_proteins_(non_nuclear)__Model-", hmmType, "__fly.pdf"))
-  polyAAChartWrapper(proteins)
+  PolyAAChartWrapper(proteins)
   dev.off()
 } # for (hmmType in kModels) {
 
@@ -222,40 +243,27 @@ for (hmmType in kModels) {
 ####################################################
 # Check for interval overlaps
 for (hmmType in kModels) {
+  dir.create(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/AA_charts"))
+  setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/AA_charts/"))
+  
   proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
+
+  samples <- proteins[,(ncol(proteins)-20+1):ncol(proteins)] # Only get the columns with polyAA intervals
+
+  intervals_list <- apply(samples, 1, function(row)
+    unlist(sapply(row, function(x)
+      lapply(strsplit(as.character(x), "; "), function(y)
+        strsplit(as.character(y), ":"))), 
+      recursive = FALSE))
   
-  intervals <- proteins[,(ncol(proteins)-20+1):ncol(proteins)] # Only get the columns with polyAA intervals
   
-  # O(n)
-  intervals_list <- apply(intervals, 1, function(row)
-    sapply(row, function(x) 
-      c((strsplit(as.character(x), ":"))))
-  )
-  
-  # Function to check if any two intervals overlap 
-  isOverlap <- function(L) { 
-    
-    # Sort intervals in increasing order of start time 
-    L = L[order(sapply(L, function(x) x[1]), decreasing=FALSE)] # O(20)
-    
-    # In the sorted array, if start time of an interval 
-    # is less than end of previous interval, then there 
-    # is an overlap (O(20))
-    for (i in 2:20) { 
-      if (is.na(L[i-1]) | is.na(L[i])) {next}
-      if (L[[i-1]][2] > L[[i]][1]){
-        return(TRUE)
-      }
-    }
-    #If we reach here, then no overlap
-    return(FALSE)
-  } 
-  
-  res <- unlist(lapply(intervals_list, isOverlap)) # O(n)
+  # Find which proteins have overlapping polyAA regions
+  res <- unlist(lapply(intervals_list, IsOverlap))
   proteins <- proteins[res,]
   
+  # Only plot proteins that have overlapping polyAA regions.
   pdf(file = paste0("AA_charts_overlappingPolyAAs__Model-", hmmType, "__fly.pdf"))
-  polyAAChartWrapper(proteins)
+  PolyAAChartWrapper(proteins)
   dev.off()
   ####################################################
   # Plot proteins with overlapping polyAAs that ALSO have neuronally expressed proteins (based off transcriptome)
@@ -268,7 +276,7 @@ for (hmmType in kModels) {
   proteins <- proteins %>% filter(!proteins$inSet)
   
   pdf(file = paste0("AA_charts_overlappingPolyAAs__location-neuronal_transcriptome_proteins_(non_nuclear)__Model-", hmmType, "__fly.pdf"))
-  polyAAChartWrapper(proteins)
+  PolyAAChartWrapper(proteins)
   dev.off()
 } # for (hmmType in kModels) {
 # END
