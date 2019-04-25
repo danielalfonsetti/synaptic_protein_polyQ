@@ -5,21 +5,35 @@
 # ---------------------------------
 # Description: Some helper functions and constants that are used in multiple scripts in this project.
 ####################################################
+print("Running ConstantsAndFunctions.R!")
 
 # Remove everything in environment
 rm(list = ls()) 
+
 # Detach all libraries
-lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE) 
+detach_helper <- function(x){
+  if (x %in% search()){
+    detach(x, character.only=TRUE,unload=TRUE)
+  }
+}
+invisible(lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""), detach_helper))
+.libPaths(c("C:/Users/danie/Documents/R/win-library/3.5",
+            .libPaths()))
+
+# https://stackoverflow.com/questions/5595512/what-is-the-difference-between-require-and-library
+
+Packages <- c("dplyr", "GO.db", "org.Dm.eg.db", "org.Hs.eg.db", "org.Mm.eg.db", "org.Ce.eg.db")
+for (package in Packages) {
+  if (!require(package, character.only=T, quietly=T)) {
+    install.packages(package)
+    suppressPackageStartupMessages(library(package, character.only=T))
+  }
+}
 
 
-.libPaths(c("C:/Users/danie/Documents/R/win-library/3.5",.libPaths()))
-library(dplyr)
-library(GO.db)
 
-library(org.Dm.eg.db)
-library(org.Hs.eg.db)
-library(org.Mm.eg.db)
-library(org.Ce.eg.db)
+Packages <- c("dplyr", "GO.db", "org.Dm.eg.db", "org.Hs.eg.db", "org.Mm.eg.db", "org.Ce.eg.db")
+invisible(lapply(Packages, library, character.only = TRUE))
 
 ####################################################3
 # CONSTANTS
@@ -30,7 +44,6 @@ kModels = c("adjusted")
 kSpecies = c("fly")
 kCandidateAAs= c("D", "T", "S", "E", "P", "G", "A", "C", "V", "M",
                  "I", "L", "Y", "F", "H", "K", "R", "W", "Q", "N")
-# kCandidateAAs= c("Q")
 
 
 kTrainingSetMap <- list("flyQ"= c("FBpp0289769","FBpp0307700", "FBpp0086727", "FBpp0111724", "FBpp0293366",
@@ -40,7 +53,7 @@ kTrainingSetMap <- list("flyQ"= c("FBpp0289769","FBpp0307700", "FBpp0086727", "F
 
 
 kOutputBaseDir <- "C:/UROPs/polyQ_neuronal_proteins/output/"
-kNeuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+kNeuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/data/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
 
 # Transcription factor categories
 # "GO:0003676" is nucleic acid binding
@@ -88,4 +101,5 @@ AnnotateByCategorySet <- function(df, cats) {
   df$inSet <- CC | MF | BP
   return(df)
 }
+print("Completed ConstantsAndFunctions.R")
 # END

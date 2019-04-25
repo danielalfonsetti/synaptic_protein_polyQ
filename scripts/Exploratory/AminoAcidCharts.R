@@ -117,7 +117,7 @@ IsOverlap <- function(L) {
   # is an overlap
   for (i in 2:length(L)) { 
     if (is.na(L[i-1]) | is.na(L[i])) {next}
-    if (as.integer(L[[i-1]][2]) > as.integer(L[[i]][1])){
+    if (as.integer(L[[i-1]][2]) >= as.integer(L[[i]][1])){
       return(TRUE)
     }
   }
@@ -143,7 +143,9 @@ for (hmmType in kModels) {
   # Iterate over the rest of the AAs and append their results.
   for (candidateAA in kCandidateAAs[2:length(kCandidateAAs)]) {
     df <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/", candidateAA, "/fly_prots_w_HMM_", candidateAA, ".csv"))
-    
+    if ("FBpp0070031" %in% df$ensembl_peptide_id) {
+      print(candidateAA)
+    }
     new_name <- paste0("indiciesPoly", candidateAA)
     colnames(df)[colnames(df)=="indiciesPolyAA"] <- new_name
     mergedPolyAaDf = merge(x = mergedPolyAaDf, y = df[, c("ensembl_peptide_id",new_name)], by = "ensembl_peptide_id")
@@ -159,8 +161,6 @@ for (hmmType in kModels) {
 ####################################################
 # Plotting 1 - Explore the AA charts for some hand chosen proteins
 ####################################################
-
-
 
 for (hmmType in kModels) {
   proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
@@ -248,23 +248,23 @@ for (hmmType in kModels) {
   
   proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
 
-  samples <- proteins[,(ncol(proteins)-20+1):ncol(proteins)] # Only get the columns with polyAA intervals
+  intervalData <- proteins[,(ncol(proteins)-20+1):ncol(proteins)] # Only get the columns with polyAA intervals
 
-  intervals_list <- apply(samples, 1, function(row)
+  intervalsList <- apply(intervalData, 1, function(row)
     unlist(sapply(row, function(x)
       lapply(strsplit(as.character(x), "; "), function(y)
         strsplit(as.character(y), ":"))), 
       recursive = FALSE))
   
-  
   # Find which proteins have overlapping polyAA regions
-  res <- unlist(lapply(intervals_list, IsOverlap))
+  res <- unlist(lapply(intervalsList, IsOverlap))
   proteins <- proteins[res,]
   
   # Only plot proteins that have overlapping polyAA regions.
   pdf(file = paste0("AA_charts_overlappingPolyAAs__Model-", hmmType, "__fly.pdf"))
   PolyAAChartWrapper(proteins)
   dev.off()
+  
   ####################################################
   # Plot proteins with overlapping polyAAs that ALSO have neuronally expressed proteins (based off transcriptome)
   neuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))

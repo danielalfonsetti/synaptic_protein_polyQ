@@ -25,7 +25,7 @@ args = commandArgs(trailingOnly=TRUE)
 if (length(args) != 0) {
   kModels =  unlist(strsplit(args[1],","))
   kSpecies = unlist(strsplit(args[2],","))
-  kCandidateAAs = unlist(strsplit(args[3],","))
+  kCandidateAAs = strsplit(args[3],"")[[1]]
 }
 #########################################
 # HELPER FUNCTIONS

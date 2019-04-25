@@ -16,8 +16,6 @@ library(clusterProfiler)
 # Setup environment
 #########################################
 
-registerDoParallel(cores = 4)
-
 setwd("C:/UROPs/polyQ_neuronal_proteins")
 
 args = commandArgs(trailingOnly=TRUE)

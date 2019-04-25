@@ -28,12 +28,6 @@ library(org.Mm.eg.db)
 library(org.Ce.eg.db)
 
 
-#library(GO.db)
-#library(protr)
-#library(biomartr)
-#library(STRINGdb)
-
-
 #########################################
 # Set constants
 #########################################
