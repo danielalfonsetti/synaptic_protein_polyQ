@@ -14,6 +14,9 @@
 # for each of the 20 amino acids.
 ####################################################
 rm(list = ls())
+source("C:/UROPs/polyQ_neuronal_proteins/scripts/ConstantsAndFunctions.R")
+# TODO: Fix isoform filter.
+
 library(GO.db)
 library(biomaRt)
 library(biomartr)
@@ -74,9 +77,9 @@ FisherTestComparison <- function(locationCats = NA,
       proteins = proteins %>% filter(proteins$nuclear == FALSE)
     }
     
-    neuronal_transcripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+    # kNeuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
     if (neuron_filter == "on") {
-      proteins <- proteins[proteins$ensembl_peptide_id %in% neuronal_transcripts$V1,]
+      proteins <- proteins[proteins$ensembl_peptide_id %in% kNeuronalTranscripts$V1,]
     }
     
     ################### 
@@ -149,7 +152,7 @@ FisherTestComparison <- function(locationCats = NA,
   
   if (neuron_filter == "on") {
     p <- p + ggtitle(paste0("Histograms of %AA of polyAA tracts (", species, ") \n",
-                   "# of prots in neuronal transcriptome: ", nrow(neuronal_transcripts), "\n",
+                   "# of prots in neuronal transcriptome: ", nrow(kNeuronalTranscripts), "\n",
                    "# of prots in category (", location, "): ", sum(proteinsNoHmm$inSet), "\n",
                    "Nuclear Filter: ", nuclear_filter, ", Isoform Filter: ", isoform_filter, ", Neuronal Filter: ", neuron_filter))
   } else {

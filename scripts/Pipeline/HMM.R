@@ -39,12 +39,8 @@ if (length(args) != 0) {
   kSpecies = unlist(strsplit(args[2],","))
   kCandidateAAs = strsplit(args[3],"")[[1]]
 }
-print("Args: ")
-print(kModels)
-print(kSpecies)
-print(kCandidateAAs)
 
-#
+
 #########################################
 # Helper Function(s)
 #########################################
@@ -109,14 +105,11 @@ TrainHMM = function(trainingSet, candidateAA) {
   # Initial values for initial state probabilities
   initialProbs <- c(.99, .01)
 
-
-  print("Debugging 2")
   hmm <- build_hmm(observations = trainingSeqs,
                    initial_probs = initialProbs,
                    transition_probs = transProbs,
                    emission_probs = emissProbs,
                    state_names = c("NonPolyAA", "PolyAA"))
-  print("Debugging 3")
 
   # Fit/tune the model
   hmmFit <- fit_model(hmm,

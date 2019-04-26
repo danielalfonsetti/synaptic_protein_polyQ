@@ -224,8 +224,8 @@ for (hmmType in kModels) {
   setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/AA_charts/"))
   
   proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
-  neuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
-  proteins <- proteins[proteins$ensembl_peptide_id %in% neuronalTranscripts$V1,]
+  # kNeuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+  proteins <- proteins[proteins$ensembl_peptide_id %in% kNeuronalTranscripts$V1,]
   proteins <- proteins %>% filter(!is.na(proteins$indiciesPolyQ)) # Only plot proteins that have a polyQ region
   
   # Remove nucleus related and transcription factor proteins
@@ -267,8 +267,8 @@ for (hmmType in kModels) {
   
   ####################################################
   # Plot proteins with overlapping polyAAs that ALSO have neuronally expressed proteins (based off transcriptome)
-  neuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
-  proteins <- proteins[proteins$ensembl_peptide_id %in% neuronalTranscripts$V1,]
+  # kNeuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+  proteins <- proteins[proteins$ensembl_peptide_id %in% kNeuronalTranscripts$V1,]
   proteins <- proteins %>% filter(!is.na(proteins$indiciesPolyQ)) # Only plot proteins that have a polyQ region
   
   # Remove nucleus related and transcription factor proteins
