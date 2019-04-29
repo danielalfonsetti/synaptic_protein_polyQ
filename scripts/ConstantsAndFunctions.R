@@ -54,6 +54,13 @@ kTrainingSetMap <- list("flyQ"= c("FBpp0289769","FBpp0307700", "FBpp0086727", "F
 
 kOutputBaseDir <- "C:/UROPs/polyQ_neuronal_proteins/output/"
 kNeuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/data/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+kFlyNeuronalTranscripts <- kNeuronalTranscripts
+
+# TODO: Down these
+kWormNeuronalTranscripts <- NA 
+kHumanNeuronalTranscripts <- NA
+kMouseNeuronalTranscripts <- NA 
+
 
 # Transcription factor categories
 # "GO:0003676" is nucleic acid binding

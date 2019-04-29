@@ -8,7 +8,6 @@ kModels="adjusted"
 kSpecies="fly"
 kCandidateAAs="DTSEPGACVMILYFHKRWQN"
 
-
 echo "Running pipeline/DownloadProteomes.R for species: $kSpecies"
 Rscript pipeline/DownloadProteomes.R $kSpecies
 
