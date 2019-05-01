@@ -20,6 +20,7 @@ source("C:/UROPs/polyQ_neuronal_proteins/scripts/ConstantsAndFunctions.R")
 # library(biomaRt)
 # library(biomartr)
 library(ggplot2)
+library(reshape2)
 library(dplyr)
 ####################################################
 
@@ -165,7 +166,6 @@ FisherTestComparison <- function(locationCats = NA,
 # End of helper functions
 ####################################################
 
-# Exploratory analysis
 kLocations = list("AZ" = kAZcats, "Synapse" =  kSynapseCats, "PSD" = kPSDcats, 
                   "Transcription_factor (+ cntrl)"= kTranscriptionCats, 
                   "AZ+PSD" = c(kAZcats, kPSDcats))
