@@ -1,9 +1,0 @@
-File Name: _ncbi_downloads/proteomes/Caenorhabditis_elegans.WBcel235.pep.all.fa.gz
-Organism Name: Caenorhabditis_elegans
-Database: ensembl
-Download_Date: Fri Oct 12 21:48:37 2018
-assembly_name: WBcel235
-assembly_date: 2012-12
-genebuild_last_geneset_update: 2017-06
-assembly_accession: GCA_000002985.3
-genebuild_initial_release_date: 2014-10
