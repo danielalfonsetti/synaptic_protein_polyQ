@@ -305,13 +305,11 @@ for (model in kModels) {
 
       # Train model
       proteins <- read.csv("C:/UROPs/polyQ_neuronal_proteins/output/fly_prots.csv", stringsAsFactors = FALSE)
-      print(kTrainingSetMap)
       trainingSetIDs <- kTrainingSetMap[["flyQ"]]
       print(paste0("TrainingSetIDs: ", trainingSetIDs))
       trainingSet <- proteins %>% filter(ensembl_peptide_id %in% trainingSetIDs)
 
 
-      print(paste0("Look here!: ", trainingSet))
       trainedModel <- TrainHMM(trainingSet, candidateAA)
 
       # Annotate the proteins based on the model (either the trained version or an adjusted version of the trained version)
