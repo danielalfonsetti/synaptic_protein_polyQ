@@ -1,0 +1,136 @@
+
+
+# NOTE 1: Find a way to measure sigificance of polyQ proteins outputted by our HMM while controlling for length.
+# Ideally, would be able to order the proteins by significance, allowing for more resolution
+# besides just a boolean of "is a polyQ"/"is not a polyQ".
+
+# Proposed Method:
+# --------------------------
+# Let m be the length of a protein
+# Let n be the length of the largest polyQ tract found by the HMM
+
+# There are 20**n different possible amino acid sequences of length n.
+# This implies there is a 1/(20**n) chance of seeing a specific n-mer at a specific location.
+# Thus there is a 1-1/(20**n) chance of not seeing the specific n-mer at a specific location.
+# There are m-(n-1) possible locations for a given n-mer to be located on a protein of length m.
+# Therefore, there is a (1-1/20**n)**(m-(n-1)) chance of not seeing a specific n-mer anywhere on a protein of length m.
+# Therefore, there is a 1-(1-1/20**n)**(m-(n-1)) chance of seeing the n-mer at least once on the protein.
+# This is our p-value for a given protein of length m annotated by the HMM to have a maximum polyQ tract of length n.
+
+# This p-value is testing the following for a given protein of length m:
+
+# Null hypothesis:  The m probability distributions for each of the m locations along the protein that define that 
+# locations' respective probabilities of being a particular amino acid are uniform and independent.
+# (i.e. each location has a 1/20 probability of being any amino acid)
+
+# Alternative hypothesis (? still debating the exact wording here?): 
+# The m probability distributions are not uniform and independent.
+# E.g. knowing that one location is a "Q" may affect the probability that another location is a "Q".
+
+# We are able to calculate such a p-value for each protein in our dataset, 
+# thus giving us a metric of determining relative significance of polyQ proteins (instead of a boolean of polyQ vs not polyQ)
+# and thereby giving us a ranked order. With this ranked order, we can use certain non-parametric tests 
+# such as the Wilcoxon ranked sum test as well as gene set enrichment analysis (GSEA) - as shown below.
+
+
+
+
+
+
+
+
+
+# From Enrichment_Analysis.R
+
+
+###################################################################
+# category_to_proteins = read.csv(text="GO_id,GO_desc,p.adjust,avg_peptide_length, number_proteins")
+# # Iterate over each enriched category, seeing if the length of the proteins in that category are correlated
+# # with the p-value of that category
+# 
+# enrich_results <- goEnrichOutput@result %>% filter(p.adjust < 0.05) # Should we use a lower threshold?
+# if (nrow(enrich_results) > 0) { # Make sure there is actually stuff to iterate over.
+#   for (i in 1:nrow(enrich_results)) {
+#     row <- enrich_results[i,]
+#     cat_gene_syms <- strsplit(row$geneID, split = '/' ) # Gene symbols of genes in category.
+#     
+#     # Get the peptide ids of all the genes that were in this enriched category. 
+#     peptide_ids <- with(universeDf[universeDf$SYMBOL %in% cat_gene_syms[[1]],], get(fromType))
+#     # Now get their HMM annotations and other data.
+#     df <- proteins[proteins$ensembl_peptide_id %in% peptide_ids,]
+#     
+#     # mean(df$peptide_length())
+#     mean <- mean(unlist(lapply(as.character(df$peptide_seq), function(x){length(unlist(strsplit(x, "")))})))
+#     number_proteins <- length(peptide_ids)
+#     category_to_proteins[i,] <- list(row$ID, row$Description, row$p.adjust, mean, number_proteins)
+#   }
+#   
+#   # Make Avg length of peptide in category vs adjusted p-value of categories.
+#   # This is a control to make sure that categories with longer peptides aren't 
+#   # more significant just based on the idea.
+#   # Are synaptic categories below the line? Play with residuals to check.
+#   
+#   # Check if the slopes are significantly different? <- Do this
+#   # Check if the sum of the residuals is significantly different?
+#   # What do I do?
+#   
+#   # hist(category_to_proteins$number_proteins)
+#   
+#   # Make sure category has at least 20 proteins.
+#   df <- category_to_proteins %>% filter(category_to_proteins$number_proteins > 20)
+#   
+#   
+#   df$synaptic_cat = df$GO_id %in% synapse_cats # True or False, depending on whether or not the category is a synaptic category
+#   
+#   # Make two linear regression.
+#   x = df$avg_peptide_length
+#   y = df$p.adjust
+#   fit <- lm(y ~ x)
+#   
+#   
+#   # df$synapse <- ifelse(df$GO_id %in% synapse_cats, TRUE, FALSE)
+#   p <- ggplot(df, aes(x = avg_peptide_length, y = p.adjust)) + 
+#     geom_point(alpha = 0.5,  aes(size = number_proteins, color = synaptic_cat)) +
+#     stat_smooth(method = "lm", col = "red") +
+#     labs(title = paste("Avg Length of Peptides in Enriched Category VS p-value of Enriched Category \n",
+#                        "Adj.R2 = ",signif(summary(fit)$adj.r.squared, 5),
+#                        "Intercept =",signif(fit$coef[[1]],5 ),
+#                        "  p.val =",signif(summary(fit)$coef[2,4], 5))) +
+#     xlab("Average Peptide Length of Category") + 
+#     ylab("Adjusted p-value of Category") +
+#     scale_size_continuous(name = "Number of Proteins") +
+#     scale_color_discrete(name = "Synaptic Category") +
+#     theme_light() +
+#     theme(plot.title = element_text(hjust = 0.5),
+#           legend.title =) +
+#     # geom_text(aes(label = GO_desc), color ='red', data = df[df$GO_id %in% synapse_cats,]) +
+#     geom_text_repel(mapping = aes(label = GO_desc), 
+#                     arrow = arrow(length = unit(0.03, "npc"), type = 'closed', ends ="first"),
+#                     color ='#00CCCC', 
+#                     data = df[df$synaptic_cat == TRUE,]) 
+#   print(p)
+# } # for (i in 1:nrow(enrich_results)) {
+
+#########################################
+# End of clusterProfiler Part 1 - GO
+#########################################
+
+#########################################
+# clusterProfiler Part 2 - KEGG
+#########################################
+
+# kegg_enrich_output <- enrichKEGG(gene = sigDf$ENTREZID,
+#                                  organism = "dme",
+#                                  keyType = "ncbi-proteinid",
+#                                  pvalueCutoff = 0.05)
+# 
+# kegg_result <- kegg_enrich_output@result
+# if (nrow(goEnrichOutput) != 0)
+# {
+#   write.csv(goEnrichOutput, file = paste0(outputDir, group_name, "Enriched_KEGG.csv"), row.names = FALSE)
+# }
+#########################################
+# End of clusterProfiler Part 2 - KEGG
+#########################################
+##############################################################################
+
