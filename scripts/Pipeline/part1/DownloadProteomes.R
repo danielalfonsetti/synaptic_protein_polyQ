@@ -15,23 +15,14 @@
 # Load libraries and set 'global' variables 
 #########################################
 rm(list = ls())
-source("C:/UROPs/polyQ_neuronal_proteins/scripts/ConstantsAndFunctions.R")
-
-# if (!requireNamespace("BiocManager", quietly = TRUE))
-#   install.packages("BiocManager")
-# BiocManager::install("org.Hs.eg.db")
-# BiocManager::install("org.Dm.eg.db")
-# BiocManager::install("org.Mm.eg.db")
-# BiocManager::install("org.Ce.eg.db")
-# BiocManager::install("biomaRt")
-# BiocManager::install("clusterProfiler")
+source("../../ConstantsAndFunctions.R", chdir=T)
 
 library(biomaRt)
 library(org.Dm.eg.db)
-library(org.Hs.eg.db) 
+library(org.Hs.eg.db)
 library(org.Mm.eg.db)
 library(org.Ce.eg.db)
-
+library(dplyr)
 
 #########################################
 # Set constants
@@ -40,6 +31,9 @@ args = commandArgs(trailingOnly=TRUE)
 if (length(args) != 0) {
   kSpecies = unlist(strsplit(args[1],","))
 }
+
+kOutputBaseDir <- "../../../output/"
+ 
 #########################################
 # Main - Download proteomes
 #########################################

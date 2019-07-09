@@ -17,19 +17,6 @@ rm(list = ls())
 #   }
 # }
 # invisible(lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""), detach_helper))
-.libPaths(c("C:/Users/danie/Documents/R/win-library/3.6",
-            .libPaths()))
-
-# https://stackoverflow.com/questions/5595512/what-is-the-difference-between-require-and-library
-Packages <- c("dplyr", "reshape2", "GO.db", "org.Dm.eg.db", "org.Hs.eg.db", "org.Mm.eg.db", "org.Ce.eg.db", "ggplot2")
-
-
-for (package in Packages) {
-  if (!require(package, character.only=T, quietly=T)) {
-    install.packages(package)
-    suppressPackageStartupMessages(library(package, character.only=T))
-  }
-}
 
 Packages <- c("dplyr", "GO.db", "org.Dm.eg.db", "org.Hs.eg.db", "org.Mm.eg.db", "org.Ce.eg.db")
 invisible(lapply(Packages, library, character.only = TRUE))
@@ -51,11 +38,10 @@ kTrainingSetMap <- list("flyQ"= c("FBpp0289769","FBpp0307700", "FBpp0086727", "F
                         "wormQ" =  NA)
 
 
-kOutputBaseDir <- "C:/UROPs/polyQ_neuronal_proteins/output/"
-kNeuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/data/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+kNeuronalTranscripts <- as.vector(read.table("../data/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
 kFlyNeuronalTranscripts <- kNeuronalTranscripts
 
-# TODO: Down these
+# TODO: Download these
 kWormNeuronalTranscripts <- NA 
 kHumanNeuronalTranscripts <- NA
 kMouseNeuronalTranscripts <- NA 
@@ -64,7 +50,6 @@ kMouseNeuronalTranscripts <- NA
 # Transcription factor categories
 # "GO:0003676" is nucleic acid binding
 kTranscriptionCats <- c("GO:0003676", get("GO:0003676", GOMFOFFSPRING))
-
 
 # Nucleus related categories
 # "GO:0009295" is nucleoid

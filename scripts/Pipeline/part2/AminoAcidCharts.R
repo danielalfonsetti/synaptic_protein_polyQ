@@ -10,7 +10,7 @@
 # Import libraries and set 'global' variables
 ####################################################
 rm(list = ls())
-source("C:/UROPs/polyQ_neuronal_proteins/scripts/ConstantsAndFunctions.R")
+source("../../ConstantsAndFunctions.R", chdir=T)
 
 library(ggplot2)
 library(reshape2)

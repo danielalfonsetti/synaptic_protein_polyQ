@@ -9,9 +9,9 @@
 # Load libraries
 #########################################
 rm(list = ls())
-source("C:/UROPs/polyQ_neuronal_proteins/scripts/ConstantsAndFunctions.R")
+kOutputBaseDir <- "../../../output/"
+source("../../ConstantsAndFunctions.R", chdir=T)
 library(clusterProfiler)
-
 #########################################
 # Setup environment
 #########################################

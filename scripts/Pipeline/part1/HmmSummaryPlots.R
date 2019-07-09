@@ -11,7 +11,9 @@
 # Load Libraries
 #########################################
 rm(list = ls())
-source("C:/UROPs/polyQ_neuronal_proteins/scripts/ConstantsAndFunctions.R")
+source("../../ConstantsAndFunctions.R", chdir=T)
+kOutputBaseDir <- "../../../output/"
+
 library(RColorBrewer)
 library(stringr)
 library(reshape2)

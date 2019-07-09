@@ -9,7 +9,8 @@
 # Load libraries
 #########################################
 rm(list = ls())
-source("C:/UROPs/polyQ_neuronal_proteins/scripts/ConstantsAndFunctions.R")
+source("../../ConstantsAndFunctions.R", chdir=T)
+kOutputBaseDir <- "../../../output/"
 
 # Efficiency tools
 library(doParallel)
@@ -304,7 +305,7 @@ for (model in kModels) {
       dir.create(outputAADir, recursive = TRUE)
 
       # Train model
-      proteins <- read.csv("C:/UROPs/polyQ_neuronal_proteins/output/fly_prots.csv", stringsAsFactors = FALSE)
+      proteins <- read.csv(paste0(kOutputBaseDir, "fly_prots.csv"), stringsAsFactors = FALSE)
       trainingSetIDs <- kTrainingSetMap[["flyQ"]]
       print(paste0("TrainingSetIDs: ", trainingSetIDs))
       trainingSet <- proteins %>% filter(ensembl_peptide_id %in% trainingSetIDs)

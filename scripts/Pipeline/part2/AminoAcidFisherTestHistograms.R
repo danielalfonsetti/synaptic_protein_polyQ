@@ -14,15 +14,9 @@
 # for each of the 20 amino acids.
 ####################################################
 rm(list = ls())
+kOutputBaseDir <- "../../../output/"
+source("../../ConstantsAndFunctions.R", chdir=T)
 
-
-# https://stackoverflow.com/questions/10382141/temporarily-change-current-working-directory-in-bash-to-run-a-command
-# Change directory both form bash and from here
-source("../ConstantsAndFunctions.R", chdir = TRUE)
-
-# library(GO.db)
-# library(biomaRt)
-# library(biomartr)
 library(ggplot2)
 library(reshape2)
 library(dplyr)
