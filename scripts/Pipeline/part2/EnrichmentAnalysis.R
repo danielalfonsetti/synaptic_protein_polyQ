@@ -9,14 +9,13 @@
 # Load libraries
 #########################################
 rm(list = ls())
-kOutputBaseDir <- "../../../output/"
 source("../../ConstantsAndFunctions.R", chdir=T)
+
+kOutputBaseDir <- "../../../output/"
 library(clusterProfiler)
 #########################################
 # Setup environment
 #########################################
-
-setwd("C:/UROPs/polyQ_neuronal_proteins")
 
 args = commandArgs(trailingOnly=TRUE)
 if (length(args) != 0) {

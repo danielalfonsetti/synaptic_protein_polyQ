@@ -1,0 +1,6 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0019935","cyclic-nucleotide-mediated signaling","8/87","42/2428",8.56241145594324e-05,0.0376073324897364,0.0360315525898087,"rk/CngB/CG43373/CG10738/CG31183/Lgr1/CG12290/CG34357",8
+"GO:0098609","cell-cell adhesion","10/87","69/2428",0.000124161348018364,0.0376073324897364,0.0360315525898087,"kirre/brn/rk/stan/Nlg4/beat-IIa/ft/Dscam3/Nlg2/Lar",10
+"GO:0007155","cell adhesion","12/87","101/2428",0.000182559866455031,0.0376073324897364,0.0360315525898087,"kirre/brn/rk/stan/Nlg4/beat-IIa/ft/Dscam3/Nrx-IV/Nlg2/Lar/Pgant3",12
+"GO:0022610","biological adhesion","12/87","101/2428",0.000182559866455031,0.0376073324897364,0.0360315525898087,"kirre/brn/rk/stan/Nlg4/beat-IIa/ft/Dscam3/Nrx-IV/Nlg2/Lar/Pgant3",12
+"GO:0019932","second-messenger-mediated signaling","9/87","61/2428",0.000241167761036056,0.039744447018742,0.0380791201635878,"rk/CngB/CG43373/olf186-F/CG10738/CG31183/Lgr1/CG12290/CG34357",9

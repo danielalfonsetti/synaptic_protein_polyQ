@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-echo "Running RunPipeline.sh script! "
 
 kModels="adjusted"
 kSpecies="fly"

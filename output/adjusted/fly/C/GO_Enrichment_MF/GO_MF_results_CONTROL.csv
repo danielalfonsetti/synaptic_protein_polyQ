@@ -1,0 +1,10 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0016810","hydrolase activity, acting on carbon-nitrogen (but not peptide) bonds","1/2","26/2693",0.0192196597970967,0.138359266415764,0.1294589627282,"NitFhit",1
+"GO:0004930","G protein-coupled receptor activity","1/2","71/2693",0.052043738954496,0.138359266415764,0.1294589627282,"moody",1
+"GO:0016462","pyrophosphatase activity","1/2","119/2693",0.0864403282076861,0.138359266415764,0.1294589627282,"NitFhit",1
+"GO:0016817","hydrolase activity, acting on acid anhydrides","1/2","119/2693",0.0864403282076861,0.138359266415764,0.1294589627282,"NitFhit",1
+"GO:0016818","hydrolase activity, acting on acid anhydrides, in phosphorus-containing anhydrides","1/2","119/2693",0.0864403282076861,0.138359266415764,0.1294589627282,"NitFhit",1
+"GO:0004888","transmembrane signaling receptor activity","1/2","146/2693",0.10550908221138,0.138359266415764,0.1294589627282,"moody",1
+"GO:0038023","signaling receptor activity","1/2","171/2693",0.12298601459179,0.138359266415764,0.1294589627282,"moody",1
+"GO:0060089","molecular transducer activity","1/2","171/2693",0.12298601459179,0.138359266415764,0.1294589627282,"moody",1
+"GO:0016787","hydrolase activity","1/2","443/2693",0.301991735769749,0.301991735769749,0.282565366802105,"NitFhit",1

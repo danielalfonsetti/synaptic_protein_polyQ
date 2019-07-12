@@ -7,9 +7,6 @@
 ####################################################
 print("Running ConstantsAndFunctions.R!")
 
-# Remove everything in environment
-rm(list = ls()) 
-
 # Detach all libraries
 # detach_helper <- function(x){
 #   if (x %in% search()){

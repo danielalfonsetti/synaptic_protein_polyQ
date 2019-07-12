@@ -1,0 +1,12 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0044456","synapse part","25/211","129/2522",3.67614054662155e-05,0.00724199687684445,0.00599791352343516,"nAChRalpha5/clumsy/Rim/jeb/Syn/gukh/RhoGAP100F/spas/Grip/ena/X11Lbeta/Rph/DCTN1-p150/RtGEF/Ten-a/Rgk1/GluRIIA/CanA1/Tomosyn/Spn/Rab3-GEF/Ank2/Neto/Dop1R2/Nrx-1",25
+"GO:0045202","synapse","28/211","166/2522",0.000167507502334165,0.0164994889799152,0.0136650857167345,"nAChRalpha5/clumsy/Rim/jeb/Syn/gukh/RhoGAP100F/spas/Grip/ena/X11Lbeta/Rph/DCTN1-p150/RtGEF/Ten-a/Rgk1/Nlg4/GluRIIA/CanA1/Tomosyn/Spn/Nlg3/Rab3-GEF/Ank2/Neto/Dop1R2/Dg/Nrx-1",28
+"GO:0030424","axon","20/211","107/2522",0.000386290711445909,0.0178903497301175,0.0148170142034101,"Mkk4/jeb/Syn/gukh/pyd/ckn/spas/Grip/ena/DCTN1-p150/plum/hdc/Rab3-GEF/Ank2/Ptp4E/Nrx-1/CG44153/trio/InR/Apc",20
+"GO:0097458","neuron part","36/211","248/2522",0.000445741980475007,0.0178903497301175,0.0148170142034101,"brat/Mkk4/5-HT2A/nAChRalpha5/Rim/jeb/Syn/gukh/pyd/RhoGAP100F/Wnt5/ckn/spas/Grip/ena/X11Lbeta/Rph/DCTN1-p150/Ten-a/plum/Rgk1/CanA1/hdc/Tomosyn/Spn/Rab3-GEF/Ank2/Ptp4E/Dop1R2/Nrx-1/CG44153/trio/dpr17/InR/Apc/Oamb",36
+"GO:0031594","neuromuscular junction","11/211","42/2522",0.000454069790104504,0.0178903497301175,0.0148170142034101,"spas/Grip/RtGEF/Ten-a/GluRIIA/Tomosyn/Rab3-GEF/Ank2/Neto/Dg/Nrx-1",11
+"GO:0098793","presynapse","18/211","95/2522",0.000642766907321937,0.0211041801237369,0.017478749234193,"Rim/jeb/Syn/gukh/RhoGAP100F/spas/Grip/ena/Rph/DCTN1-p150/Ten-a/Rgk1/CanA1/Tomosyn/Rab3-GEF/Ank2/Dop1R2/Nrx-1",18
+"GO:0043195","terminal bouton","10/211","38/2522",0.000794470448067993,0.0223586683241992,0.0185177322482014,"jeb/Syn/gukh/spas/Grip/ena/DCTN1-p150/Rab3-GEF/Ank2/Nrx-1",10
+"GO:0045177","apical part of cell","15/211","80/2522",0.00203698088209226,0.0477634543829408,0.0395582977790854,"brat/sdt/RhoGEF64C/Np/pyd/baz/Btk29A/rho/Spn/Ptp4E/loco/Asap/btsz/Apc/mib1",15
+"GO:0043679","axon terminus","10/211","43/2522",0.00221997882120992,0.0477634543829408,0.0395582977790854,"jeb/Syn/gukh/spas/Grip/ena/DCTN1-p150/Rab3-GEF/Ank2/Nrx-1",10
+"GO:0099738","cell cortex region","9/211","37/2522",0.0026445781724151,0.0477634543829408,0.0395582977790854,"brat/sdt/RhoGEF64C/Rim/baz/Ten-a/Spn/loco/mib1",9
+"GO:0044306","neuron projection terminus","10/211","44/2522",0.0026669949147835,0.0477634543829408,0.0395582977790854,"jeb/Syn/gukh/spas/Grip/ena/DCTN1-p150/Rab3-GEF/Ank2/Nrx-1",10

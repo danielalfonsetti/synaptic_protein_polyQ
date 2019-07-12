@@ -1,0 +1,3 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0008061","chitin binding","6/110","20/2693",9.83865151882118e-05,0.0171192536427488,0.0165703604527515,"CG14880/CG42494/Cht6/mtg/Cda5/thw",6
+"GO:0004930","G protein-coupled receptor activity","10/110","71/2693",0.000486123504673845,0.0422927449066245,0.0409367161830606,"CG32447/mAChR-A/mthl1/Pdfr/AstC-R2/Oamb/AstC-R1/CCKLR-17D3/GABA-B-R3/CG44153",10

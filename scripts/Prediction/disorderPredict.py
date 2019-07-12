@@ -2,7 +2,8 @@
 
 import urllib.request
 import json
-import pandas
+import pandas as pd 
+
 
 def getDisorder(protein= 'A4V4D2'):
 
@@ -12,7 +13,6 @@ def getDisorder(protein= 'A4V4D2'):
 
     path = "http://mobidb.bio.unipd.it/ws/" + protein + "/consensus"
     request = urllib.request.Request(path, headers={"Accept" : acceptHeader})
-
 
     # Send request
     response = urllib.request.urlopen(request)
@@ -27,6 +27,17 @@ def getDisorder(protein= 'A4V4D2'):
     except IndexError:
         return [None]
     
+    
+fly_prots_df = pd.read_csv("../../output/fly_prots.csv")
+fly_uniprot_ids = fly_prots_df['uniprotsptrembl']
+
+disorder_dict = {str(_id): getDisorder(str(_id)) for _id in fly_uniprot_ids[1:5] if str(_id) != 'nan'}
+print(disorder_dict)
+
+
+# We want to see if polyQ regions have more disorder
+
+
 # Figure
 # handle data
 # =============================================================================
@@ -36,7 +47,7 @@ def getDisorder(protein= 'A4V4D2'):
 # =============================================================================
 
 
-#print(getDisorder("Q9W5X6")) # bad
+# # bad
 
 
 # bad X1

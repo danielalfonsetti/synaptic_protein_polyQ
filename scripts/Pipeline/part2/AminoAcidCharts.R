@@ -180,19 +180,19 @@ for (hmmType in kModels) {
   # First 11 columns (general protein information, not polyAA annotation specific)
   # And 15th column (indices of polyAA regions)
   
-  mergedPolyAaDf <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",  hmmType, "/fly/", kCandidateAAs[1], "/fly_prots_w_HMM_", kCandidateAAs[1], ".csv"))
+  mergedPolyAaDf <- read.csv(paste0("../../output/",  hmmType, "/fly/", kCandidateAAs[1], "/fly_prots_w_HMM_", kCandidateAAs[1], ".csv"))
   mergedPolyAaDf <- mergedPolyAaDf[, c(1:12, 17)]
   newName <- paste0("indiciesPoly", kCandidateAAs[1])
   colnames(mergedPolyAaDf)[colnames(mergedPolyAaDf)=="indiciesPolyAA"] <- newName
   
   # Iterate over the rest of the AAs and append their results.
   for (candidateAA in kCandidateAAs[2:length(kCandidateAAs)]) {
-    df <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/", candidateAA, "/fly_prots_w_HMM_", candidateAA, ".csv"))
+    df <- read.csv(paste0("../../output/", hmmType, "/fly/", candidateAA, "/fly_prots_w_HMM_", candidateAA, ".csv"))
     newName <- paste0("indiciesPoly", candidateAA)
     colnames(df)[colnames(df)=="indiciesPolyAA"] <- newName
     mergedPolyAaDf = merge(x = mergedPolyAaDf, y = df[, c("ensembl_peptide_id",newName)], by = "ensembl_peptide_id")
   }
-  write.csv(mergedPolyAaDf, paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"), row.names = FALSE)
+  write.csv(mergedPolyAaDf, paste0("../../output/", hmmType, "/fly/mergedPolyAaDf.csv"), row.names = FALSE)
 }
 
 ####################################################
@@ -206,11 +206,11 @@ for (hmmType in kModels) {
 kLocations = list("AZ" = kAZcats, "Synapse" =  kSynapseCats, "PSD" = kPSDcats)
 
 for (hmmType in kModels) {
-  dir.create(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",hmmType,"/fly/AA_charts"))
-  setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",hmmType,"/fly/AA_charts/"))
+  dir.create(paste0("../../output/",hmmType,"/fly/AA_charts"))
+  setwd(paste0("../../output/",hmmType,"/fly/AA_charts/"))
   
   for (location in names(kLocations)) {
-    proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
+    proteins <- read.csv(paste0("../../output/", hmmType, "/fly/mergedPolyAaDf.csv"))
     locationCats <- kLocations[[location]]
     proteins <- AnnotateByCategorySet(proteins, locationCats)
     proteins <- proteins %>% filter(proteins$inSet)
@@ -226,11 +226,11 @@ for (hmmType in kModels) {
 # TODO: Generalize this to all (by downloading transcriptome of other organisms)
 ####################################################
 for (hmmType in kModels) {
-  dir.create(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/AA_charts"))
-  setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/AA_charts/"))
+  dir.create(paste0("../../output/", hmmType, "/fly/AA_charts"))
+  setwd(paste0("../../output/", hmmType, "/fly/AA_charts/"))
   
-  proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
-  # kNeuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+  proteins <- read.csv(paste0("../../output/", hmmType, "/fly/mergedPolyAaDf.csv"))
+  # kNeuronalTranscripts <- as.vector(read.table("../../output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
   proteins <- proteins[proteins$ensembl_peptide_id %in% kNeuronalTranscripts$V1,]
   proteins <- proteins %>% filter(!is.na(proteins$indiciesPolyQ)) # Only plot proteins that have a polyQ region
   
@@ -249,10 +249,10 @@ for (hmmType in kModels) {
 
 # Check for interval overlaps
 for (hmmType in kModels) {
-  dir.create(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/AA_charts"))
-  setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/AA_charts/"))
+  dir.create(paste0("../../output/", hmmType, "/fly/AA_charts"))
+  setwd(paste0("../../output/", hmmType, "/fly/AA_charts/"))
   
-  proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
+  proteins <- read.csv(paste0("../../output/", hmmType, "/fly/mergedPolyAaDf.csv"))
 
   intervalData <- proteins[,(ncol(proteins)-20+1):ncol(proteins)] # Only get the columns with polyAA intervals
 
@@ -274,7 +274,7 @@ for (hmmType in kModels) {
   ####################################################
   # [FLY SPECIFIC]
   # Plot proteins with overlapping polyAAs that ALSO have neuronally expressed proteins (based off transcriptome)
-  # kNeuronalTranscripts <- as.vector(read.table("C:/UROPs/polyQ_neuronal_proteins/output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
+  # kNeuronalTranscripts <- as.vector(read.table("../../output/fly_CNS_transcriptome_mh-l.txt", sep = "\t"))
   if (fly %in% kSpecies) {
     proteins <- proteins[proteins$ensembl_peptide_id %in% kNeuronalTranscripts$V1,]
     proteins <- proteins %>% filter(!is.na(proteins$indiciesPolyQ)) # Only plot proteins that have a polyQ region
@@ -302,10 +302,10 @@ if ("fly" %in% kSpecies) {
   
   
   for (hmmType in kModels) {
-    proteins <- read.csv(paste0("C:/UROPs/polyQ_neuronal_proteins/output/", hmmType, "/fly/mergedPolyAaDf.csv"))
+    proteins <- read.csv(paste0("../../output/", hmmType, "/fly/mergedPolyAaDf.csv"))
     
-    dir.create(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",hmmType,"/fly/AA_charts"))
-    setwd(paste0("C:/UROPs/polyQ_neuronal_proteins/output/",hmmType,"/fly/AA_charts"))
+    dir.create(paste0("../../output/",hmmType,"/fly/AA_charts"))
+    setwd(paste0("../../output/",hmmType,"/fly/AA_charts"))
     
     # Known AZ proteins
     AZproteins <- proteins %>% filter(proteins$external_gene_name %in% c("brp", "Rbp", "Rim"))
@@ -336,7 +336,7 @@ if ("fly" %in% kSpecies) {
 
 ###################################33333
 
-a <- read.csv("C:/UROPs/polyQ_neuronal_proteins/output/adjusted/fly/mergedPolyAaDf.csv")
+a <- read.csv("../../output/adjusted/fly/mergedPolyAaDf.csv")
 b <- a %>% filter(!is.na(a$uniprotsptrembl))
 b$disorderedPred <-lapply(b$uniprotsptrembl, function(proteinName) paste0(lapply(getDisorder(proteinName), function(interval) paste0(interval[1], ":", interval[2])), collapse="; "))
 

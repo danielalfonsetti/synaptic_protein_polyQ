@@ -1,0 +1,175 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0009887","animal organ morphogenesis","28/88","236/2428",3.67591963840184e-09,3.53623469214257e-06,2.75887442334791e-06,"mthl1/ena/Prosap/Fas2/eys/f/robo1/tinc/CG43658/btsz/Dab/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/dia/prom/GEFmeso/Exn/pyd/spg/ex/Dys/wts/pk/mwh/tau",28
+"GO:0009653","anatomical structure morphogenesis","37/88","411/2428",1.2750350126579e-08,6.13291841088448e-06,4.78473665276358e-06,"DAAM/Myo10A/mthl1/ena/Prosap/Fas2/eys/f/robo1/tinc/CG43658/btsz/lva/Dab/sdt/Mp/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/dia/CG34401/prom/GEFmeso/Exn/pyd/spg/ex/RhoBTB/spz3/Dys/wts/pk/mwh/NT1/tau",37
+"GO:0045664","regulation of neuron differentiation","14/88","67/2428",4.89394732478859e-08,1.36377280165228e-05,1.06397856174425e-05,"DAAM/Prosap/Fas2/robo1/tinc/lva/Dab/mas/PDZ-GEF/CG34401/spg/wts/pk/Vmat",14
+"GO:0048513","animal organ development","32/88","337/2428",5.67057297984315e-08,1.36377280165228e-05,1.06397856174425e-05,"DAAM/mthl1/ena/Prosap/Fas2/eys/f/robo1/tinc/CG43658/btsz/Dab/mas/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/dia/prom/GEFmeso/Exn/pyd/spg/pico/ex/rdo/Dys/wts/pk/mwh/tau",32
+"GO:0051128","regulation of cellular component organization","25/88","222/2428",9.70787583652161e-08,1.86779531094676e-05,1.45720325714524e-05,"stnB/DAAM/Nrx-1/mthl1/ena/Prosap/Eps-15/Fas2/Mekk1/robo1/CG43658/lva/sdt/nwk/mas/PDZ-GEF/dia/CG34401/RtGEF/pyd/ex/RhoBTB/wts/pk/mwh",25
+"GO:0060429","epithelium development","26/88","250/2428",2.60062338087348e-07,3.55000278101635e-05,2.7696159129715e-05,"Myo10A/mthl1/ena/Fas2/f/robo1/CG43658/btsz/Dab/sdt/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/dia/GEFmeso/Exn/pyd/pico/ex/rdo/Dys/wts/pk/mwh",26
+"GO:0050767","regulation of neurogenesis","14/88","76/2428",2.63700926496342e-07,3.55000278101635e-05,2.7696159129715e-05,"DAAM/Prosap/Fas2/robo1/tinc/lva/Dab/mas/PDZ-GEF/CG34401/spg/wts/pk/Vmat",14
+"GO:0048518","positive regulation of biological process","31/88","342/2428",3.04636123592049e-07,3.55000278101635e-05,2.7696159129715e-05,"DAAM/Nrx-1/CG43102/ena/Prosap/Mekk1/robo1/CG43658/Shab/btsz/lva/Dab/sdt/Mp/nwk/mas/RhoGEF64C/l(3)psg2/dia/Exn/RtGEF/pyd/spg/pico/ex/RhoBTB/ca/wts/pk/Vmat/Rab3-GEF",31
+"GO:0030182","neuron differentiation","26/88","253/2428",3.32120842298827e-07,3.55000278101635e-05,2.7696159129715e-05,"DAAM/ena/Prosap/Fas2/eys/f/robo1/tinc/lva/Dab/sdt/Mp/mas/RhoGEF64C/pot/PDZ-GEF/CG34401/prom/spg/ex/wts/pk/Vmat/mwh/NT1/tau",26
+"GO:0048522","positive regulation of cellular process","28/88","293/2428",4.78223153774117e-07,4.4149524930564e-05,3.44442622557087e-05,"DAAM/Nrx-1/CG43102/ena/Prosap/Mekk1/robo1/CG43658/lva/Dab/sdt/Mp/nwk/mas/RhoGEF64C/l(3)psg2/dia/Exn/RtGEF/pyd/spg/pico/ex/RhoBTB/wts/pk/Vmat/Rab3-GEF",28
+"GO:0051960","regulation of nervous system development","17/88","118/2428",5.04828247646782e-07,4.4149524930564e-05,3.44442622557087e-05,"DAAM/ena/Prosap/Eps-15/Fas2/robo1/tinc/lva/Dab/nwk/mas/PDZ-GEF/CG34401/spg/wts/pk/Vmat",17
+"GO:0007015","actin filament organization","10/88","39/2428",6.2759008714593e-07,5.03118053195321e-05,3.92519063276358e-05,"DAAM/ena/f/CG43658/btsz/nwk/dia/pico/RhoBTB/mwh",10
+"GO:0007444","imaginal disc development","19/88","150/2428",7.70786959292128e-07,5.70382349876174e-05,4.44996843704686e-05,"mthl1/Fas2/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/pyd/pico/ex/rdo/Dys/wts/pk/mwh",19
+"GO:0007399","nervous system development","31/88","360/2428",9.97247104304095e-07,6.85251224528956e-05,5.34614425089338e-05,"DAAM/Nrx-1/Syn/ena/Prosap/Eps-15/Fas2/eys/f/robo1/tinc/lva/Dab/sdt/Mp/nwk/mas/RhoGEF64C/pot/PDZ-GEF/CG34401/prom/spg/ex/spz3/wts/pk/Vmat/mwh/NT1/tau",31
+"GO:0009888","tissue development","26/88","271/2428",1.32505429129763e-06,7.96688892642701e-05,6.21555072167902e-05,"Myo10A/mthl1/ena/Fas2/f/robo1/CG43658/btsz/Dab/sdt/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/dia/GEFmeso/Exn/pyd/pico/ex/rdo/Dys/wts/pk/mwh",26
+"GO:0048699","generation of neurons","26/88","271/2428",1.32505429129763e-06,7.96688892642701e-05,6.21555072167902e-05,"DAAM/ena/Prosap/Fas2/eys/f/robo1/tinc/lva/Dab/sdt/Mp/mas/RhoGEF64C/pot/PDZ-GEF/CG34401/prom/spg/ex/wts/pk/Vmat/mwh/NT1/tau",26
+"GO:0050793","regulation of developmental process","23/88","221/2428",1.55926798602645e-06,8.82362236798496e-05,6.88395092282884e-05,"DAAM/ena/Prosap/Eps-15/Fas2/robo1/tinc/btsz/lva/Dab/nwk/mas/PDZ-GEF/dia/CG34401/RtGEF/pyd/spg/pico/ex/wts/pk/Vmat",23
+"GO:0035295","tube development","21/88","189/2428",1.69241124213409e-06,9.04499786073888e-05,7.05666207977549e-05,"mthl1/Fas2/f/robo1/CG43658/btsz/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/pyd/pico/ex/rdo/Dys/wts/pk/mwh",21
+"GO:0110053","regulation of actin filament organization","7/88","19/2428",2.28927239778582e-06,0.000115909476140524,9.04294304499331e-05,"DAAM/ena/CG43658/nwk/dia/RhoBTB/mwh",7
+"GO:0002009","morphogenesis of an epithelium","20/88","180/2428",3.17133933590391e-06,0.000152541422056978,0.00011900868139471,"Myo10A/mthl1/ena/Fas2/f/CG43658/btsz/Dab/sdt/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/pyd/Dys/pk/mwh",20
+"GO:0030036","actin cytoskeleton organization","14/88","94/2428",3.93043853446172e-06,0.000180051517626294,0.000140471312033645,"DAAM/mthl1/ena/f/CG43658/RhoGAP18B/btsz/nwk/dia/CG34347/pico/Pi3K68D/RhoBTB/mwh",14
+"GO:0008064","regulation of actin polymerization or depolymerization","6/88","14/2428",4.54786053148532e-06,0.000190219210056038,0.000148403869974784,"DAAM/ena/nwk/dia/RhoBTB/mwh",6
+"GO:0030832","regulation of actin filament length","6/88","14/2428",4.54786053148532e-06,0.000190219210056038,0.000148403869974784,"DAAM/ena/nwk/dia/RhoBTB/mwh",6
+"GO:0022008","neurogenesis","26/88","290/2428",4.95986260747906e-06,0.000198807826183119,0.000155104475400551,"DAAM/ena/Prosap/Fas2/eys/f/robo1/tinc/lva/Dab/sdt/Mp/mas/RhoGEF64C/pot/PDZ-GEF/CG34401/prom/spg/ex/wts/pk/Vmat/mwh/NT1/tau",26
+"GO:0023051","regulation of signaling","28/88","329/2428",5.34953553094752e-06,0.00020585012723086,0.000160598687729077,"CG32447/Nrx-1/CG43102/Prosap/Eps-15/Fas2/Mekk1/CG43658/Shab/Dab/Mp/nwk/RhoGEF64C/GEFmeso/Exn/kek6/RtGEF/pyd/spg/ex/pns/Pi3K68D/spz3/Dys/ca/wts/NT1/Rab3-GEF",28
+"GO:0048729","tissue morphogenesis","20/88","187/2428",5.80384454886563e-06,0.0002114146580655,0.000164939983806436,"Myo10A/mthl1/ena/Fas2/f/CG43658/btsz/Dab/sdt/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/pyd/Dys/pk/mwh",20
+"GO:0045595","regulation of cell differentiation","15/88","111/2428",5.97950594765905e-06,0.0002114146580655,0.000164939983806436,"DAAM/Prosap/Fas2/robo1/tinc/lva/Dab/mas/PDZ-GEF/CG34401/spg/ex/wts/pk/Vmat",15
+"GO:2000026","regulation of multicellular organismal development","20/88","188/2428",6.31051297273991e-06,0.0002114146580655,0.000164939983806436,"DAAM/ena/Prosap/Eps-15/Fas2/robo1/tinc/lva/Dab/nwk/mas/PDZ-GEF/dia/CG34401/pyd/spg/ex/wts/pk/Vmat",20
+"GO:0030029","actin filament-based process","14/88","98/2428",6.53688580974651e-06,0.0002114146580655,0.000164939983806436,"DAAM/mthl1/ena/f/CG43658/RhoGAP18B/btsz/nwk/dia/CG34347/pico/Pi3K68D/RhoBTB/mwh",14
+"GO:0032956","regulation of actin cytoskeleton organization","8/88","30/2428",6.59297270474532e-06,0.0002114146580655,0.000164939983806436,"DAAM/mthl1/ena/CG43658/nwk/dia/RhoBTB/mwh",8
+"GO:0008154","actin polymerization or depolymerization","6/88","15/2428",7.36029520474676e-06,0.000228406580224722,0.000178196620746501,"DAAM/ena/nwk/dia/RhoBTB/mwh",6
+"GO:0060284","regulation of cell development","14/88","100/2428",8.34390985499963e-06,0.000250838790015926,0.000195697622586011,"DAAM/Prosap/Fas2/robo1/tinc/lva/Dab/mas/PDZ-GEF/CG34401/spg/wts/pk/Vmat",14
+"GO:0032970","regulation of actin filament-based process","8/88","31/2428",8.62525435354992e-06,0.000251439232973182,0.000196166071900513,"DAAM/mthl1/ena/CG43658/nwk/dia/RhoBTB/mwh",8
+"GO:0010646","regulation of cell communication","27/88","326/2428",1.42590935311123e-05,0.000403448469909707,0.000314759556894212,"CG32447/Nrx-1/CG43102/Prosap/Eps-15/Fas2/Mekk1/CG43658/Shab/Dab/Mp/RhoGEF64C/GEFmeso/Exn/kek6/RtGEF/pyd/spg/ex/pns/Pi3K68D/spz3/Dys/ca/wts/NT1/Rab3-GEF",27
+"GO:0048666","neuron development","21/88","216/2428",1.49834843194454e-05,0.000411831769008757,0.000321299979541792,"DAAM/ena/Prosap/Fas2/eys/robo1/tinc/lva/Dab/sdt/Mp/mas/RhoGEF64C/pot/PDZ-GEF/CG34401/prom/wts/pk/NT1/tau",21
+"GO:0051239","regulation of multicellular organismal process","23/88","252/2428",1.54436426178724e-05,0.000412688449955368,0.000321968338787808,"DAAM/ena/Prosap/Eps-15/Fas2/robo1/tinc/Shab/btsz/lva/Dab/nwk/mas/PDZ-GEF/dia/CG34401/RtGEF/pyd/spg/ex/wts/pk/Vmat",23
+"GO:1902905","positive regulation of supramolecular fiber organization","5/88","11/2428",2.1727796144328e-05,0.000564922699752527,0.000440737372714249,"DAAM/CG43658/nwk/dia/RhoBTB",5
+"GO:0120036","plasma membrane bounded cell projection organization","20/88","210/2428",3.42439439229547e-05,0.000866912475102169,0.000676341607120962,"DAAM/Myo10A/ena/Prosap/Fas2/f/robo1/lva/Dab/Mp/mas/RhoGEF64C/PDZ-GEF/dia/CG34401/wts/pk/mwh/NT1/tau",20
+"GO:0030833","regulation of actin filament polymerization","5/88","12/2428",3.61875954024744e-05,0.000892627353261034,0.0006964036578128,"DAAM/nwk/dia/RhoBTB/mwh",5
+"GO:1902903","regulation of supramolecular fiber organization","7/88","28/2428",4.11967543954313e-05,0.000990781943210122,0.000772981207472171,"DAAM/ena/CG43658/nwk/dia/RhoBTB/mwh",7
+"GO:0035120","post-embryonic appendage morphogenesis","13/88","101/2428",4.59501347966881e-05,0.0010560204839148,0.000823878548015377,"mthl1/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",13
+"GO:0035107","appendage morphogenesis","13/88","102/2428",5.11162956844985e-05,0.0010560204839148,0.000823878548015377,"mthl1/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",13
+"GO:0035114","imaginal disc-derived appendage morphogenesis","13/88","102/2428",5.11162956844985e-05,0.0010560204839148,0.000823878548015377,"mthl1/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",13
+"GO:0045666","positive regulation of neuron differentiation","7/88","29/2428",5.27199118233339e-05,0.0010560204839148,0.000823878548015377,"Prosap/lva/Dab/mas/spg/pk/Vmat",7
+"GO:0031344","regulation of cell projection organization","10/88","62/2428",5.33821522949202e-05,0.0010560204839148,0.000823878548015377,"DAAM/ena/Prosap/robo1/lva/mas/dia/CG34401/wts/pk",10
+"GO:0120035","regulation of plasma membrane bounded cell projection organization","10/88","62/2428",5.33821522949202e-05,0.0010560204839148,0.000823878548015377,"DAAM/ena/Prosap/robo1/lva/mas/dia/CG34401/wts/pk",10
+"GO:0048583","regulation of response to stimulus","26/88","330/2428",5.3856492120131e-05,0.0010560204839148,0.000823878548015377,"CG43102/Prosap/Eps-15/Fas2/Mekk1/Sytbeta/CG43658/Dab/Mp/RhoGEF64C/dia/CG34401/GEFmeso/Exn/RtGEF/pyd/spg/ex/pns/Pi3K68D/spz3/ca/wts/pk/NT1/Rab3-GEF",26
+"GO:0030030","cell projection organization","20/88","217/2428",5.5554328811562e-05,0.0010560204839148,0.000823878548015377,"DAAM/Myo10A/ena/Prosap/Fas2/f/robo1/lva/Dab/Mp/mas/RhoGEF64C/PDZ-GEF/dia/CG34401/wts/pk/mwh/NT1/tau",20
+"GO:0030041","actin filament polymerization","5/88","13/2428",5.71321597666644e-05,0.0010560204839148,0.000823878548015377,"DAAM/nwk/dia/RhoBTB/mwh",5
+"GO:0007560","imaginal disc morphogenesis","14/88","118/2428",5.77571052135583e-05,0.0010560204839148,0.000823878548015377,"mthl1/Fas2/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",14
+"GO:0048563","post-embryonic animal organ morphogenesis","14/88","118/2428",5.77571052135583e-05,0.0010560204839148,0.000823878548015377,"mthl1/Fas2/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",14
+"GO:0051130","positive regulation of cellular component organization","12/88","89/2428",5.81799227104828e-05,0.0010560204839148,0.000823878548015377,"DAAM/Nrx-1/ena/Prosap/CG43658/lva/sdt/nwk/mas/dia/RhoBTB/pk",12
+"GO:0090066","regulation of anatomical structure size","12/88","89/2428",5.81799227104828e-05,0.0010560204839148,0.000823878548015377,"DAAM/ena/Fas2/Mekk1/btsz/nwk/dpy/dia/pico/RhoBTB/pk/mwh",12
+"GO:0035239","tube morphogenesis","16/88","150/2428",6.11212912661231e-05,0.00106307732201096,0.000829384101754911,"mthl1/Fas2/f/CG43658/btsz/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/pyd/Dys/pk/mwh",16
+"GO:0032535","regulation of cellular component size","10/88","63/2428",6.15848697616645e-05,0.00106307732201096,0.000829384101754911,"DAAM/ena/Mekk1/btsz/nwk/dia/pico/RhoBTB/pk/mwh",10
+"GO:0048736","appendage development","13/88","104/2428",6.29889889341212e-05,0.00106307732201096,0.000829384101754911,"mthl1/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",13
+"GO:0048737","imaginal disc-derived appendage development","13/88","104/2428",6.29889889341212e-05,0.00106307732201096,0.000829384101754911,"mthl1/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",13
+"GO:0007266","Rho protein signal transduction","7/88","30/2428",6.67585454681219e-05,0.00110727104724712,0.000863862847890579,"CG43102/CG43658/RhoGEF64C/GEFmeso/Exn/RtGEF/RhoBTB",7
+"GO:0000902","cell morphogenesis","19/88","204/2428",7.68672164936908e-05,0.0012415341437477,0.00096861127529501,"DAAM/ena/Prosap/Fas2/eys/robo1/lva/Dab/Mp/RhoGEF64C/PDZ-GEF/dia/CG34401/pyd/RhoBTB/wts/pk/NT1/tau",19
+"GO:0060562","epithelial tube morphogenesis","15/88","137/2428",7.91516650549532e-05,0.0012415341437477,0.00096861127529501,"mthl1/Fas2/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/pyd/Dys/pk/mwh",15
+"GO:0007010","cytoskeleton organization","17/88","170/2428",8.02748851580079e-05,0.0012415341437477,0.00096861127529501,"DAAM/mthl1/ena/f/CG43658/RhoGAP18B/btsz/nwk/dia/CG34347/pico/Pi3K68D/RhoBTB/pk/mwh/Rab3-GEF/tau",17
+"GO:0046530","photoreceptor cell differentiation","10/88","65/2428",8.12523176220753e-05,0.0012415341437477,0.00096861127529501,"eys/tinc/Dab/sdt/PDZ-GEF/prom/spg/ex/wts/tau",10
+"GO:0007264","small GTPase mediated signal transduction","12/88","92/2428",8.13062900791113e-05,0.0012415341437477,0.00096861127529501,"CG43102/CG43658/RhoGEF64C/PDZ-GEF/GEFmeso/Exn/RtGEF/spg/pns/RhoBTB/ca/Rab3-GEF",12
+"GO:0046578","regulation of Ras protein signal transduction","9/88","53/2428",8.54732580476433e-05,0.0012585533982845,0.000981889236214956,"CG43102/CG43658/RhoGEF64C/GEFmeso/Exn/RtGEF/pns/ca/Rab3-GEF",9
+"GO:0032271","regulation of protein polymerization","5/88","14/2428",8.6345659341764e-05,0.0012585533982845,0.000981889236214956,"DAAM/nwk/dia/RhoBTB/mwh",5
+"GO:0051495","positive regulation of cytoskeleton organization","5/88","14/2428",8.6345659341764e-05,0.0012585533982845,0.000981889236214956,"DAAM/CG43658/nwk/dia/RhoBTB",5
+"GO:0035023","regulation of Rho protein signal transduction","6/88","22/2428",8.9349707197041e-05,0.00128290176602319,0.0010008851725293,"CG43102/CG43658/RhoGEF64C/GEFmeso/Exn/RtGEF",6
+"GO:0097435","supramolecular fiber organization","10/88","66/2428",9.29401348873133e-05,0.00130795597106378,0.00102043178396813,"DAAM/ena/f/CG43658/btsz/nwk/dia/pico/RhoBTB/mwh",10
+"GO:0009886","post-embryonic animal morphogenesis","15/88","139/2428",9.38138898164248e-05,0.00130795597106378,0.00102043178396813,"mthl1/Fas2/f/CG43658/btsz/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",15
+"GO:0050769","positive regulation of neurogenesis","7/88","32/2428",0.000104028484747998,0.00142964860467963,0.00111537307707252,"Prosap/lva/Dab/mas/spg/pk/Vmat",7
+"GO:0009966","regulation of signal transduction","22/88","267/2428",0.000123905966108393,0.0016612751086209,0.00129608179499585,"CG43102/Prosap/Eps-15/Fas2/Mekk1/CG43658/Dab/Mp/RhoGEF64C/GEFmeso/Exn/RtGEF/pyd/spg/ex/pns/Pi3K68D/spz3/ca/wts/NT1/Rab3-GEF",22
+"GO:0048869","cellular developmental process","30/88","430/2428",0.000124336598566221,0.0016612751086209,0.00129608179499585,"DAAM/ena/Prosap/Fas2/eys/f/robo1/tinc/lva/Dab/sdt/Mp/mas/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/dia/CG34401/prom/pyd/spg/ex/RhoBTB/wts/pk/Vmat/mwh/NT1/tau",30
+"GO:0048569","post-embryonic animal organ development","14/88","127/2428",0.000131185645248574,0.00172877521546751,0.00134874354812161,"mthl1/Fas2/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",14
+"GO:0051056","regulation of small GTPase mediated signal transduction","9/88","56/2428",0.000133595288478674,0.00173673875022276,0.00135495648200988,"CG43102/CG43658/RhoGEF64C/GEFmeso/Exn/RtGEF/pns/ca/Rab3-GEF",9
+"GO:0030154","cell differentiation","29/88","417/2428",0.000180869494222468,0.00231008056307233,0.00180226221848186,"DAAM/ena/Prosap/Fas2/eys/f/robo1/tinc/lva/Dab/sdt/Mp/mas/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/dia/CG34401/prom/pyd/spg/ex/wts/pk/Vmat/mwh/NT1/tau",29
+"GO:0051493","regulation of cytoskeleton organization","8/88","46/2428",0.000182501167145008,0.00231008056307233,0.00180226221848186,"DAAM/mthl1/ena/CG43658/nwk/dia/RhoBTB/mwh",8
+"GO:0065008","regulation of biological quality","32/88","484/2428",0.000192585710486522,0.00240607082451992,0.00187715121772919,"SK/DAAM/Nrx-1/Syn/ena/Prosap/Eps-15/Fas2/Mekk1/Sytbeta/robo1/ATP8B/Shab/btsz/nwk/dpy/PDZ-GEF/dia/nAChRalpha3/Exn/kek6/RtGEF/pyd/pico/RhoBTB/Dys/ca/wts/pk/mwh/NT1/Rab3-GEF",32
+"GO:0022603","regulation of anatomical structure morphogenesis","11/88","86/2428",0.000197921423582642,0.00244103089085259,0.00190442611355498,"DAAM/tinc/lva/Dab/PDZ-GEF/dia/CG34401/pyd/spg/wts/pk",11
+"GO:0048589","developmental growth","15/88","151/2428",0.000242591852717164,0.00292449695818729,0.00228161323031791,"DAAM/Nrx-1/Syn/ena/Prosap/Eps-15/Fas2/btsz/nwk/RtGEF/pico/ex/rdo/wts/pk",15
+"GO:0032989","cellular component morphogenesis","19/88","222/2428",0.000243201410244265,0.00292449695818729,0.00228161323031791,"DAAM/ena/Prosap/Fas2/eys/robo1/lva/Dab/Mp/RhoGEF64C/PDZ-GEF/dia/CG34401/pyd/RhoBTB/wts/pk/NT1/tau",19
+"GO:0048707","instar larval or pupal morphogenesis","14/88","135/2428",0.000254461845983261,0.00302212710908515,0.00235778162684945,"mthl1/Fas2/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",14
+"GO:0033043","regulation of organelle organization","10/88","75/2428",0.000278974781609708,0.00322698477005257,0.00251760601931008,"DAAM/mthl1/ena/Mekk1/CG43658/nwk/dia/ex/RhoBTB/mwh",10
+"GO:0007423","sensory organ development","15/88","153/2428",0.000281177065469131,0.00322698477005257,0.00251760601931008,"ena/Fas2/eys/f/tinc/Dab/PDZ-GEF/prom/pyd/spg/ex/rdo/wts/pk/tau",15
+"GO:0046532","regulation of photoreceptor cell differentiation","4/88","10/2428",0.00028649548407569,0.00322698477005257,0.00251760601931008,"tinc/Dab/PDZ-GEF/spg",4
+"GO:0010720","positive regulation of cell development","8/88","49/2428",0.000288483045971435,0.00322698477005257,0.00251760601931008,"DAAM/Prosap/lva/Dab/mas/spg/pk/Vmat",8
+"GO:0045597","positive regulation of cell differentiation","8/88","49/2428",0.000288483045971435,0.00322698477005257,0.00251760601931008,"DAAM/Prosap/lva/Dab/mas/spg/pk/Vmat",8
+"GO:0001754","eye photoreceptor cell differentiation","9/88","62/2428",0.000299048348830579,0.00330671852385077,0.00257981213207747,"eys/tinc/Dab/PDZ-GEF/prom/spg/ex/wts/tau",9
+"GO:0007552","metamorphosis","14/88","138/2428",0.00032153320811622,0.00351494257054322,0.00274226288740269,"mthl1/Fas2/f/CG43658/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",14
+"GO:0010975","regulation of neuron projection development","8/88","50/2428",0.000333364976552268,0.00360333828587957,0.00281122682769683,"DAAM/Prosap/robo1/lva/mas/CG34401/wts/pk",8
+"GO:0048468","cell development","26/88","368/2428",0.000347139334746195,0.00371053377806488,0.00289485784414078,"DAAM/ena/Prosap/Fas2/eys/robo1/tinc/lva/Dab/sdt/Mp/mas/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/dia/CG34401/prom/spg/ex/wts/pk/Vmat/NT1/tau",26
+"GO:0042461","photoreceptor cell development","7/88","39/2428",0.000386474015555069,0.00408558245015359,0.00318746064882319,"eys/tinc/Dab/sdt/PDZ-GEF/prom/tau",7
+"GO:0035025","positive regulation of Rho protein signal transduction","4/88","11/2428",0.000437791305750755,0.00457777430578507,0.00357145538901932,"CG43102/CG43658/RhoGEF64C/Exn",4
+"GO:0040007","growth","15/88","160/2428",0.00046113289011481,0.00474281911232378,0.00370021887196286,"DAAM/Nrx-1/Syn/ena/Prosap/Eps-15/Fas2/btsz/nwk/RtGEF/pico/ex/rdo/wts/pk",15
+"GO:0031346","positive regulation of cell projection organization","6/88","29/2428",0.000463435547358041,0.00474281911232378,0.00370021887196286,"DAAM/ena/Prosap/lva/mas/pk",6
+"GO:0007265","Ras protein signal transduction","10/88","80/2428",0.000477137580619355,0.00483164581637704,0.00376951905796787,"CG43102/CG43658/RhoGEF64C/GEFmeso/Exn/RtGEF/pns/RhoBTB/ca/Rab3-GEF",10
+"GO:0006996","organelle organization","25/88","356/2428",0.000517841506398436,0.005189203428701,0.00404847581208427,"DAAM/mthl1/ena/Prosap/Mekk1/eys/f/CG43658/RhoGAP18B/ATP8B/btsz/Mp/nwk/dia/CG34347/prom/pico/ex/Pi3K68D/RhoBTB/ca/pk/mwh/Rab3-GEF/tau",25
+"GO:0051094","positive regulation of developmental process","10/88","81/2428",0.000528296016571691,0.00523938936022646,0.00408762951509078,"DAAM/Prosap/btsz/lva/Dab/mas/spg/pico/pk/Vmat",10
+"GO:0048592","eye morphogenesis","12/88","112/2428",0.000544254476991729,0.00528861421076811,0.00412603340877302,"Fas2/eys/tinc/Dab/PDZ-GEF/prom/pyd/spg/ex/wts/pk/tau",12
+"GO:0090596","sensory organ morphogenesis","12/88","112/2428",0.000544254476991729,0.00528861421076811,0.00412603340877302,"Fas2/eys/tinc/Dab/PDZ-GEF/prom/pyd/spg/ex/wts/pk/tau",12
+"GO:0051258","protein polymerization","5/88","20/2428",0.000562617916180012,0.00537600938201003,0.00419421675169401,"DAAM/nwk/dia/RhoBTB/mwh",5
+"GO:0002165","instar larval or pupal development","15/88","163/2428",0.000564425101437644,0.00537600938201003,0.00419421675169401,"mthl1/Fas2/f/CG43658/btsz/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",15
+"GO:0007268","chemical synaptic transmission","15/88","165/2428",0.000643824225141921,0.00600322028668791,0.0046835496929735,"stnB/CG32447/Nrx-1/Syn/Prosap/Fas2/Sytbeta/Shab/nwk/nAChRalpha3/Exn/kek6/Dys/NT1/Rab3-GEF",15
+"GO:0098916","anterograde trans-synaptic signaling","15/88","165/2428",0.000643824225141921,0.00600322028668791,0.0046835496929735,"stnB/CG32447/Nrx-1/Syn/Prosap/Fas2/Sytbeta/Shab/nwk/nAChRalpha3/Exn/kek6/Dys/NT1/Rab3-GEF",15
+"GO:0022607","cellular component assembly","21/88","279/2428",0.000656457873595719,0.00600322028668791,0.0046835496929735,"DAAM/Nrx-1/Myo10A/Syn/ena/Prosap/Eps-15/Fas2/Mekk1/f/CG43658/Shab/btsz/sdt/nwk/PDZ-GEF/dia/pyd/RhoBTB/Meltrin/mwh",21
+"GO:0001654","eye development","13/88","131/2428",0.000667717848935142,0.00600322028668791,0.0046835496929735,"ena/Fas2/eys/tinc/Dab/PDZ-GEF/prom/pyd/spg/ex/wts/pk/tau",13
+"GO:0048880","sensory system development","13/88","131/2428",0.000667717848935142,0.00600322028668791,0.0046835496929735,"ena/Fas2/eys/tinc/Dab/PDZ-GEF/prom/pyd/spg/ex/wts/pk/tau",13
+"GO:0150063","visual system development","13/88","131/2428",0.000667717848935142,0.00600322028668791,0.0046835496929735,"ena/Fas2/eys/tinc/Dab/PDZ-GEF/prom/pyd/spg/ex/wts/pk/tau",13
+"GO:0048584","positive regulation of response to stimulus","15/88","166/2428",0.000686989900384405,0.00606315857036512,0.00473031191669803,"CG43102/Prosap/Mekk1/CG43658/Dab/Mp/RhoGEF64C/dia/Exn/RtGEF/pyd/spg/ex/pk/Rab3-GEF",15
+"GO:0099537","trans-synaptic signaling","15/88","166/2428",0.000686989900384405,0.00606315857036512,0.00473031191669803,"stnB/CG32447/Nrx-1/Syn/Prosap/Fas2/Sytbeta/Shab/nwk/nAChRalpha3/Exn/kek6/Dys/NT1/Rab3-GEF",15
+"GO:0007480","imaginal disc-derived leg morphogenesis","5/88","21/2428",0.000717525117765864,0.00617424411881992,0.00481697784956626,"CG43658/RhoGEF64C/l(3)psg2/GEFmeso/Exn",5
+"GO:0048167","regulation of synaptic plasticity","5/88","21/2428",0.000717525117765864,0.00617424411881992,0.00481697784956626,"Prosap/Fas2/kek6/Dys/NT1",5
+"GO:0009967","positive regulation of signal transduction","13/88","132/2428",0.000718830916120407,0.00617424411881992,0.00481697784956626,"CG43102/Prosap/Mekk1/CG43658/Dab/Mp/RhoGEF64C/Exn/RtGEF/pyd/spg/ex/Rab3-GEF",13
+"GO:0031175","neuron projection development","15/88","167/2428",0.000732609996932534,0.00618220014955349,0.00482318492902029,"DAAM/ena/Prosap/Fas2/robo1/lva/Dab/Mp/mas/RhoGEF64C/CG34401/wts/pk/NT1/tau",15
+"GO:0099536","synaptic signaling","15/88","167/2428",0.000732609996932534,0.00618220014955349,0.00482318492902029,"stnB/CG32447/Nrx-1/Syn/Prosap/Fas2/Sytbeta/Shab/nwk/nAChRalpha3/Exn/kek6/Dys/NT1/Rab3-GEF",15
+"GO:0007478","leg disc morphogenesis","5/88","22/2428",0.000902282591462575,0.00748272287057756,0.00583781749285677,"CG43658/RhoGEF64C/l(3)psg2/GEFmeso/Exn",5
+"GO:0043254","regulation of protein complex assembly","5/88","22/2428",0.000902282591462575,0.00748272287057756,0.00583781749285677,"DAAM/nwk/dia/RhoBTB/mwh",5
+"GO:0016331","morphogenesis of embryonic epithelium","7/88","45/2428",0.000955075676833753,0.00778629492469551,0.00607465617825572,"Myo10A/ena/btsz/Dab/sdt/PDZ-GEF/pyd",7
+"GO:0051962","positive regulation of nervous system development","7/88","45/2428",0.000955075676833753,0.00778629492469551,0.00607465617825572,"Prosap/lva/Dab/mas/spg/pk/Vmat",7
+"GO:0009791","post-embryonic development","15/88","172/2428",0.001001586185357,0.00809685638918856,0.0063169478121145,"mthl1/Fas2/f/CG43658/btsz/dpy/RhoGEF64C/pot/l(3)psg2/PDZ-GEF/GEFmeso/Exn/Dys/pk/mwh",15
+"GO:0050804","modulation of chemical synaptic transmission","9/88","73/2428",0.00103051829297065,0.00819304626312203,0.00639199254361091,"CG32447/Nrx-1/Prosap/Fas2/Shab/Exn/kek6/Dys/NT1",9
+"GO:0099177","regulation of trans-synaptic signaling","9/88","73/2428",0.00103051829297065,0.00819304626312203,0.00639199254361091,"CG32447/Nrx-1/Prosap/Fas2/Shab/Exn/kek6/Dys/NT1",9
+"GO:0001751","compound eye photoreceptor cell differentiation","8/88","59/2428",0.00105362918894005,0.0083081252439371,0.00648177404412644,"eys/Dab/PDZ-GEF/prom/spg/ex/wts/tau",8
+"GO:0044085","cellular component biogenesis","21/88","290/2428",0.00110367044300559,0.00863195907456405,0.00673442041816847,"DAAM/Nrx-1/Myo10A/Syn/ena/Prosap/Eps-15/Fas2/Mekk1/f/CG43658/Shab/btsz/sdt/nwk/PDZ-GEF/dia/pyd/RhoBTB/Meltrin/mwh",21
+"GO:0048667","cell morphogenesis involved in neuron differentiation","14/88","159/2428",0.00136874084068736,0.0104989595322291,0.00819100355233544,"DAAM/ena/Prosap/Fas2/robo1/lva/Dab/Mp/RhoGEF64C/CG34401/wts/pk/NT1/tau",14
+"GO:0048812","neuron projection morphogenesis","14/88","159/2428",0.00136874084068736,0.0104989595322291,0.00819100355233544,"DAAM/ena/Prosap/Fas2/robo1/lva/Dab/Mp/RhoGEF64C/CG34401/wts/pk/NT1/tau",14
+"GO:0010638","positive regulation of organelle organization","5/88","24/2428",0.00137512359777637,0.0104989595322291,0.00819100355233544,"DAAM/CG43658/nwk/dia/RhoBTB",5
+"GO:0000904","cell morphogenesis involved in differentiation","15/88","178/2428",0.00143122930912589,0.0108412802785756,0.00845807291675723,"DAAM/ena/Prosap/Fas2/robo1/lva/Dab/Mp/RhoGEF64C/dia/CG34401/wts/pk/NT1/tau",15
+"GO:0120039","plasma membrane bounded cell projection morphogenesis","14/88","160/2428",0.00145577174005733,0.0109410344838684,0.00853589844293485,"DAAM/ena/Prosap/Fas2/robo1/lva/Dab/Mp/RhoGEF64C/CG34401/wts/pk/NT1/tau",14
+"GO:0022604","regulation of cell morphogenesis","8/88","62/2428",0.00146954541440777,0.0109589355710099,0.00854986438574249,"DAAM/lva/PDZ-GEF/dia/CG34401/pyd/wts/pk",8
+"GO:0042462","eye photoreceptor cell development","6/88","36/2428",0.00154900326073837,0.0114626241294639,0.00894282854175267,"eys/tinc/Dab/PDZ-GEF/prom/tau",6
+"GO:0046847","filopodium assembly","4/88","15/2428",0.00161963621835224,0.0118938171149226,0.00927923361739774,"DAAM/Myo10A/ena/dia",4
+"GO:0048858","cell projection morphogenesis","14/88","162/2428",0.00164384044657378,0.0119801099212423,0.00934655692509655,"DAAM/ena/Prosap/Fas2/robo1/lva/Dab/Mp/RhoGEF64C/CG34401/wts/pk/NT1/tau",14
+"GO:0010647","positive regulation of cell communication","13/88","145/2428",0.00174741898036448,0.0125449034261987,0.00978719350353395,"CG43102/Prosap/Mekk1/CG43658/Dab/Mp/RhoGEF64C/Exn/RtGEF/pyd/spg/ex/Rab3-GEF",13
+"GO:0023056","positive regulation of signaling","13/88","145/2428",0.00174741898036448,0.0125449034261987,0.00978719350353395,"CG43102/Prosap/Mekk1/CG43658/Dab/Mp/RhoGEF64C/Exn/RtGEF/pyd/spg/ex/Rab3-GEF",13
+"GO:1902533","positive regulation of intracellular signal transduction","9/88","79/2428",0.00182658703326838,0.0130161238963273,0.0101548269373907,"CG43102/Mekk1/CG43658/RhoGEF64C/Exn/RtGEF/spg/ex/Rab3-GEF",9
+"GO:0032990","cell part morphogenesis","14/88","165/2428",0.001963877239652,0.0138915434157737,0.0108378055098442,"DAAM/ena/Prosap/Fas2/robo1/lva/Dab/Mp/RhoGEF64C/CG34401/wts/pk/NT1/tau",14
+"GO:0040011","locomotion","17/88","225/2428",0.00227150395221803,0.0159502686279835,0.0124439670989739,"DAAM/Nrx-1/mthl1/ena/Fas2/robo1/Dab/Mp/RhoGEF64C/PDZ-GEF/CG34401/ex/Pi3K68D/RhoBTB/wts/pk/NT1",17
+"GO:0006928","movement of cell or subcellular component","17/88","226/2428",0.00238412377568038,0.0166197613927864,0.0129662872010687,"DAAM/mthl1/ena/Fas2/robo1/Dab/Mp/RhoGEF64C/PDZ-GEF/dia/CG34401/ex/Pi3K68D/RhoBTB/wts/pk/NT1",17
+"GO:0032879","regulation of localization","15/88","188/2428",0.00249062908136568,0.0172373034264301,0.0134480767513346,"stnB/Nrx-1/ena/Prosap/Sytbeta/robo1/ATP8B/sdt/CG34401/Exn/pyd/Dys/ca/wts/pk",15
+"GO:0048638","regulation of developmental growth","10/88","99/2428",0.00255728861608653,0.017572226061966,0.0137093743102984,"ena/Eps-15/Fas2/btsz/nwk/RtGEF/pico/ex/wts/pk",10
+"GO:0050773","regulation of dendrite development","4/88","17/2428",0.00267114167866633,0.0182243850700497,0.0142181710853982,"Prosap/robo1/lva/wts",4
+"GO:0044089","positive regulation of cellular component biogenesis","6/88","40/2428",0.00271673358413906,0.0184049134362097,0.0143590144217283,"DAAM/ena/CG43658/nwk/dia/RhoBTB",6
+"GO:0044087","regulation of cellular component biogenesis","10/88","100/2428",0.00275770531716134,0.0185518357699945,0.0144736392428122,"DAAM/ena/Eps-15/Fas2/Mekk1/CG43658/nwk/dia/RhoBTB/mwh",10
+"GO:0010976","positive regulation of neuron projection development","4/88","18/2428",0.00334023256011487,0.0223146091863229,0.0174092530362712,"Prosap/lva/mas/pk",4
+"GO:0048598","embryonic morphogenesis","8/88","71/2428",0.00354025440784633,0.0234877568299874,0.0183245110184714,"Myo10A/mthl1/ena/btsz/Dab/sdt/PDZ-GEF/pyd",8
+"GO:0007476","imaginal disc-derived wing morphogenesis","9/88","87/2428",0.003586093341911,0.0236289164035506,0.0184346398902851,"mthl1/f/dpy/pot/PDZ-GEF/GEFmeso/Dys/pk/mwh",9
+"GO:0007166","cell surface receptor signaling pathway","17/88","236/2428",0.00379327712402671,0.0248240312470319,0.0193670360861514,"CG32447/mthl1/Prosap/Eps-15/Fas2/robo1/Dab/CG31183/Mp/pyd/spg/ex/Pi3K68D/spz3/wts/NT1/Rab3-GEF",17
+"GO:1902531","regulation of intracellular signal transduction","12/88","140/2428",0.00388044315953194,0.0250715370523161,0.0195601334044221,"CG43102/Mekk1/CG43658/RhoGEF64C/GEFmeso/Exn/RtGEF/spg/ex/pns/ca/Rab3-GEF",12
+"GO:0035218","leg disc development","5/88","30/2428",0.00388322143533794,0.0250715370523161,0.0195601334044221,"CG43658/RhoGEF64C/l(3)psg2/GEFmeso/Exn",5
+"GO:0048749","compound eye development","11/88","123/2428",0.00411661309849485,0.0264012120050136,0.0205975097489602,"ena/eys/Dab/PDZ-GEF/prom/pyd/spg/ex/wts/pk/tau",11
+"GO:0001745","compound eye morphogenesis","10/88","106/2428",0.00424107307812796,0.027019286762643,0.0210797149160351,"eys/Dab/PDZ-GEF/prom/pyd/spg/ex/wts/pk/tau",10
+"GO:0035220","wing disc development","10/88","107/2428",0.0045404892928324,0.0287365177612156,0.0224194519791517,"mthl1/f/dpy/pot/PDZ-GEF/GEFmeso/pyd/Dys/pk/mwh",10
+"GO:0007267","cell-cell signaling","16/88","220/2428",0.00457674785152212,0.0287766760337534,0.0224507823745117,"stnB/CG32447/Nrx-1/Syn/Prosap/Fas2/Sytbeta/Shab/nwk/nAChRalpha3/Exn/kek6/Dys/wts/NT1/Rab3-GEF",16
+"GO:0007472","wing disc morphogenesis","9/88","91/2428",0.00486404824095123,0.0303845091415265,0.0237051701695026,"mthl1/f/dpy/pot/PDZ-GEF/GEFmeso/Dys/pk/mwh",9
+"GO:0007424","open tracheal system development","9/88","92/2428",0.00523323772034368,0.032479836690133,0.0253398879090326,"DAAM/Fas2/robo1/btsz/dpy/RhoGEF64C/dia/pyd/wts",9
+"GO:0040008","regulation of growth","10/88","110/2428",0.00554030257521501,0.0341651992138259,0.0266547620521478,"ena/Eps-15/Fas2/btsz/nwk/RtGEF/pico/ex/wts/pk",10
+"GO:0051240","positive regulation of multicellular organismal process","9/88","93/2428",0.00562391358190481,0.0344599036037734,0.0268846824264038,"Prosap/Shab/btsz/lva/Dab/mas/spg/pk/Vmat",9
+"GO:0120031","plasma membrane bounded cell projection assembly","5/88","33/2428",0.0059368583202409,0.0361472006586819,0.0282010658383195,"DAAM/Myo10A/ena/PDZ-GEF/dia",5
+"GO:0060541","respiratory system development","9/88","94/2428",0.00603689718771114,0.0365251263809945,0.0284959132395766,"DAAM/Fas2/robo1/btsz/dpy/RhoGEF64C/dia/pyd/wts",9
+"GO:0034333","adherens junction assembly","3/88","11/2428",0.0061476511169966,0.0367331700282654,0.0286582232521646,"sdt/PDZ-GEF/pyd",3
+"GO:0051017","actin filament bundle assembly","3/88","11/2428",0.0061476511169966,0.0367331700282654,0.0286582232521646,"DAAM/f/CG43658",3
+"GO:0060341","regulation of cellular localization","6/88","47/2428",0.00620085783706184,0.0368223780200833,0.0287278209085451,"stnB/Nrx-1/sdt/Exn/Dys/wts",6
+"GO:0008045","motor neuron axon guidance","5/88","34/2428",0.00676497109213135,0.0396823304306729,0.0309590782329246,"Fas2/robo1/Dab/Mp/NT1",5
+"GO:0042051","compound eye photoreceptor development","5/88","34/2428",0.00676497109213135,0.0396823304306729,0.0309590782329246,"eys/Dab/PDZ-GEF/prom/tau",5
+"GO:0051124","synaptic growth at neuromuscular junction","7/88","63/2428",0.00685455150236307,0.0399641123955956,0.0311789168815622,"Nrx-1/Syn/ena/Prosap/Eps-15/Fas2/nwk",7
+"GO:0048488","synaptic vesicle endocytosis","4/88","22/2428",0.00714713408005,0.0411709160778928,0.0321204323925348,"stnB/Nrx-1/Eps-15/Dab",4
+"GO:0140238","presynaptic endocytosis","4/88","22/2428",0.00714713408005,0.0411709160778928,0.0321204323925348,"stnB/Nrx-1/Eps-15/Dab",4
+"GO:0007417","central nervous system development","7/88","64/2428",0.00747370874765608,0.0427958798526497,0.0333881850694159,"DAAM/Prosap/Fas2/mas/spg/spz3/NT1",7
+"GO:0051489","regulation of filopodium assembly","3/88","12/2428",0.00798400376902052,0.0451800683870455,0.0352482643177191,"DAAM/ena/dia",3
+"GO:0061572","actin filament bundle organization","3/88","12/2428",0.00798400376902052,0.0451800683870455,0.0352482643177191,"DAAM/f/CG43658",3
+"GO:0007411","axon guidance","10/88","116/2428",0.00805468377100128,0.0453134841386154,0.035352351669584,"DAAM/ena/Fas2/robo1/Dab/Mp/RhoGEF64C/CG34401/pk/NT1",10
+"GO:0008360","regulation of cell shape","4/88","23/2428",0.00841593971127895,0.0470705465247113,0.0367231641012356,"PDZ-GEF/dia/pyd/wts",4
+"GO:0048646","anatomical structure formation involved in morphogenesis","10/88","117/2428",0.0085481955707013,0.0472607134426129,0.0368715271742893,"DAAM/mthl1/ena/robo1/btsz/lva/Dab/dia/spz3/NT1",10
+"GO:0097485","neuron projection guidance","10/88","117/2428",0.0085481955707013,0.0472607134426129,0.0368715271742893,"DAAM/ena/Fas2/robo1/Dab/Mp/RhoGEF64C/CG34401/pk/NT1",10

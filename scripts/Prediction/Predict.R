@@ -132,7 +132,7 @@ PolyAAChartWrapper <- function(proteins, graphHasHMMannots = TRUE, plotDisorder 
   }
 }
 
-a <- read.csv("C:/UROPs/polyQ_neuronal_proteins/output/adjusted/fly/mergedPolyAaDf.csv")
+a <- read.csv("../../output/adjusted/fly/mergedPolyAaDf.csv")
 
 
 b <- a %>% filter(!is.na(a$uniprotsptrembl))

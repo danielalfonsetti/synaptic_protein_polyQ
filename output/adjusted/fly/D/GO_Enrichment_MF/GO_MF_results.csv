@@ -1,0 +1,2 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0043565","sequence-specific DNA binding","3/37","10/2693",0.000268288855508999,0.0335361069386248,0.0313474346963146,"pan/mamo/su(sable)",3

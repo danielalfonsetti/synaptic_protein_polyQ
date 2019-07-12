@@ -1,5 +1,6 @@
 packages <- c("dplyr", "reshape2", "ggplot2", "HiddenMarkov",
-              "seqHMM", "doParallel", "RColorBrewer", "BiocManager", "here")
+              "seqHMM", "doParallel", "RColorBrewer", "BiocManager", "bamboo",
+              "reticulate", "DECIPHER")
 
 for (package in packages) {
   if (!requireNamespace(package, quietly = TRUE)) {

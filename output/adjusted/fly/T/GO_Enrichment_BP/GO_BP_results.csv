@@ -1,0 +1,52 @@
+"ID","Description","GeneRatio","BgRatio","pvalue","p.adjust","qvalue","geneID","Count"
+"GO:0006030","chitin metabolic process","7/102","19/2428",6.25615213957832e-06,0.00680669352786121,0.00598614978408073,"CG14880/CG42494/Cht6/mtg/Cda5/exp/thw",7
+"GO:0009888","tissue development","26/102","271/2428",2.64140070115836e-05,0.00876259003506762,0.00770626387565447,"Fas2/dpy/pyr/Dg/shot/Dys/cos/spri/cv-c/RhoGAP19D/mthl1/FER/hep/pico/scaf/btsz/chas/SP2353/fry/fog/CG30069/Myo10A/pigs/Gli/step/Scgdelta",26
+"GO:0009653","anatomical structure morphogenesis","34/102","411/2428",2.75793383067499e-05,0.00876259003506762,0.00770626387565447,"Fas2/dpy/pyr/Dg/shot/Dys/cos/rg/spri/spz4/cv-c/haf/RhoGAP19D/mthl1/FER/hep/tinc/Ank2/pwn/scaf/btsz/chas/SP2353/fry/fog/sas/Myo10A/pigs/Gli/step/CG44153/Scgdelta/exp/Dscam2",34
+"GO:0048569","post-embryonic animal organ development","16/102","127/2428",5.00692221710726e-05,0.00876259003506762,0.00770626387565447,"Fas2/dpy/pyr/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/fry/fog/Gli/step",16
+"GO:0048729","tissue morphogenesis","20/102","187/2428",5.948560225598e-05,0.00876259003506762,0.00770626387565447,"Fas2/dpy/pyr/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/FER/hep/scaf/btsz/chas/fry/fog/Myo10A/Gli/step",20
+"GO:1901071","glucosamine-containing compound metabolic process","7/102","26/2428",6.40079053254173e-05,0.00876259003506762,0.00770626387565447,"CG14880/CG42494/Cht6/mtg/Cda5/exp/thw",7
+"GO:0016331","morphogenesis of embryonic epithelium","9/102","45/2428",7.17808849784823e-05,0.00876259003506762,0.00770626387565447,"shot/cv-c/FER/hep/scaf/btsz/fog/Myo10A/step",9
+"GO:0007560","imaginal disc morphogenesis","15/102","118/2428",7.9624373112809e-05,0.00876259003506762,0.00770626387565447,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/fry/fog/Gli/step",15
+"GO:0048563","post-embryonic animal organ morphogenesis","15/102","118/2428",7.9624373112809e-05,0.00876259003506762,0.00770626387565447,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/fry/fog/Gli/step",15
+"GO:0006040","amino sugar metabolic process","7/102","27/2428",8.34572609428269e-05,0.00876259003506762,0.00770626387565447,"CG14880/CG42494/Cht6/mtg/Cda5/exp/thw",7
+"GO:0120036","plasma membrane bounded cell projection organization","21/102","210/2428",0.000103301661775111,0.00876259003506762,0.00770626387565447,"mas/Fas2/Dg/shot/cos/Spn/spri/atk/cv-c/haf/FER/hep/Ank2/fry/fog/PsGEF/sas/Myo10A/Gli/CG44153/Dscam2",21
+"GO:0030036","actin cytoskeleton organization","13/102","94/2428",0.000103784169261368,0.00876259003506762,0.00770626387565447,"Dg/shot/Spn/cv-c/mthl1/FER/hep/pico/btsz/fog/PsGEF/step/Scgdelta",13
+"GO:0007444","imaginal disc development","17/102","150/2428",0.000112340300701433,0.00876259003506762,0.00770626387565447,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/pico/scaf/fry/fog/CG30069/Gli/step",17
+"GO:0002009","morphogenesis of an epithelium","19/102","180/2428",0.000112753915892414,0.00876259003506762,0.00770626387565447,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/FER/hep/scaf/btsz/chas/fry/fog/Myo10A/Gli/step",19
+"GO:0048598","embryonic morphogenesis","11/102","71/2428",0.00013015173929341,0.00893965387185078,0.00786198274914121,"pyr/shot/cv-c/mthl1/FER/hep/scaf/btsz/fog/Myo10A/step",11
+"GO:0009886","post-embryonic animal morphogenesis","16/102","139/2428",0.000152230357582892,0.00893965387185078,0.00786198274914121,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/btsz/fry/fog/Gli/step",16
+"GO:0048666","neuron development","21/102","216/2428",0.000156194467947626,0.00893965387185078,0.00786198274914121,"mas/Fas2/Dg/shot/rg/Spn/spri/cv-c/haf/FER/Rim/hep/tinc/Ank2/SP2353/fry/fog/sas/Gli/CG44153/Dscam2",21
+"GO:0030029","actin filament-based process","13/102","98/2428",0.000160780661113304,0.00893965387185078,0.00786198274914121,"Dg/shot/Spn/cv-c/mthl1/FER/hep/pico/btsz/fog/PsGEF/step/Scgdelta",13
+"GO:0030030","cell projection organization","21/102","217/2428",0.000167036469346694,0.00893965387185078,0.00786198274914121,"mas/Fas2/Dg/shot/cos/Spn/spri/atk/cv-c/haf/FER/hep/Ank2/fry/fog/PsGEF/sas/Myo10A/Gli/CG44153/Dscam2",21
+"GO:0060429","epithelium development","23/102","250/2428",0.000168366418820999,0.00893965387185078,0.00786198274914121,"Fas2/dpy/Dg/shot/Dys/cos/spri/cv-c/RhoGAP19D/mthl1/FER/hep/pico/scaf/btsz/chas/fry/fog/CG30069/Myo10A/pigs/Gli/step",23
+"GO:0048513","animal organ development","28/102","337/2428",0.000172548466276532,0.00893965387185078,0.00786198274914121,"mas/Fas2/dpy/pyr/Dg/shot/Dys/cos/rg/atk/cv-c/RhoGAP19D/mthl1/hep/tinc/pwn/pico/scaf/btsz/SP2353/fry/fog/PsGEF/CG30069/Gli/step/Scgdelta/exp",28
+"GO:0009791","post-embryonic development","18/102","172/2428",0.000196542970034843,0.00971994324535949,0.00854820860103694,"Fas2/dpy/pyr/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/btsz/fry/fog/sas/Gli/step",18
+"GO:0007399","nervous system development","29/102","360/2428",0.000222515868561229,0.0105259680432442,0.00925706748385158,"mas/Fas2/GlcAT-P/pyr/inaE/Dg/shot/rg/Spn/spri/spz4/cv-c/mtg/haf/FER/Nrx-1/Rim/hep/tinc/Ank2/SP2353/fry/fog/PsGEF/sas/Gli/CG44153/Syn/Dscam2",29
+"GO:0007472","wing disc morphogenesis","12/102","91/2428",0.000310257686608731,0.0137606100860849,0.0121017749305836,"dpy/Dg/shot/Dys/cos/cv-c/mthl1/scaf/fry/fog/Gli/step",12
+"GO:0002165","instar larval or pupal development","17/102","163/2428",0.000316190489110407,0.0137606100860849,0.0121017749305836,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/btsz/fry/fog/sas/Gli/step",17
+"GO:0048707","instar larval or pupal morphogenesis","15/102","135/2428",0.000372063183243681,0.0150875492886694,0.0132687522285222,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/fry/fog/Gli/step",15
+"GO:0035239","tube morphogenesis","16/102","150/2428",0.000374415285656318,0.0150875492886694,0.0132687522285222,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/btsz/fry/fog/Gli/step",16
+"GO:0035220","wing disc development","13/102","107/2428",0.000394416399910673,0.015325894396529,0.0134783649443159,"dpy/Dg/shot/Dys/cos/cv-c/mthl1/scaf/fry/fog/CG30069/Gli/step",13
+"GO:0060562","epithelial tube morphogenesis","15/102","137/2428",0.000437626094522383,0.0164185238220811,0.0144392784000307,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/fry/fog/Gli/step",15
+"GO:0007552","metamorphosis","15/102","138/2428",0.000473980014822725,0.016799832621568,0.0147746206008178,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/scaf/fry/fog/Gli/step",15
+"GO:0006022","aminoglycan metabolic process","7/102","35/2428",0.000478671701533647,0.016799832621568,0.0147746206008178,"CG14880/CG42494/Cht6/mtg/Cda5/exp/thw",7
+"GO:0009887","animal organ morphogenesis","21/102","236/2428",0.000546375586683999,0.018576769947256,0.0163373489570972,"Fas2/dpy/Dg/shot/Dys/cos/rg/cv-c/RhoGAP19D/mthl1/hep/tinc/pwn/scaf/btsz/SP2353/fry/fog/Gli/step/exp",21
+"GO:0035295","tube development","18/102","189/2428",0.000643587955635892,0.0212188998706621,0.0186609713452321,"Fas2/dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/hep/pico/scaf/btsz/fry/fog/CG30069/Gli/step",18
+"GO:0007476","imaginal disc-derived wing morphogenesis","11/102","87/2428",0.00080922368195104,0.0248832043673707,0.0218835456365518,"dpy/Dg/shot/Dys/cos/cv-c/mthl1/fry/fog/Gli/step",11
+"GO:0007391","dorsal closure","7/102","38/2428",0.000809614890544237,0.0248832043673707,0.0218835456365518,"shot/cv-c/FER/hep/scaf/Myo10A/step",7
+"GO:0035120","post-embryonic appendage morphogenesis","12/102","101/2428",0.000823341320979178,0.0248832043673707,0.0218835456365518,"dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/fry/fog/Gli/step",12
+"GO:0035107","appendage morphogenesis","12/102","102/2428",0.000900722445677706,0.025789105813088,0.0226802410836852,"dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/fry/fog/Gli/step",12
+"GO:0035114","imaginal disc-derived appendage morphogenesis","12/102","102/2428",0.000900722445677706,0.025789105813088,0.0226802410836852,"dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/fry/fog/Gli/step",12
+"GO:0048736","appendage development","12/102","104/2428",0.00107383588474252,0.0292083360649964,0.0256872847166039,"dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/fry/fog/Gli/step",12
+"GO:0048737","imaginal disc-derived appendage development","12/102","104/2428",0.00107383588474252,0.0292083360649964,0.0256872847166039,"dpy/Dg/shot/Dys/cos/cv-c/RhoGAP19D/mthl1/fry/fog/Gli/step",12
+"GO:0031175","neuron projection development","16/102","167/2428",0.00125016688383469,0.0331751602344425,0.0291759100746016,"mas/Fas2/Dg/shot/Spn/spri/cv-c/haf/FER/hep/Ank2/fry/fog/sas/CG44153/Dscam2",16
+"GO:0007186","G protein-coupled receptor signaling pathway","14/102","137/2428",0.00138406736052334,0.0346638309764113,0.0304851222499592,"CG32447/mAChR-A/inaE/mthl1/Pdfr/Ggamma30A/AstC-R2/Dgk/fog/Oamb/AstC-R1/CCKLR-17D3/GABA-B-R3/rdgA",14
+"GO:0030182","neuron differentiation","21/102","253/2428",0.00138538399951701,0.0346638309764113,0.0304851222499592,"mas/Fas2/Dg/shot/rg/Spn/spri/cv-c/haf/FER/Rim/hep/tinc/Ank2/SP2353/fry/fog/sas/Gli/CG44153/Dscam2",21
+"GO:0048699","generation of neurons","22/102","271/2428",0.00140808977679973,0.0346638309764113,0.0304851222499592,"mas/Fas2/pyr/Dg/shot/rg/Spn/spri/cv-c/haf/FER/Rim/hep/tinc/Ank2/SP2353/fry/fog/sas/Gli/CG44153/Dscam2",22
+"GO:0097435","supramolecular fiber organization","9/102","66/2428",0.00143370624442877,0.0346638309764113,0.0304851222499592,"Dg/shot/Spn/FER/hep/pico/btsz/PsGEF/Scgdelta",9
+"GO:0022008","neurogenesis","23/102","290/2428",0.00148305012335563,0.035077359439368,0.0308488000487476,"mas/Fas2/pyr/inaE/Dg/shot/rg/Spn/spri/cv-c/haf/FER/Rim/hep/tinc/Ank2/SP2353/fry/fog/sas/Gli/CG44153/Dscam2",23
+"GO:0070593","dendrite self-avoidance","4/102","13/2428",0.00156674465699239,0.0362391714204388,0.0318705561350415,"Fas2/fry/CG44153/Dscam2",4
+"GO:0050793","regulation of developmental process","19/102","221/2428",0.00159878697443112,0.0362391714204388,0.0318705561350415,"mas/Fas2/pyr/shot/Spn/spri/cv-c/FER/hep/tinc/Ank2/pico/scaf/btsz/fry/fog/RtGEF/Gli/step",19
+"GO:0051094","positive regulation of developmental process","10/102","81/2428",0.00170179819443351,0.0377868660315033,0.0332316768794858,"mas/pyr/shot/spri/hep/Ank2/pico/btsz/Gli/step",10
+"GO:0099172","presynapse organization","5/102","22/2428",0.00176490513835313,0.0384043358105642,0.0337747109634316,"Fas2/Spn/Nrx-1/Gli/Syn",5
+"GO:0017144","drug metabolic process","8/102","57/2428",0.0021996843262433,0.046926598959857,0.0412696192477844,"CG14880/CG42494/Dg/Cht6/mtg/Cda5/exp/thw",8
