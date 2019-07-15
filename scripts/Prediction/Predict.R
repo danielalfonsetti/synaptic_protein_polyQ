@@ -1,12 +1,11 @@
 # source("https://bioconductor.org/biocLite.R")
 #biocLite("DECIPHER")
-source("C:/UROPs/polyQ_neuronal_proteins/scripts/ConstantsAndFunctions.R")
+source("../../scripts/ConstantsAndFunctions.R", chdir=T)
 
 
 library(DECIPHER)
 library(bamboo)
 library(reticulate)
-source_python("C:/UROPs/polyQ_neuronal_proteins/scripts/Prediction/disorderPredict.py")
 
 
 # Helper functions for plotting
@@ -61,6 +60,8 @@ PolyAAChart <- function(row, graphHasHMMannots = FALSE, plotDisorder = FALSE)  {
       function(AA) 
         unlist(lapply(strsplit(as.character(eval(parse(text = paste0("row$indiciesPoly", AA)))), split = "; ")[[1]], function(i) eval(parse(text = i))))
     )
+    print("Look here")
+    print(hmmAnnotationsList)
     
     # Remove first and last index in each list (because we plot each point as a line from its middle position to -1 and +1).
     hmmAnnotationsList <- lapply(hmmAnnotationsList, function(vec){vec[2:(length(vec)-1)]})
@@ -92,6 +93,8 @@ PolyAAChart <- function(row, graphHasHMMannots = FALSE, plotDisorder = FALSE)  {
       function(AA) 
         unlist(lapply(strsplit(as.character(eval(parse(text = "row$disorderedPred"))), split = "; ")[[1]], function(i) eval(parse(text = i))))
     )
+    print("Look here")
+    print(disorderAnnotationsList)
     
     # Remove first and last index in each list (because we plot each point as a line from its middle position to -1 and +1).
     disorderAnnotationsList <- lapply(disorderAnnotationsList, function(vec){vec[2:(length(vec)-1)]})
@@ -132,15 +135,14 @@ PolyAAChartWrapper <- function(proteins, graphHasHMMannots = TRUE, plotDisorder 
   }
 }
 
-a <- read.csv("../../output/adjusted/fly/mergedPolyAaDf.csv")
 
+a <- read.csv("../../output/adjusted/fly/mergedPolyAaDfDisorder.csv")
 
-b <- a %>% filter(!is.na(a$uniprotsptrembl))
-b <- b[1:30,]
-b$disorderedPred <-lapply(b$uniprotsptrembl, function(proteinName) paste0(lapply(getDisorder(proteinName), function(interval) paste0(interval[1], ":", interval[2])), collapse="; "))
+# b <- a %>% filter(!is.na(a$uniprotsptrembl))
+# b <- b[1:30,]
+# b$disorderedPred <-lapply(b$uniprotsptrembl, function(proteinName) paste0(lapply(getDisorder(proteinName), function(interval) paste0(interval[1], ":", interval[2])), collapse="; "))
 
-
-pdf("wowIMcool_w_disordered.pdf")
+pdf("disordered_test.pdf")
 PolyAAChart(b) 
 dev.off()
 
